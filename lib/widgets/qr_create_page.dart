@@ -24,7 +24,7 @@ class _QRCreatePageState extends State<QRCreatePage> {
                 BarcodeWidget(
                   barcode: Barcode.qrCode(),
                   color: Colors.white,
-                  data: controller.text ?? '',
+                  data: controller.text ?? 'Hello',
                   width: 200,
                   height: 200,
                 ),

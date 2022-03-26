@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/back.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../qr_create_page.dart';
+import 'auth.dart';
 
 class signupmanager extends StatelessWidget {
   @override
@@ -67,7 +71,7 @@ class _AuthCardState extends State<AuthCard> {
 
   ///////sign up function/////////
 
-  /*Future<void>_signup()async{
+  Future<void>_signup()async{
 
     if(_formKey.currentState!.validate()){
 
@@ -87,7 +91,7 @@ class _AuthCardState extends State<AuthCard> {
           'email':_autData['email'],
           'coins':100,
         }).then((value) {
-          _switchAuthMode();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
         });
 
       }).catchError((e){
@@ -104,7 +108,7 @@ class _AuthCardState extends State<AuthCard> {
       });
     }
 
-  } */
+  }
 
 
   @override
@@ -221,7 +225,9 @@ class _AuthCardState extends State<AuthCard> {
                              const Text('SIGN UP',
                                style: TextStyle(fontSize: 25),
                              ),
-                             onPressed:() {},
+                             onPressed:() {
+                               _signup();
+                             },
                              padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
                              color:const  Color.fromRGBO(65, 189, 180, 54),
                              textColor: Colors.white,
@@ -237,7 +243,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
     );
   }
-  /*showAlertDialog(BuildContext context,String message) {
+
+  showAlertDialog(BuildContext context,String message) {
+
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
       backgroundColor: Colors.white54,
@@ -257,5 +265,5 @@ class _AuthCardState extends State<AuthCard> {
         return alert;
       },
     );
-  }*/
+  }
 }
