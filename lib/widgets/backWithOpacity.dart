@@ -8,7 +8,7 @@ class BackWithOpacity extends StatelessWidget {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/background.jpg'),
-          opacity: 0.6,
+          opacity: 0.85,
           fit: BoxFit.cover,
         ),
       ),
