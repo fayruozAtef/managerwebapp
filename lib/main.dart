@@ -4,7 +4,12 @@ import 'package:managerweb/widgets/signup/signupmanager.dart';
 
 void main()  async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBgi5-xQd9BtXG0Za3LjyVlyFf1Pgu15Us",
+          appId: "1:736288426370:web:d4f5bc6377d460cb7b679b",
+          messagingSenderId:  "736288426370",
+          projectId: "testfirebaseflutter-aa934"));
   runApp(const MyApp());
 }
 

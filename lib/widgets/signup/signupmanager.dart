@@ -1,11 +1,24 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:managerweb/widgets/back.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../qr_create_page.dart';
 import 'auth.dart';
+final List<Map<String, dynamic>> _menuItem = [
+  {
+    "title": "Manager",
+    "selected": false,
+  },
+  {
+    "title": "Waiter",
+    "selected": true,
+  },
 
+];
 class signupmanager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,6 +77,7 @@ class _AuthCardState extends State<AuthCard> {
     'fname':'',
     'lname':'',
     'phone':'',
+    'type':'',
 
   };
   var _isLoading=false;
@@ -89,7 +103,7 @@ class _AuthCardState extends State<AuthCard> {
           'last name': _autData['lname'], // Stokes and Sons
           'phone': _autData['phone'] ,
           'email':_autData['email'],
-          'coins':100,
+          'jobtype':_autData['type']=='M'? 'manager':'Waiter',
         }).then((value) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
         });
@@ -130,6 +144,7 @@ class _AuthCardState extends State<AuthCard> {
                         const SizedBox(height: 70.0,),
                         const Text('Welcome', style: TextStyle(color: Colors.white,fontSize: 50,fontFamily:'Time New Roman'),textAlign:TextAlign.center),
                         const SizedBox(height: 40,),
+                        
                         TextFormField(
                           decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
                           style:const TextStyle(color: Colors.white,fontSize: 23,),
