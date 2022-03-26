@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # create QR Code
+    # create QR Code
     barcode_widget: ^2.0.0
 
 
