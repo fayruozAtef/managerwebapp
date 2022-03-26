@@ -1,7 +1,24 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:managerweb/widgets/back.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../qr_create_page.dart';
+import 'auth.dart';
+final List<Map<String, dynamic>> _menuItem = [
+  {
+    "title": "Manager",
+    "selected": false,
+  },
+  {
+    "title": "Waiter",
+    "selected": true,
+  },
+
+];
 class signupmanager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -60,6 +77,7 @@ class _AuthCardState extends State<AuthCard> {
     'fname':'',
     'lname':'',
     'phone':'',
+    'type':'',
 
   };
   var _isLoading=false;
@@ -67,7 +85,7 @@ class _AuthCardState extends State<AuthCard> {
 
   ///////sign up function/////////
 
-  /*Future<void>_signup()async{
+  Future<void>_signup()async{
 
     if(_formKey.currentState!.validate()){
 
@@ -85,9 +103,9 @@ class _AuthCardState extends State<AuthCard> {
           'last name': _autData['lname'], // Stokes and Sons
           'phone': _autData['phone'] ,
           'email':_autData['email'],
-          'coins':100,
+          'jobtype':_autData['type']=='M'? 'manager':'Waiter',
         }).then((value) {
-          _switchAuthMode();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
         });
 
       }).catchError((e){
@@ -104,7 +122,7 @@ class _AuthCardState extends State<AuthCard> {
       });
     }
 
-  } */
+  }
 
 
   @override
@@ -126,6 +144,7 @@ class _AuthCardState extends State<AuthCard> {
                         const SizedBox(height: 70.0,),
                         const Text('Welcome', style: TextStyle(color: Colors.white,fontSize: 50,fontFamily:'Time New Roman'),textAlign:TextAlign.center),
                         const SizedBox(height: 40,),
+                        
                         TextFormField(
                           decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
                           style:const TextStyle(color: Colors.white,fontSize: 23,),
@@ -221,7 +240,9 @@ class _AuthCardState extends State<AuthCard> {
                              const Text('SIGN UP',
                                style: TextStyle(fontSize: 25),
                              ),
-                             onPressed:() {},
+                             onPressed:() {
+                               _signup();
+                             },
                              padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
                              color:const  Color.fromRGBO(65, 189, 180, 54),
                              textColor: Colors.white,
@@ -237,7 +258,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
     );
   }
-  /*showAlertDialog(BuildContext context,String message) {
+
+  showAlertDialog(BuildContext context,String message) {
+
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
       backgroundColor: Colors.white54,
@@ -257,5 +280,5 @@ class _AuthCardState extends State<AuthCard> {
         return alert;
       },
     );
-  }*/
+  }
 }
