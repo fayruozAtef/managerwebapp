@@ -39,6 +39,8 @@ dependencies:
 
   group_radio_button: ^1.2.0
 
+  path_provider: 0.4.1
+  qr_flutter: ^4.0.0
   # create QR Code
   barcode_widget: ^2.0.0
 
