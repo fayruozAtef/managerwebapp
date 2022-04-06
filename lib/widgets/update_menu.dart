@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:file_picker/file_picker.dart';
+import 'package:managerweb/widgets/totalPayment.dart';
 import 'dart:typed_data';
 import 'package:uuid/uuid.dart';
 
@@ -83,7 +84,7 @@ MyAppState({Key? key, required this.title2}) : super();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Breakfast', style: TextStyle(color: Colors.white, fontSize: 40,)),
+        title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 40,)),
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
@@ -190,31 +191,34 @@ MyAppState({Key? key, required this.title2}) : super();
                     ),
                   ),
                 ),
-              FloatingActionButton(
-                child: Icon(Icons.add, color: Colors.white, size: 20),
-                onPressed: () async{
-                  setState(() {
-                    currentname.add('');
-                    currentcomponent.add('');
-                    currentprice.add(0);
-                    imageUrl.add('');
-                  });
-                },
-                backgroundColor: Colors.teal,
-                mini: false,
-              ),
-              Padding(padding: const EdgeInsets.fromLTRB(0, 13, 0, 13),
-                child:ElevatedButton(
-                  style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
-                      fixedSize:MaterialStateProperty.all(Size(320,50)),
-                      shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius:BorderRadius.circular(18)
-                      ))
-                  ),
-                  onPressed: () {
-                    final isValid = formkey.currentState!.validate();
-                    if(isValid==true ){
-                      for(int i=0;i<currentname.length;i++) {
+
+
+            ],
+          ),
+        ),
+      ),
+      persistentFooterButtons: [
+        Column(
+          children: [
+           buildNavigateButton(),
+            SizedBox(height: 10,),
+            buildNavigateButton2(),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget buildNavigateButton2()=>ElevatedButton(
+    style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+        fixedSize:MaterialStateProperty.all(Size(320,50)),
+        shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+            borderRadius:BorderRadius.circular(18)
+        ))
+    ),
+    onPressed: () {
+      // final isValid = formkey.currentState!.validate();
+      // if(isValid==true ){
+      /*for(int i=0;i<currentname.length;i++) {
                         if(i>=listid.length){
                           if(currentprice[i]!=0) {
                             bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i]
@@ -224,20 +228,26 @@ MyAppState({Key? key, required this.title2}) : super();
                         else {
                           updateData(i, currentname, currentcomponent, currentprice, imageUrl);
                         }
-                      }
-                      /*Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) =>));*/
-                    }
-                  },
-                  child: Text('save my changes',style:TextStyle(fontSize: 32)),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+                      }*/
+      Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>payment()));
+      //  }
+    },
+    child: Text('save my changes',style:TextStyle(fontSize: 32)),
+  );
+  Widget buildNavigateButton()=>FloatingActionButton(
+    child: Icon(Icons.add, color: Colors.white, size: 20),
+    onPressed: () async{
+      setState(() {
+        currentname.add('');
+        currentcomponent.add('');
+        currentprice.add(0);
+        imageUrl.add('');
+      });
+    },
+    backgroundColor: Colors.teal,
+    mini: false,
+  );
 }
 

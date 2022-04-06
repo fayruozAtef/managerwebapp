@@ -1,51 +1,40 @@
 import 'dart:typed_data';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:managerweb/widgets/update_menu.dart';
+import 'package:uuid/uuid.dart';
 
-List<String> imgList=['','','','','','','','',''];
-List name=['breakfast','Salads','Appetizers','Soups','Main Dishes','Pasta','Pizza','Drinks','Dessert'];
+List listid=[];
+List imgList=[];
+List name=[];
 class Categories extends StatefulWidget {
   Categories({Key? key}) : super(key: key);
 
   @override
   _CategoriesState createState() => _CategoriesState();
 }
+
 class _CategoriesState extends State<Categories> {
-  _CategoriesState({Key? key}) ;
 
   Future<FirebaseApp> secondaryApp = Firebase.initializeApp();
   firebase_storage.FirebaseStorage storage =
   firebase_storage.FirebaseStorage.instanceFor(
       bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
 
-  dowurl() async{
-    String durl1 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/breakfast.jpeg').getDownloadURL();
-    String durl2 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/salads.jpg').getDownloadURL();
-    String durl3 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/Appetizers.jpeg').getDownloadURL();
-    String durl4 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/soup.jpg').getDownloadURL();
-    String durl5 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/maindish.jpg').getDownloadURL();
-    String durl6 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/pasta.jpg').getDownloadURL();
-    String durl7 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/pizza.jpg').getDownloadURL();
-    String durl8 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/drinks.jpg').getDownloadURL();
-    String durl9 = await storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets/dessert.jpg').getDownloadURL();
-
-    setState((){
-      imgList[0]=(durl1);
-      imgList[1]=(durl2);
-      imgList[2]=(durl3);
-      imgList[3]=(durl4);
-      imgList[4]=(durl5);
-      imgList[5]=(durl6);
-      imgList[6]=(durl7);
-      imgList[7]=(durl8);
-      imgList[8]=(durl9);
+  CollectionReference bff = FirebaseFirestore.instance.collection("categories");
+  getData() async {
+    QuerySnapshot dbf = await bff.get();
+    dbf.docs.forEach((element) {
+      setState(() {
+        listid.add(element.id);
+        name.add(element.get('type'));
+        imgList.add(element.get('imagepath'));
+      });
     });
   }
-
 
   _openPicker(int n) async{
     FilePickerResult? result;
@@ -53,7 +42,7 @@ class _CategoriesState extends State<Categories> {
 
     if(result != null) {
       Uint8List? uploadFile = result.files.single.bytes;
-      firebase_storage.Reference reference =storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com/assets').child(name[n]+'.jpeg');
+      firebase_storage.Reference reference =storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com').child(Uuid().v1());
       final firebase_storage.UploadTask uploadTask = reference.putData(uploadFile!);
 
       uploadTask.whenComplete(() async {
@@ -64,9 +53,17 @@ class _CategoriesState extends State<Categories> {
       });
     }
   }
+
+  updateData(int n,List name,List image) async{
+    CollectionReference db = FirebaseFirestore.instance.collection("categories");
+    return await db.doc(listid[n]).update(
+      {"type": name[n], "imagepath":image[n]},
+    );
+  }
+
   @override
   void initState() {
-    dowurl();
+    getData();
     super.initState();
   }
   final formkey=GlobalKey<FormState>();
@@ -96,7 +93,7 @@ class _CategoriesState extends State<Categories> {
                     child: Column(
                       children: [
                         Container(
-                          child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(),
+                          child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(height: 100,width: 100,),
                         ),
                         FloatingActionButton(
                           child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
@@ -113,7 +110,7 @@ class _CategoriesState extends State<Categories> {
                             initialValue: name[i],
                             validator: (val){
                               if(val!.isEmpty) {
-                                return 'Please Enter Name Of Item';
+                                return 'Please Enter Name Of Category';
                               }
                               return null;
                             },
@@ -121,7 +118,7 @@ class _CategoriesState extends State<Categories> {
                             style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
                             cursorColor: Colors.black,
                             decoration: const InputDecoration(
-                              labelText: 'Name of Item',
+                              labelText: 'Name of Category',
                               labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color:Colors.black38),
@@ -133,29 +130,50 @@ class _CategoriesState extends State<Categories> {
                     ),
                     ),
                   ),
-              FloatingActionButton(
-                child: Icon(Icons.add, color: Colors.white, size: 20),
-                onPressed: () async{
-                  setState(() {
-                    name.add('new name');
-                    imgList.add('');
-                  });
-                },
-                backgroundColor: Colors.teal,
-                mini: false,
-              ),
             ],
         ),
       ),
       ),
-      floatingActionButton: buildNavigateButton(),
+      //floatingActionButton: buildNavigateButton(),
+      persistentFooterButtons: [
+        Column(
+         children: [
+            buildNavigateButton2(),
+            SizedBox(height: 10,),
+            buildNavigateButton(),
+          ],
+        ),
+      ],
     );
   }
+  Widget buildNavigateButton2()=>FloatingActionButton(
+  child: Icon(Icons.add, color: Colors.white, size: 20),
+  onPressed: () async{
+  setState(() {
+  name.add('new category');
+  imgList.add('');
+  });
+},
+backgroundColor: Colors.teal,
+mini: false,
+);
   Widget buildNavigateButton()=>FloatingActionButton.extended(
     backgroundColor: Colors.teal,
-    onPressed: (){
-
-      },
+    onPressed: () {
+      final isValid = formkey.currentState!.validate();
+      if (isValid == true) {
+        for (int i = 0; i < name.length; i++) {
+          if (i >= listid.length) {
+            if (imgList[i] != '' || name[i]!='new category') {
+              bff.add({"type": name[i], "imagepath": imgList[i]});
+            }
+          }
+          else {
+            updateData(i, name, imgList);
+          }
+        }
+      }
+    },
     label: Text('Save',style:TextStyle(fontSize: 32)),
   );
 }
