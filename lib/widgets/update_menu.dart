@@ -86,7 +86,6 @@ MyAppState({Key? key, required this.title2}) : super();
       appBar: AppBar(
         title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 40,)),
         backgroundColor: Colors.black,
-        automaticallyImplyLeading: false,
       ),
       body:SingleChildScrollView(
         child:Form(
@@ -191,8 +190,6 @@ MyAppState({Key? key, required this.title2}) : super();
                     ),
                   ),
                 ),
-
-
             ],
           ),
         ),
@@ -216,7 +213,7 @@ MyAppState({Key? key, required this.title2}) : super();
         ))
     ),
     onPressed: () {
-      // final isValid = formkey.currentState!.validate();
+      final isValid = formkey.currentState!.validate();
       // if(isValid==true ){
       /*for(int i=0;i<currentname.length;i++) {
                         if(i>=listid.length){
@@ -250,4 +247,3 @@ MyAppState({Key? key, required this.title2}) : super();
     mini: false,
   );
 }
-
