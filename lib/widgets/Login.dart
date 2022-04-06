@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:managerweb/widgets/qr_create_page.dart';
 
 import 'backWithOpacity.dart';
 import 'changetable.dart';
@@ -10,9 +11,9 @@ class Loginmanager extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        BackWithOpacity(),
+        const BackWithOpacity(),
         Container(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           height: 150,
           width: 150,
           decoration: const BoxDecoration(
@@ -75,8 +76,7 @@ class _LogInState extends State<LogIn> {
       ).then((value){
         print("Successfull");
         String id=Auth().getId();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Uploadimage() ));
-        // print(value.user.uid);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>QRCreatePage() ));
       }).catchError((e){
         if (e.code == 'user-not-found') {
           print('No user found for that email.');
@@ -94,9 +94,9 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(padding: EdgeInsets.only(top: 240),),
+        const Padding(padding: EdgeInsets.only(top: 240),),
         Container(
-          padding: EdgeInsets.fromLTRB(100, 20, 360, 0),
+          padding:const  EdgeInsets.fromLTRB(100, 20, 360, 0),
           child: SingleChildScrollView(
             child: Form(
               child:Column(
@@ -104,7 +104,7 @@ class _LogInState extends State<LogIn> {
                   TextFormField(
                     decoration:const InputDecoration (
                       labelText: 'E-Mail' ,
-                      labelStyle: TextStyle(fontSize:30 ,color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(color: Colors.white),
@@ -113,24 +113,20 @@ class _LogInState extends State<LogIn> {
                         return 'Invalid Email! ';
                       }
                     },
+                    // controller: email,
                     onSaved: (value){
                       _autData['email']=value!;
                     },
                   ),
-                  Padding(padding: EdgeInsets.only(top: 40),),
+                  const Padding(padding: EdgeInsets.only(top: 40),),
                   TextFormField(
-                    decoration:const InputDecoration(labelText: 'password' ,
-                        labelStyle: TextStyle(fontSize: 30,
-                            color: Colors.white)),
+                    decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
                     obscureText: true,
                     style: TextStyle(color: Colors.white),
                     controller: _passwordController,
                     validator: (value){
                       if(value!.isEmpty){
                         return 'enter password';
-                      }
-                      else if(value.length <5){
-                        return 'password is too short!';
                       }
                     },
                     onSaved: (value) {
@@ -158,7 +154,7 @@ class _LogInState extends State<LogIn> {
               height: 80.0,
               child: RaisedButton(
                 child:
-                Text('LOGIN',
+               const Text('LOGIN',
                   style: TextStyle(fontWeight: FontWeight.bold,
                       fontSize: 30),
                 ),
@@ -168,7 +164,7 @@ class _LogInState extends State<LogIn> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                padding:const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
                 color: Colors.transparent,
                 //color: Color.fromRGBO(65, 189, 180, 54),
                 textColor: Colors.white,
@@ -179,28 +175,7 @@ class _LogInState extends State<LogIn> {
       ],
     );
   }
-  Widget buildFiled() =>Material(
-    child:   TextField(
 
-      keyboardType: TextInputType.number,
-      decoration:  InputDecoration(
-        hintText: 'Enter number of seats',
-        labelText: 'no of seats',
-        border: OutlineInputBorder(
-          borderRadius:  BorderRadius.circular(12.0),
-        ),
-      ),
-
-    ),
-  );
-
-  Widget buildText(String text)=>Container(
-    padding: EdgeInsets.fromLTRB(10.0,10.0,0,5),
-    child: Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
-    ),
-  );
   showAlertDialog(BuildContext context,String message) {
 
     // set up the AlertDialog
