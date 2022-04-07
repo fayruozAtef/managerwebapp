@@ -207,9 +207,9 @@ MyAppState({Key? key, required this.title2}) : super();
   }
   Widget buildNavigateButton2()=>ElevatedButton(
     style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
-        fixedSize:MaterialStateProperty.all(Size(320,50)),
+        fixedSize:MaterialStateProperty.all(Size(120,50)),
         shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-            borderRadius:BorderRadius.circular(18)
+            borderRadius:BorderRadius.circular(20)
         ))
     ),
     onPressed: () {
@@ -231,7 +231,7 @@ MyAppState({Key? key, required this.title2}) : super();
               builder: (context) =>payment()));
       //  }
     },
-    child: Text('save my changes',style:TextStyle(fontSize: 32)),
+    child: Text('save',style:TextStyle(fontSize: 35)),
   );
   Widget buildNavigateButton()=>FloatingActionButton(
     child: Icon(Icons.add, color: Colors.white, size: 20),
