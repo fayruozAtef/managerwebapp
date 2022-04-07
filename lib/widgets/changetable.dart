@@ -1,9 +1,13 @@
 
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 class Uploadimage extends StatefulWidget {
   //final String userId;
   const Uploadimage({Key? key, }) : super(key: key);
@@ -21,7 +25,39 @@ class _imagepic extends State<Uploadimage> {
   num tableno=0;
   num seatsno=0;
   num nochange=0;
-  CollectionReference gettable = FirebaseFirestore.instance.collection("tables");
+  List input=[];
+  CollectionReference gettable = FirebaseFirestore.instance.collection("tryimage");
+  FirebaseStorage _storage= FirebaseStorage.instanceFor(
+      bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
+  //String filename = result.files.single.name;
+
+  _openPicker() async{
+    FilePickerResult? result;
+    result=await FilePicker.platform.pickFiles(
+      type: FileType.image
+    );
+
+    if(result != null) {
+      Uint8List? uploadFile = result.files.single.bytes;
+      Reference reference =_storage.refFromURL('gs://testfirebaseflutter-aa934.appspot.com').child(Uuid().v1());
+      UploadTask uploadTask = reference.putData(uploadFile!);
+
+      uploadTask.whenComplete(() async {
+        String image = await uploadTask.snapshot.ref.getDownloadURL();
+        setState(() {
+          for(int i=0; i<uploadFile.length;i++){
+          imagelist[i]=image.toString();
+          }
+        });
+      });
+    }
+  }
+
+  photo()async{
+    await gettable.doc('$tableno').update({
+      "image":imagelist
+    });
+  }
 
   changetable() async {
 
@@ -102,7 +138,7 @@ class _imagepic extends State<Uploadimage> {
                             fontSize: 30),
                       ),
                       onPressed:() {
-                        selectimage();
+                        _openPicker();
                       },
 
 
@@ -144,7 +180,7 @@ class _imagepic extends State<Uploadimage> {
                 itemCount: imagelist.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
                 itemBuilder: (BuildContext context,int index){
-                  return Image.network(File(imagelist[index].path).path,
+                  return Image.network(File(imagelist[index]).path,
                   fit: BoxFit.cover,);
                 }),
           ),
@@ -172,6 +208,7 @@ class _imagepic extends State<Uploadimage> {
                       tableno=int.parse(number.text) ;
                       seatsno=int.parse(seats.text) ;
                       changetable();
+                      photo();
                     });
 
                   },
@@ -188,7 +225,7 @@ class _imagepic extends State<Uploadimage> {
       ) ,
     );
   }
-  Future<void> selectimage() async {
+  /*Future<void> selectimage() async {
     final List<XFile>? select = await _picker.pickMultiImage();
     if(select!.isNotEmpty){
       imagelist.addAll(select);
@@ -196,7 +233,7 @@ class _imagepic extends State<Uploadimage> {
     print("list l:"+imagelist.length.toString());
     setState(() {
     });
-  }
+  }*/
   Widget buildText(String text)=>Container(
     padding: EdgeInsets.fromLTRB(10.0,10.0,0,5),
     child: Text(
