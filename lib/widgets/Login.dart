@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/qr_create_page.dart';
@@ -57,6 +58,8 @@ class LogIn extends StatefulWidget {
 }
 class _LogInState extends State<LogIn> {
   final GlobalKey<FormState>_formKey=GlobalKey();
+  CollectionReference gettype = FirebaseFirestore.instance.collection("employee");
+  String type="";
   Map<String, String> _autData={
     'email':'' ,
     'password':'' ,
@@ -64,28 +67,39 @@ class _LogInState extends State<LogIn> {
 
   /////////log in function//////////////////
   Future<void>_logIn()async{
+
     if(_formKey.currentState!.validate()){
 
       _formKey.currentState!.save() ;
+      QuerySnapshot dbt = await gettype.where("email",isEqualTo: _autData['email']).get();
+      dbt.docs.forEach((element) {
+        setState(() {
+          type = element.get('jobtype');
+        });
+      });
       //true login
       UserCredential userCredential ;
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _autData['email']!,
-          password: _autData['password']!
-      ).then((value){
-        print("Successfull");
-        String id=Auth().getId();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>QRCreatePage() ));
-      }).catchError((e){
-        if (e.code == 'user-not-found') {
-          print('No user found for that email.');
-          showAlertDialog(context, 'No user found for that email.');
-        } else if (e.code == 'wrong-password')
-        {
-          print('Wrong password provided for that user.');
-          showAlertDialog(context, 'Wrong password');
-        }
-      });
+      if(type=="manager") {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _autData['email']!,
+            password: _autData['password']!
+        ).then((value) {
+          print("Successfull");
+          String id = Auth().getId();
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => QRCreatePage()));
+        }).catchError((e) {
+          if (e.code == 'user-not-found') {
+            print('No user found for that email.');
+            showAlertDialog(context, 'No user found for that email.');
+          } else if (e.code == 'wrong-password') {
+            print('Wrong password provided for that user.');
+            showAlertDialog(context, 'Wrong password');
+          }
+        });
+      }else{
+        showAlertDialog(context, "Please Enter the Right Email and Password");
+      }
     }
   }
 
