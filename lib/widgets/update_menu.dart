@@ -28,7 +28,7 @@ MyAppState({Key? key, required this.title2}) : super();
   List<String> imageUrl=[];
 
   List listid=[];
-  CollectionReference bff = FirebaseFirestore.instance.collection("menuupdate");
+  CollectionReference bff = FirebaseFirestore.instance.collection("menu");
   getData() async {
     QuerySnapshot dbf = await bff.where('type',isEqualTo:title2).get();
     dbf.docs.forEach((element) {
@@ -43,7 +43,7 @@ MyAppState({Key? key, required this.title2}) : super();
   }
 
   updateData(int n,List <String> name,List <String> component,List <num> price,List <String> image) async{
-    CollectionReference db = FirebaseFirestore.instance.collection("menuupdate");
+    CollectionReference db = FirebaseFirestore.instance.collection("menu");
     return await db.doc(listid[n]).set(
       {"name": name[n], "component": component[n], "price": price[n],"imagepath":image[n]},
       SetOptions(merge: true),
@@ -214,8 +214,8 @@ MyAppState({Key? key, required this.title2}) : super();
     ),
     onPressed: () {
       final isValid = formkey.currentState!.validate();
-      // if(isValid==true ){
-      /*for(int i=0;i<currentname.length;i++) {
+       if(isValid==true ){
+      for(int i=0;i<currentname.length;i++) {
                         if(i>=listid.length){
                           if(currentprice[i]!=0) {
                             bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i]
@@ -225,11 +225,11 @@ MyAppState({Key? key, required this.title2}) : super();
                         else {
                           updateData(i, currentname, currentcomponent, currentprice, imageUrl);
                         }
-                      }*/
+                      }
       Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) =>payment()));
-      //  }
+       }
     },
     child: Text('save',style:TextStyle(fontSize: 35)),
   );
