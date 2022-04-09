@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/qr_create_page.dart';
-
 import 'Background/backWithOpacity.dart';
-import 'changetable.dart';
 import 'signup/auth.dart';
 
 class Loginmanager extends StatelessWidget {
