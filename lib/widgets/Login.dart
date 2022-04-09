@@ -57,12 +57,11 @@ class LogIn extends StatefulWidget {
 }
 class _LogInState extends State<LogIn> {
   final GlobalKey<FormState>_formKey=GlobalKey();
-  TextEditingController email = TextEditingController();
   Map<String, String> _autData={
     'email':'' ,
     'password':'' ,
   };
-  final _passwordController =TextEditingController();
+
   /////////log in function//////////////////
   Future<void>_logIn()async{
     if(_formKey.currentState!.validate()){
@@ -99,6 +98,7 @@ class _LogInState extends State<LogIn> {
           padding:const  EdgeInsets.fromLTRB(100, 20, 360, 0),
           child: SingleChildScrollView(
             child: Form(
+              key: _formKey,
               child:Column(
                 children: [
                   TextFormField(
