@@ -75,6 +75,8 @@ class _imagepic extends State<Uploadimage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title:const Text('Arrange Table'),),
+      backgroundColor: Colors.black,
       body:SingleChildScrollView(
 
         child: Column(
@@ -91,12 +93,14 @@ class _imagepic extends State<Uploadimage> {
                 )
             ),
             Container(
+              color: Colors.black,
               padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
               child: buildtableno(),
             ),
             SizedBox(height: 30,),
             buildText("Enter Number of Seats"),
             Container(
+              color: Colors.black,
               padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
               child: buildnoseat(),
             ),
@@ -104,6 +108,7 @@ class _imagepic extends State<Uploadimage> {
 
             ////Location
             Container(
+              color: Colors.black,
               child: Row(
                 children: [
                   buildText(" Location Of table"),
@@ -127,11 +132,11 @@ class _imagepic extends State<Uploadimage> {
                         child: Row(
                           children: [
                             Icon(Icons.cloud_upload_outlined,
-                            size: 50,),
+                            size: 50,color: Colors.white),
                             const SizedBox(width: 10,),
                             Text('Upload Image',
                               style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 30),
+                                  fontSize: 30,color: Colors.white),
                             ),
                           ],
                         ),
@@ -155,11 +160,11 @@ class _imagepic extends State<Uploadimage> {
                         child: Row(
                           children: [
                             Icon(Icons.delete_forever,
-                              size: 50,),
+                              size: 50,color: Colors.white),
                             const SizedBox(width: 10,),
                             Text('Delete Images',
                               style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 30),
+                                  fontSize: 30,color: Colors.white),
                             ),
                           ],
                         ),
@@ -179,7 +184,7 @@ class _imagepic extends State<Uploadimage> {
             ),
             SizedBox(height: 30,),
             imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
-              style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold),)): Container(
+              style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
               height: 200,
               child: GridView.builder(
                   itemCount: imagelist.length,
@@ -204,7 +209,7 @@ class _imagepic extends State<Uploadimage> {
                     child:
                     Text('Change',
                       style: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 30),
+                          fontSize: 30, color: Colors.white),
                     ),
                     onPressed:() async {
                       QuerySnapshot dbt = await gettable.get();
@@ -251,25 +256,26 @@ class _imagepic extends State<Uploadimage> {
     padding: EdgeInsets.fromLTRB(10.0,10.0,0,5),
     child: Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
     ),
   );
   Widget buildnoseat() =>Material(
+    color: Colors.black,
     child:   TextField(
-
       controller: seats,
       keyboardType: TextInputType.number,
       decoration:  InputDecoration(
         hintText: 'Number of seats',
+        hintStyle: TextStyle(color: Colors.grey,),
         errorText: "Please Enter Number of Seats",
-        errorStyle: TextStyle(color: Colors.black,),
+        errorStyle: TextStyle(color: Colors.white,),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: Colors.white),
           borderRadius:  BorderRadius.circular(15.0),
         ),
         border: OutlineInputBorder(
           borderRadius:  BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: Colors.white),
         ),
 
       ),
@@ -277,49 +283,56 @@ class _imagepic extends State<Uploadimage> {
   );
 
   Widget buildtableno() =>Material(
+    color:  Colors.black,
     child:   TextField(
       controller: number,
       keyboardType: TextInputType.number,
       decoration:  InputDecoration(
         hintText: 'Enter Table no',
+        hintStyle: TextStyle(color: Colors.grey,),
         errorText: "Please Enter Table Number",
-        errorStyle: TextStyle(color: Colors.black),
+        errorStyle: TextStyle(color: Colors.white),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
+          borderSide: const BorderSide(color: Colors.white),
           borderRadius:  BorderRadius.circular(15.0),
         ),
         border: OutlineInputBorder(
           borderRadius:  BorderRadius.circular(12.0),
-          borderSide: const BorderSide(color: Colors.black),
+          borderSide: const BorderSide(color: Colors.white),
         ),
 
       ),
     ),
   );
   Widget buildlocation() =>Material(
-    child:   Row(
-        children:[
-          Radio<String>(
-            value: 'In Door',
-            groupValue: _group,
-            onChanged: (value) {
-              setState((){
-                _group=value!;
-              });
-            },
-          ),
-          Text('In Door',style:TextStyle(fontSize: 22)),
-          const SizedBox(width: 50,),
-          Radio<String>(value: 'Out Door',
-            groupValue: _group ,
-            onChanged: (value) {
-              setState((){
-                _group=value!;
-              });
-            },
-          ),
-          Text('Out Door',style:TextStyle(fontSize: 22))
-        ]
+    color: Colors.black,
+    child:   Theme(
+      data: ThemeData.dark(),
+      child: Row(
+          children:[
+            Radio<String>(
+              value: 'In Door',
+              hoverColor: Colors.white,
+              groupValue: _group,
+              onChanged: (value) {
+                setState((){
+                  _group=value!;
+                });
+              },
+            ),
+            Text('In Door',style:TextStyle(fontSize: 22, color: Colors.white)),
+            const SizedBox(width: 50,),
+            Radio<String>(value: 'Out Door',
+              groupValue: _group ,
+              onChanged: (value) {
+                setState((){
+                  _group=value!;
+                });
+              },
+            ),
+            Text('Out Door',style:TextStyle(fontSize: 22, color: Colors.white))
+          ]
+      ),
     ),
   );
   showAlertDialog(BuildContext context, num noseats) {
