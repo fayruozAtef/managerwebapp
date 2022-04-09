@@ -31,12 +31,12 @@ class _QRCreatePageState extends State<QRCreatePage> {
       print(e.toString());
     }
   }*/
-  Future<void> renderImage() async {
+  /*Future<void> renderImage() async {
     //Get the render object from context.
     final RenderObject? boundary = globalKey.currentContext?.findRenderObject();
     //Convert to the image
     final Image image = await boundary!.toImage();
-  }
+  }*/
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
