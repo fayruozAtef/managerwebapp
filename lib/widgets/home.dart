@@ -79,46 +79,76 @@ class _home extends State<Home2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
             Text("Manager:  $uname",style: TextStyle(color: Colors.white,fontSize: 20),),
-
-            FlatButton(onPressed:(){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager()));
-            },
-              child:const Text("New Manager" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Row(
+              children: [
+                const Icon(Icons.person_add_alt ,color: Colors.white,),
+                FlatButton(onPressed:(){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager()));
+                },
+                  child:const Text("New Manager" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
 
-            FlatButton(onPressed:(){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp()));
-            },
-              child:const Text("New Waiter" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+
+            Row(
+              children: [
+                const Icon(Icons.person_add_alt_1_rounded ,color: Colors.white,),
+                FlatButton(onPressed:(){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp()));
+                },
+                  child:const Text("New Waiter" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
 
-
-            FlatButton(
-              onPressed:(){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
-              },
-              child: const Text("Generate QR Codes" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Row(
+              children: [
+                const Icon(Icons.qr_code_outlined ,color: Colors.white,),
+                FlatButton(
+                  onPressed:(){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
+                  },
+                  child: const Text("Generate QR Codes" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
 
-            FlatButton(
-              onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
-              },
-              child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Row(
+              children: [
+                const Icon(Icons.table_restaurant ,color: Colors.white,),
+                FlatButton(
+                  onPressed:(){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
+                  },
+                  child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
 
-            FlatButton(
-              onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Categories()));
-              },
-              child: const Text("Menu Change" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Row(
+              children: [
+                const Icon(Icons.menu_book_sharp ,color: Colors.white,),
+                FlatButton(
+                  onPressed:(){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Categories()));
+                  },
+                  child: const Text("Menu Change" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
 
-            FlatButton(
-              onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => payment()));
-              },
-              child: const Text("Payment" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            Row(
+              children: [
+                const Icon(Icons.account_balance_outlined ,color: Colors.white,),
+                FlatButton(
+                  onPressed:(){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => payment()));
+                  },
+                  child: const Text("Payment" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+
+              ],
             ),
 
             Row(

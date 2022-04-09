@@ -78,176 +78,179 @@ class _imagepic extends State<Uploadimage> {
       appBar: AppBar(title:const Text('Arrange Table'),),
       backgroundColor: Colors.black,
       body:SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 30,),
-            ////Table no
-            Container(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 30,),
+              ////Table no
+              Container(
+                  child: Row(
+                    children: [
+                      buildText("Enter Table Number You Want to Change"),
+                      Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
+                    ],
+                  )
+              ),
+              Container(
+                color: Colors.black,
+                padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
+                child: buildtableno(),
+              ),
+              SizedBox(height: 30,),
+              buildText("Enter Number of Seats"),
+              Container(
+                color: Colors.black,
+                padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
+                child: buildnoseat(),
+              ),
+              SizedBox(height: 30,),
+
+              ////Location
+              Container(
+                color: Colors.black,
                 child: Row(
                   children: [
-                    buildText("Enter Table Number You Want to Change"),
-                    Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
+                    buildText(" Location Of table"),
+                    const SizedBox(width: 50,),
+                    buildlocation(),
                   ],
-                )
-            ),
-            Container(
-              color: Colors.black,
-              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-              child: buildtableno(),
-            ),
-            SizedBox(height: 30,),
-            buildText("Enter Number of Seats"),
-            Container(
-              color: Colors.black,
-              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-              child: buildnoseat(),
-            ),
-            SizedBox(height: 30,),
-
-            ////Location
-            Container(
-              color: Colors.black,
-              child: Row(
-                children: [
-                  buildText(" Location Of table"),
-                  const SizedBox(width: 50,),
-                  buildlocation(),
-                ],
+                ),
               ),
-            ),
-            SizedBox(height: 30,),
+              SizedBox(height: 30,),
 
-            ////UploadPhoto
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: ButtonTheme(
-                      minWidth: 100.0,
-                      height: 50.0,
-                      child: RaisedButton(
-                        child: Row(
-                          children: [
-                            Icon(Icons.cloud_upload_outlined,
-                            size: 50,color: Colors.white),
-                            const SizedBox(width: 10,),
-                            Text('Upload Image',
-                              style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 30,color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        onPressed:() {
-                          _openPicker();
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                        color: Color.fromRGBO(65, 189, 180, 54),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 80,),
-                  Container(
-                    child: ButtonTheme(
-                      minWidth: 100.0,
-                      height: 50.0,
-                      child: RaisedButton(
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete_forever,
+              ////UploadPhoto
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: ButtonTheme(
+                        minWidth: 100.0,
+                        height: 50.0,
+                        child: RaisedButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.cloud_upload_outlined,
                               size: 50,color: Colors.white),
-                            const SizedBox(width: 10,),
-                            Text('Delete Images',
-                              style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 30,color: Colors.white),
-                            ),
-                          ],
+                              const SizedBox(width: 10,),
+                              Text('Upload Image',
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 30,color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          onPressed:() {
+                            _openPicker();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                          color: Color.fromRGBO(65, 189, 180, 54),
                         ),
-                        onPressed:() {
-                          imagelist=[];
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                        color: Color.fromRGBO(65, 189, 180, 54),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30,),
-            imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
-              style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
-              height: 200,
-              child: GridView.builder(
-                  itemCount: imagelist.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
-                  itemBuilder: (BuildContext context,int index){
-                    return Image.network(File(imagelist[index]).path,);
-                  }),
-            ),
-            SizedBox(height: 30,),
-            /////Change Button
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-
-              child: Center(
-                child: ButtonTheme(
-                  minWidth: 200.0,
-                  height: 80.0,
-                  child: RaisedButton(
-                    child:
-                    Text('Change',
-                      style: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 30, color: Colors.white),
+                    const SizedBox(width: 80,),
+                    Container(
+                      child: ButtonTheme(
+                        minWidth: 100.0,
+                        height: 50.0,
+                        child: RaisedButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete_forever,
+                                size: 50,color: Colors.white),
+                              const SizedBox(width: 10,),
+                              Text('Delete Images',
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 30,color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          onPressed:() {
+                            imagelist=[];
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                          color: Color.fromRGBO(65, 189, 180, 54),
+                        ),
+                      ),
                     ),
-                    onPressed:() async {
-                      QuerySnapshot dbt = await gettable.get();
-                      setState(() {
-                        input=[];
-                        dbt.docs.forEach((element) {
-                          setState(() {
-                            input.add(element.get('num'));
+                  ],
+                ),
+              ),
+              SizedBox(height: 30,),
+              imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
+                style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
+                height: 200,
+                child: GridView.builder(
+                    itemCount: imagelist.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
+                    itemBuilder: (BuildContext context,int index){
+                      return Image.network(File(imagelist[index]).path,);
+                    }),
+              ),
+              SizedBox(height: 30,),
+              /////Change Button
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+
+                child: Center(
+                  child: ButtonTheme(
+                    minWidth: 200.0,
+                    height: 80.0,
+                    child: RaisedButton(
+                      child:
+                      Text('Change',
+                        style: TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 30, color: Colors.white),
+                      ),
+                      onPressed:() async {
+                        QuerySnapshot dbt = await gettable.get();
+                        setState(() {
+                          input=[];
+                          dbt.docs.forEach((element) {
+                            setState(() {
+                              input.add(element.get('num'));
+                            });
                           });
+                          print("ta : $input");
+                          tableno=int.parse(number.text) ;
+                          seatsno=int.parse(seats.text) ;
+                          if(input.contains(tableno)) {
+                            changenoseats();
+                            if (imagelist.toString() != "[]") {
+                              photo();
+                            }
+
+                            if (_group.isNotEmpty) {
+                              changloca();
+                            }
+                          }else {
+                            showAlertDialog(context, tableno);
+                          }
                         });
-                        print("ta : $input");
-                        tableno=int.parse(number.text) ;
-                        seatsno=int.parse(seats.text) ;
-                        if(input.contains(tableno)) {
-                          changenoseats();
-                          if (imagelist.toString() != "[]") {
-                            photo();
-                          }
 
-                          if (_group.isNotEmpty) {
-                            changloca();
-                          }
-                        }else {
-                          showAlertDialog(context, tableno);
-                        }
-                      });
-
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                      color: Color.fromRGBO(65, 189, 180, 54),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                    color: Color.fromRGBO(65, 189, 180, 54),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ) ,
     );
@@ -260,9 +263,10 @@ class _imagepic extends State<Uploadimage> {
     ),
   );
   Widget buildnoseat() =>Material(
-    color: Colors.black,
+    color: Colors.transparent,
     child:   TextField(
       controller: seats,
+      style: TextStyle(color: Colors.white),
       keyboardType: TextInputType.number,
       decoration:  InputDecoration(
         hintText: 'Number of seats',
@@ -283,13 +287,14 @@ class _imagepic extends State<Uploadimage> {
   );
 
   Widget buildtableno() =>Material(
-    color:  Colors.black,
+    color:  Colors.transparent,
     child:   TextField(
+      style: TextStyle(color: Colors.white),
       controller: number,
       keyboardType: TextInputType.number,
       decoration:  InputDecoration(
         hintText: 'Enter Table no',
-        hintStyle: TextStyle(color: Colors.grey,),
+        hintStyle: TextStyle(color: Colors.white,),
         errorText: "Please Enter Table Number",
         errorStyle: TextStyle(color: Colors.white),
         errorBorder: OutlineInputBorder(
