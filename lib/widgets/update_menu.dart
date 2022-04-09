@@ -104,8 +104,8 @@ MyAppState({Key? key, required this.title2}) : super();
                     child: Column(
                       children: [
                         Container(
-                          height: 375,
-                          width: 2000,
+                          width: 400,
+                          height: 400,
                           child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
                         ),
                         FloatingActionButton(
@@ -286,15 +286,10 @@ MyAppState({Key? key, required this.title2}) : super();
           ),
         ),
       ),
-      persistentFooterButtons: [
-        Column(
-          children: [
+      floatingActionButton: buildNavigateButton2(),
+
+
            //buildNavigateButton(),
-            SizedBox(height: 10,),
-            buildNavigateButton2(),
-          ],
-        ),
-      ],
     );
   }
   Widget buildNavigateButton2()=>ElevatedButton(

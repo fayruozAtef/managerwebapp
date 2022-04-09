@@ -93,6 +93,8 @@ class _CategoriesState extends State<Categories> {
                     child: Column(
                       children: [
                         Container(
+                          width: 400,
+                          height: 400,
                           child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(height: 100,width: 100,),
                         ),
                         FloatingActionButton(
@@ -148,7 +150,6 @@ class _CategoriesState extends State<Categories> {
                       Container(
                         width: 100,
                         height: 100,
-
                         color: Colors.white,
                       ),
                       FloatingActionButton(
@@ -190,16 +191,8 @@ class _CategoriesState extends State<Categories> {
         ),
       ),
       ),
-      //floatingActionButton: buildNavigateButton(),
-      persistentFooterButtons: [
-        Column(
-         children: [
+      floatingActionButton: buildNavigateButton(),
             //buildNavigateButton2(),
-            SizedBox(height: 10,),
-            buildNavigateButton(),
-          ],
-        ),
-      ],
     );
   }
   /*Widget buildNavigateButton2()=>FloatingActionButton(
