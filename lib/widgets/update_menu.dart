@@ -190,6 +190,98 @@ MyAppState({Key? key, required this.title2}) : super();
                     ),
                   ),
                 ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.0),
+                  side: BorderSide(color: Colors.black, width: 2),
+                ),
+                child:InkWell(onTap: ()async{
+                  setState(() {
+                    currentname.add('');
+                    currentcomponent.add('');
+                    currentprice.add(0);
+                    imageUrl.add('');
+                  });
+                },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 60,
+                        child:Icon(Icons.add, color: Colors.white, size: 50),
+                        color: Colors.teal,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+
+                        color: Colors.white,
+                      ),
+                      FloatingActionButton(
+                        child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                        backgroundColor: Colors.teal,
+                        mini: true,
+                        onPressed:(){
+
+                        },
+                      ),
+                      Container(
+                        height: 100,
+                        padding:EdgeInsets.all(13),
+                        child:TextFormField(
+                          initialValue: 'new',
+                          /*validator: (val){
+                            if(val!.isEmpty) {
+                              return 'Please Enter Name Of Category';
+                            }
+                            return null;
+                          },*/
+                          //onChanged: (val)=>setState((){=val;}),
+                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: 'Name of Category',
+                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color:Colors.black38),
+                            ),
+                          ),
+                        ) ,
+                      ),
+                      Container(
+                        padding:const EdgeInsets.all(13),
+                        child:TextFormField(
+                          initialValue: 'new',
+                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: 'Component of Item',
+                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color:Colors.black38),
+                            ),
+                          ),
+                        ) ,
+                      ),
+                      Container(
+                        padding:EdgeInsets.all(13),
+                        child:TextFormField(
+                          initialValue: 'new',
+                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: 'Price of Item',
+                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color:Colors.black38),
+                            ),
+                          ),
+                        ) ,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -197,7 +289,7 @@ MyAppState({Key? key, required this.title2}) : super();
       persistentFooterButtons: [
         Column(
           children: [
-           buildNavigateButton(),
+           //buildNavigateButton(),
             SizedBox(height: 10,),
             buildNavigateButton2(),
           ],
@@ -233,7 +325,7 @@ MyAppState({Key? key, required this.title2}) : super();
     },
     child: Text('save',style:TextStyle(fontSize: 35)),
   );
-  Widget buildNavigateButton()=>FloatingActionButton(
+ /* Widget buildNavigateButton()=>FloatingActionButton(
     child: Icon(Icons.add, color: Colors.white, size: 20),
     onPressed: () async{
       setState(() {
@@ -245,5 +337,5 @@ MyAppState({Key? key, required this.title2}) : super();
     },
     backgroundColor: Colors.teal,
     mini: false,
-  );
+  );*/
 }
