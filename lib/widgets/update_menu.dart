@@ -84,8 +84,8 @@ MyAppState({Key? key, required this.title2}) : super();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 40,)),
-        backgroundColor: Colors.black,
+        title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 30,)),
+        //backgroundColor: Colors.black,
       ),
       body:SingleChildScrollView(
         child:Form(

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/qr_create_page.dart';
 import 'package:managerweb/widgets/signup/employeesignup.dart';
 import 'package:managerweb/widgets/signup/signupmanager.dart';
+import 'package:managerweb/widgets/totalPayment.dart';
+import 'package:managerweb/widgets/update_categories.dart';
 import 'Background/homeback.dart';
 import 'Login.dart';
 import 'changetable.dart';
@@ -50,7 +52,8 @@ class _home extends State<Home2> {
   }
   @override
   Widget build(BuildContext context) =>Scaffold(
-    appBar: AppBar(title:const Text('Home'),),
+    appBar: AppBar(title:const Text('Home',style: TextStyle(color: Colors.white, fontSize: 30,)), 
+    ),
     backgroundColor: Colors.transparent,
     body: Row(
       children: [
@@ -106,19 +109,30 @@ class _home extends State<Home2> {
 
             FlatButton(
               onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Categories()));
               },
               child: const Text("Menu Change" ,style: TextStyle(color: Colors.white,fontSize: 22),),
             ),
 
-
             FlatButton(
-              onPressed:()async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Loginmanager() ));
-
+              onPressed:(){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => payment()));
               },
-              child: const Text("Log out" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+              child: const Text("Payment" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            ),
+
+            Row(
+              children: [
+                Icon(Icons.exit_to_app, color: Colors.white,),
+                FlatButton(
+                  onPressed:()async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Loginmanager() ));
+
+                  },
+                  child: const Text("Log out" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+                ),
+              ],
             ),
           ],
         ),

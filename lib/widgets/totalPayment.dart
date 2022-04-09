@@ -56,8 +56,8 @@ class _payment extends State<payment> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Total Payment', style: TextStyle(color: Colors.white, fontSize: 40,)),
-        backgroundColor: Colors.black,
+        title:const Text('Total Payment', style: TextStyle(color: Colors.white, fontSize: 30,)),
+        //backgroundColor: Colors.black,
       ),
       body:SingleChildScrollView(
         child: Column(

@@ -71,13 +71,13 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Menu' ,
+        title: const Text('Menu Categories' ,
             style: TextStyle(color: Colors.white, fontSize: 25,
               fontWeight: FontWeight.bold,
             )
         ),
-        backgroundColor: Colors.black,
-        automaticallyImplyLeading: false,
+        //backgroundColor: Colors.black,
+        //automaticallyImplyLeading: false,
       ),
       body:SingleChildScrollView(
        child:Form(
@@ -87,7 +87,7 @@ class _CategoriesState extends State<Categories> {
              for(int i=0;i<name.length;i++)
                 Card(
                   child:InkWell(onTap: (){
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                         MaterialPageRoute(builder: (context)=>details(title: name[i])));
                   },
                     child: Column(
