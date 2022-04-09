@@ -2,11 +2,8 @@ import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:group_radio_button/group_radio_button.dart';
-import 'package:managerweb/widgets/back.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../backWithOpacity.dart';
+import '../Background/backWithOpacity.dart';
 import '../qr_create_page.dart';
 import 'auth.dart';
 final List<Map<String, dynamic>> _menuItem = [
