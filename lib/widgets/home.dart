@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/qr_create_page.dart';
+import 'package:managerweb/widgets/signup/employeesignup.dart';
 import 'package:managerweb/widgets/signup/signupmanager.dart';
 import 'Background/homeback.dart';
 import 'Login.dart';
+import 'changetable.dart';
 
 class Home extends StatelessWidget {
   String uid="mCh2OcakXlSMhbpYaZyhISaYgFY2";
@@ -82,7 +84,7 @@ class _home extends State<Home2> {
             ),
 
             FlatButton(onPressed:(){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp()));
             },
               child:const Text("New Waiter" ,style: TextStyle(color: Colors.white,fontSize: 22),),
             ),
@@ -95,7 +97,20 @@ class _home extends State<Home2> {
               child: const Text("Generate QR Codes" ,style: TextStyle(color: Colors.white,fontSize: 22),),
             ),
 
-            Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            FlatButton(
+              onPressed:(){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
+              },
+              child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            ),
+
+            FlatButton(
+              onPressed:(){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
+              },
+              child: const Text("Menu Change" ,style: TextStyle(color: Colors.white,fontSize: 22),),
+            ),
+
 
             FlatButton(
               onPressed:()async {

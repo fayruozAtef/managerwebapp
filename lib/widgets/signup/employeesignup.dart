@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:group_radio_button/group_radio_button.dart';
-import 'package:managerweb/widgets/back.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../backWithOpacity.dart';
+import '../Background/backWithOpacity.dart';
 import '../qr_create_page.dart';
 import 'auth.dart';
+
 class EmployeSignUp extends StatelessWidget {
   const EmployeSignUp({Key? key}) : super(key: key);
 
@@ -15,32 +13,26 @@ class EmployeSignUp extends StatelessWidget {
     return Stack(
       children:<Widget> [
         BackWithOpacity(),
-        Container(
-          padding: EdgeInsets.all(20.0),
-          height: 150,
-          width: 150,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              opacity: 0.6,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
+            appBar: AppBar(title: const Text("Add New Waiter", style: TextStyle(fontSize: 25),),),
             backgroundColor: Colors.transparent,
             body: Stack(
-              children:const[
-                SizedBox(height: 50,),
-                SizedBox(
-
-                  height: 80,
-                  child: Center(
-                    child: Text('Welcome', style: TextStyle(color: Colors.white,fontSize: 70,fontFamily:'Time New Roman'),textAlign:TextAlign.center),
+              children:[
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  height: 150,
+                  width: 150,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/logo.png'),
+                      opacity: 0.6,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 30,),
                 SignUpEmp(),
               ],
             ),
@@ -121,9 +113,8 @@ class _SignUpEmpState extends State<SignUpEmp> {
       child:  SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 130,),
+            const SizedBox(height: 100,),
 
-            const SizedBox(height: 10.0,),
             SizedBox(
               width:( MediaQuery. of(context). size. width )-300,
               child: Column(

@@ -26,7 +26,7 @@ class signupmanager extends StatelessWidget {
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
-            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(fontSize: 30),),),
+            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(fontSize: 25),),),
             backgroundColor: Colors.transparent,
             body: Stack(
                 children:[
@@ -42,7 +42,6 @@ class signupmanager extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50,),
                   AuthCard(),
                 ],
               ),
@@ -98,7 +97,7 @@ class _AuthCardState extends State<AuthCard> {
           'last name': _autData['lname'], // Stokes and Sons
           'phone': _autData['phone'] ,
           'email':_autData['email'],
-          'jobtype':_autData['type']=='M'? 'manager':'Waiter',
+          'jobtype':_autData['type']== 'manager',
         }).then((value) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
         });
@@ -128,40 +127,7 @@ class _AuthCardState extends State<AuthCard> {
         child:  SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 130,),
-
-              const SizedBox(height: 10.0,),
-              SizedBox(
-                height: 60,
-                width:( MediaQuery. of(context). size. width )-300,
-                child: Center(
-                  child: Row(
-                      children:[
-                        Radio<String>(
-                          value: 'M',
-                          groupValue: _autData['type'],
-                          onChanged: (value) {
-                            setState((){
-                              _autData['type']=value!;
-                            });
-                          },
-                        ),
-                        Text('Manager',style:TextStyle(color:Colors.white,fontSize: 22)),
-                        const SizedBox(width: 50,),
-                        Radio<String>(value: 'W',
-                          groupValue: _autData['type'],
-                          onChanged: (value) {
-                            setState((){
-                              _autData['type']=value!;
-                            });
-                          },
-                        ),
-                        Text('Waiter',style:TextStyle(color:Colors.white,fontSize: 22))
-                      ]
-                  ),
-
-                ),
-              ),
+              const SizedBox(height: 100,),
               SizedBox(
                 width:( MediaQuery. of(context). size. width )-300,
                 child: Column(
