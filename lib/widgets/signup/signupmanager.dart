@@ -22,33 +22,27 @@ class signupmanager extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        BackWithOpacity(),
-        Container(
-          padding: EdgeInsets.all(20.0),
-          height: 150,
-          width: 150,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              opacity: 0.6,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        const BackWithOpacity(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
+            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(fontSize: 30),),),
             backgroundColor: Colors.transparent,
             body: Stack(
-                children:const[
-                  SizedBox(height: 50,),
-                  SizedBox(
-
-                    height: 80,
-                    child: Center(
-                      child: Text('Welcome', style: TextStyle(color: Colors.white,fontSize: 70,fontFamily:'Time New Roman'),textAlign:TextAlign.center),
+                children:[
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    height: 150,
+                    width: 150,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/logo.png'),
+                        opacity: 0.6,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
+                  SizedBox(height: 50,),
                   AuthCard(),
                 ],
               ),
@@ -130,173 +124,173 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize= MediaQuery.of(context).size;
     return Align(
-      alignment: Alignment.center,
-      child:  SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 130,),
+        alignment: Alignment.center,
+        child:  SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 130,),
 
-            const SizedBox(height: 10.0,),
-            SizedBox(
-              height: 60,
-              width:( MediaQuery. of(context). size. width )-300,
-              child: Center(
-                child: Row(
-                    children:[
-                      Radio<String>(
-                        value: 'M',
-                        groupValue: _autData['type'],
-                        onChanged: (value) {
-                          setState((){
-                            _autData['type']=value!;
-                          });
-                        },
-                      ),
-                      Text('Manager',style:TextStyle(color:Colors.white,fontSize: 22)),
-                      const SizedBox(width: 50,),
-                      Radio<String>(value: 'W',
-                        groupValue: _autData['type'],
-                        onChanged: (value) {
-                          setState((){
-                            _autData['type']=value!;
-                          });
-                        },
-                      ),
-                      Text('Waiter',style:TextStyle(color:Colors.white,fontSize: 22))
-                    ]
+              const SizedBox(height: 10.0,),
+              SizedBox(
+                height: 60,
+                width:( MediaQuery. of(context). size. width )-300,
+                child: Center(
+                  child: Row(
+                      children:[
+                        Radio<String>(
+                          value: 'M',
+                          groupValue: _autData['type'],
+                          onChanged: (value) {
+                            setState((){
+                              _autData['type']=value!;
+                            });
+                          },
+                        ),
+                        Text('Manager',style:TextStyle(color:Colors.white,fontSize: 22)),
+                        const SizedBox(width: 50,),
+                        Radio<String>(value: 'W',
+                          groupValue: _autData['type'],
+                          onChanged: (value) {
+                            setState((){
+                              _autData['type']=value!;
+                            });
+                          },
+                        ),
+                        Text('Waiter',style:TextStyle(color:Colors.white,fontSize: 22))
+                      ]
+                  ),
+
                 ),
-
               ),
-            ),
-            SizedBox(
-              width:( MediaQuery. of(context). size. width )-300,
-              child: Column(
-                  children:[
-                    Stack(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                children: <Widget>[
+              SizedBox(
+                width:( MediaQuery. of(context). size. width )-300,
+                child: Column(
+                    children:[
+                      Stack(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: <Widget>[
 
-                                  const SizedBox(height: 10,),
-                                  TextFormField(
-                                    decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
-                                    style:const TextStyle(color: Colors.white,fontSize: 23,),
-                                    keyboardType: TextInputType.name,
-                                    validator: (value){
-                                      _autData['firstname']=value!;
-                                    },
-                                    onSaved: (value) {
-                                      _autData['fname']=value!;
-                                    },
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white)),
-                                    style: TextStyle(color: Colors.white,fontSize: 23),
-                                    keyboardType: TextInputType.name,
-                                    validator: (value){
-                                      _autData['lastname']=value!;
-                                    },
-                                    onSaved: (value) {
-                                      _autData['lname']=value!;
-                                    },
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white)),
-                                    keyboardType: TextInputType.phone,
-                                    style: const TextStyle(color: Colors.white,fontSize: 23),
-                                    validator: (value){
-                                      _autData['phone']=value!;
-                                    },
-                                    onSaved: (value) {
-                                      _autData['phone']=value!;
-                                    },
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration (
-                                      labelText: 'E-Mail' ,
-                                      labelStyle: TextStyle(color: Colors.white),
+                                    const SizedBox(height: 10,),
+                                    TextFormField(
+                                      decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                      style:const TextStyle(color: Colors.white,fontSize: 23,),
+                                      keyboardType: TextInputType.name,
+                                      validator: (value){
+                                        _autData['firstname']=value!;
+                                      },
+                                      onSaved: (value) {
+                                        _autData['fname']=value!;
+                                      },
                                     ),
-                                    keyboardType: TextInputType.emailAddress,
-                                    style: const TextStyle(color: Colors.white,fontSize: 23),
-                                    validator: (value){
-                                      if(value!.isEmpty || !value.contains('@')){
-                                        return 'Invalid Email! ';
-                                      }
-                                    },
-                                    // controller: email,
-                                    onSaved: (value){
-                                      _autData['email']=value!;
-                                    },
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
-                                    obscureText: true,
-                                    style: const TextStyle(color: Colors.white,fontSize: 23),
-                                    controller: _passwordController,
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return 'enter password';
-                                      }
-                                      else if(value.length <5){
-                                        return 'password is too short!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {
-                                      _autData['password']=value!;
-                                    },
-                                  ),
-                                  TextFormField(
-                                      decoration:const InputDecoration(labelText: 'confirm password' ,
-                                          labelStyle: TextStyle(color: Colors.white,fontSize: 23)),
-                                      style:const TextStyle(color: Colors.white,fontSize: 23),
+                                    TextFormField(
+                                      decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                      style: TextStyle(color: Colors.white,fontSize: 23),
+                                      keyboardType: TextInputType.name,
+                                      validator: (value){
+                                        _autData['lastname']=value!;
+                                      },
+                                      onSaved: (value) {
+                                        _autData['lname']=value!;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white)),
+                                      keyboardType: TextInputType.phone,
+                                      style: const TextStyle(color: Colors.white,fontSize: 23),
+                                      validator: (value){
+                                        _autData['phone']=value!;
+                                      },
+                                      onSaved: (value) {
+                                        _autData['phone']=value!;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration:const InputDecoration (
+                                        labelText: 'E-Mail' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                      ),
+                                      keyboardType: TextInputType.emailAddress,
+                                      style: const TextStyle(color: Colors.white,fontSize: 23),
+                                      validator: (value){
+                                        if(value!.isEmpty || !value.contains('@')){
+                                          return 'Invalid Email! ';
+                                        }
+                                      },
+                                      // controller: email,
+                                      onSaved: (value){
+                                        _autData['email']=value!;
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
                                       obscureText: true,
-                                      validator: (value) {
-                                        if(value !=_passwordController.text){
-                                          return 'passwords do not match!' ;
+                                      style: const TextStyle(color: Colors.white,fontSize: 23),
+                                      controller: _passwordController,
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return 'enter password';
+                                        }
+                                        else if(value.length <5){
+                                          return 'password is too short!';
                                         }
                                         return null;
-                                      }
-                                  ),
-                                  const SizedBox(height: 20,),
-                                  Container(
-                                    width: 250,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-
-                                    ),
-                                    child: RaisedButton(
-                                      child:
-                                      const Text('SIGN UP',
-                                        style: TextStyle(fontSize: 25),
-                                      ),
-                                      onPressed:() {
-                                        _signup();
                                       },
-                                      padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                      color:const  Color.fromRGBO(65, 189, 180, 54),
-                                      textColor: Colors.white,
+                                      onSaved: (value) {
+                                        _autData['password']=value!;
+                                      },
                                     ),
-                                  ),
-                                ],
+                                    TextFormField(
+                                        decoration:const InputDecoration(labelText: 'confirm password' ,
+                                            labelStyle: TextStyle(color: Colors.white,fontSize: 23)),
+                                        style:const TextStyle(color: Colors.white,fontSize: 23),
+                                        obscureText: true,
+                                        validator: (value) {
+                                          if(value !=_passwordController.text){
+                                            return 'passwords do not match!' ;
+                                          }
+                                          return null;
+                                        }
+                                    ),
+                                    const SizedBox(height: 20,),
+                                    Container(
+                                      width: 250,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+
+                                      ),
+                                      child: RaisedButton(
+                                        child:
+                                        const Text('SIGN UP',
+                                          style: TextStyle(fontSize: 25),
+                                        ),
+                                        onPressed:() {
+                                          _signup();
+                                        },
+                                        padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                                        color:const  Color.fromRGBO(65, 189, 180, 54),
+                                        textColor: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ]
-                    ),
+                          ]
+                      ),
 
-                  ]
+                    ]
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   showAlertDialog(BuildContext context,String message) {
