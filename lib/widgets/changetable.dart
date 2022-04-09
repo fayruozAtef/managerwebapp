@@ -87,7 +87,7 @@ class _imagepic extends State<Uploadimage> {
             Container(
                 child: Row(
                   children: [
-                    buildText("Enter Table Number"),
+                    buildText("Enter Table Number You Want to Change"),
                     Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
                   ],
                 )
