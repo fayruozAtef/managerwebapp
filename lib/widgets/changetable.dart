@@ -166,7 +166,7 @@ class _imagepic extends State<Uploadimage> {
                           ],
                         ),
                         onPressed:() {
-                          imagelist.clear();
+                          imagelist=[];
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -208,29 +208,29 @@ class _imagepic extends State<Uploadimage> {
                       style: TextStyle(fontWeight: FontWeight.bold,
                           fontSize: 30),
                     ),
-                    onPressed:() {
+                    onPressed:() async {
+                      QuerySnapshot dbt = await gettable.get();
                       setState(() {
-                        /*if(number.text.length<1) {
-                          _error2 = 'Enter Number of Seats';
-                        } else {
-                          _error2 = null;
-                          changenoseats();
-                        }
-                        if(seats.text.length<1) {
-                          _error = 'Enter Number of Seats';
-                        } else {
-                          _error = null;
-                          changenoseats();
-                        }*/
+                        input=[];
+                        dbt.docs.forEach((element) {
+                          setState(() {
+                            input.add(element.get('num'));
+                          });
+                        });
+                        print("ta : $input");
                         tableno=int.parse(number.text) ;
                         seatsno=int.parse(seats.text) ;
-                        changenoseats();
-                        if(imagelist.toString()!="[]") {
-                          photo();
-                        }
+                        if(input.contains(tableno)) {
+                          changenoseats();
+                          if (imagelist.toString() != "[]") {
+                            photo();
+                          }
 
-                        if(_group.isNotEmpty) {
-                          changloca();
+                          if (_group.isNotEmpty) {
+                            changloca();
+                          }
+                        }else {
+                          showAlertDialog(context, tableno);
                         }
                       });
 
@@ -324,5 +324,27 @@ class _imagepic extends State<Uploadimage> {
         ]
     ),
   );
+  showAlertDialog(BuildContext context, num noseats) {
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white54,
+      title:const Text("Warning:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+      ),),
+      content: Text("There is no table with number $noseats in the resturant to change.", style:const  TextStyle(
+        fontSize: 18, color: Colors.black,
+      ),),
+      actions: const [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 }
