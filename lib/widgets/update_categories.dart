@@ -130,6 +130,62 @@ class _CategoriesState extends State<Categories> {
                     ),
                     ),
                   ),
+              Card(
+                child:InkWell(onTap: ()async{
+                  setState(() {
+                  name.add('new category');
+                  imgList.add('');
+                  });
+                },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 60,
+                        child:Icon(Icons.add, color: Colors.white, size: 50),
+                  color: Colors.teal,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+
+                        color: Colors.white,
+                      ),
+                      FloatingActionButton(
+                        child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                        backgroundColor: Colors.teal,
+                        mini: true,
+                        onPressed:(){
+
+                        },
+                      ),
+                      Container(
+                        height: 100,
+                        padding:EdgeInsets.all(13),
+                        child:TextFormField(
+                          initialValue: 'new',
+                          /*validator: (val){
+                            if(val!.isEmpty) {
+                              return 'Please Enter Name Of Category';
+                            }
+                            return null;
+                          },*/
+                          //onChanged: (val)=>setState((){=val;}),
+                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: 'Name of Category',
+                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color:Colors.black38),
+                            ),
+                          ),
+                        ) ,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
         ),
       ),
@@ -138,7 +194,7 @@ class _CategoriesState extends State<Categories> {
       persistentFooterButtons: [
         Column(
          children: [
-            buildNavigateButton2(),
+            //buildNavigateButton2(),
             SizedBox(height: 10,),
             buildNavigateButton(),
           ],
@@ -146,7 +202,7 @@ class _CategoriesState extends State<Categories> {
       ],
     );
   }
-  Widget buildNavigateButton2()=>FloatingActionButton(
+  /*Widget buildNavigateButton2()=>FloatingActionButton(
   child: Icon(Icons.add, color: Colors.white, size: 20),
   onPressed: () async{
   setState(() {
@@ -156,7 +212,7 @@ class _CategoriesState extends State<Categories> {
 },
 backgroundColor: Colors.teal,
 mini: false,
-);
+);*/
   Widget buildNavigateButton()=>FloatingActionButton.extended(
     backgroundColor: Colors.teal,
     onPressed: () {
