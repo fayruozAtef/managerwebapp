@@ -123,7 +123,6 @@ class _LogInState extends State<LogIn> {
                     decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
                     obscureText: true,
                     style: TextStyle(color: Colors.white),
-                    controller: _passwordController,
                     validator: (value){
                       if(value!.isEmpty){
                         return 'enter password';
