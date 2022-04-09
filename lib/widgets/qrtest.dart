@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Qrtest extends StatelessWidget {
@@ -85,7 +85,7 @@ class _QRGeneratorSharePageState extends State<QRGeneratorSharePage> {
 
                 Uint8List pngBytes = byteData!.buffer.asUint8List();
 //app directory for storing images.
-                final appDir = await getApplicationDocumentsDirectory();
+                final appDir = await getTemporaryDirectory();
 //current time
                 var datetime = DateTime.now();
 //qr image file creation
