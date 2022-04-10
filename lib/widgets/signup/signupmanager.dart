@@ -97,7 +97,7 @@ class _AuthCardState extends State<AuthCard> {
           'last name': _autData['lname'], // Stokes and Sons
           'phone': _autData['phone'] ,
           'email':_autData['email'],
-          'jobtype':_autData['type']== 'manager',
+          'jobtype':_autData['type']= 'manager',
         }).then((value) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
         });
