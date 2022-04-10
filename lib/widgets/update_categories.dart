@@ -90,22 +90,24 @@ class _CategoriesState extends State<Categories> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context)=>details(title: name[i])));
                   },
-                    child: Column(
+                    child: Row(
                       children: [
-                        Container(
-                          width: 400,
-                          height: 400,
-                          child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(height: 100,width: 100,),
-                        ),
-                        FloatingActionButton(
-                          child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                          backgroundColor: Colors.teal,
-                          mini: true,
-                          onPressed:(){
-                            _openPicker(i);
-                          },
-                        ),
-                        Container(
+                        Expanded(child: Column(children: [
+                          Container(
+                            width: 400,
+                            height: 400,
+                            child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(height: 100,width: 100,),
+                          ),
+                          FloatingActionButton(
+                            child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                            backgroundColor: Colors.teal,
+                            mini: true,
+                            onPressed:(){
+                              _openPicker(i);
+                            },
+                          ),
+                        ],)),
+                        Expanded(child: Container(
                           height: 100,
                           padding:EdgeInsets.all(13),
                           child:TextFormField(
@@ -127,7 +129,8 @@ class _CategoriesState extends State<Categories> {
                               ),
                             ),
                           ) ,
-                        ),
+                        ),),
+
                       ],
                     ),
                     ),
@@ -156,9 +159,7 @@ class _CategoriesState extends State<Categories> {
                         child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
                         backgroundColor: Colors.teal,
                         mini: true,
-                        onPressed:(){
-
-                        },
+                        onPressed:(){},
                       ),
                       Container(
                         height: 100,

@@ -99,95 +99,102 @@ MyAppState({Key? key, required this.title2}) : super();
                     borderRadius: BorderRadius.circular(13.0),
                     side: BorderSide(color: Colors.black, width: 2),
                   ),
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
+                  child: Row(
                       children: [
-                        Container(
-                          width: 400,
-                          height: 400,
-                          child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
-                        ),
-                        FloatingActionButton(
-                          child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                          backgroundColor: Colors.teal,
-                          mini: true,
-                          onPressed:(){
-                            _openPicker(i);
-                          },
-                        ),
-                        Container(
-                          padding:EdgeInsets.all(13),
-                          child:TextFormField(
-                            initialValue: currentname[i],
-                            validator: (val){
-                              if(val!.isEmpty) {
-                                return 'Please Enter Name Of Item';
-                              }
-                              return null;
-                            },
-                            onChanged: (val)=>setState((){currentname[i]=val;
-                            print('current name=$currentname');}),
-                            style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              labelText: 'Name of Item',
-                              labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color:Colors.black38),
-                              ),
+                   Expanded(child:
+                   Column(
+  children: [
+    Container(
+      width: 400,
+      height: 400,
+      child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
+    ),
+    FloatingActionButton(
+      child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+      backgroundColor: Colors.teal,
+      mini: true,
+      onPressed:(){
+        _openPicker(i);
+      },
+    ),
+  ],
+),),
+                    Expanded(child:  Column(
+                          children: [
+                            Container(
+                              padding:EdgeInsets.all(13),
+                              child:TextFormField(
+                                initialValue: currentname[i],
+                                validator: (val){
+                                  if(val!.isEmpty) {
+                                    return 'Please Enter Name Of Item';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val)=>setState((){currentname[i]=val;
+                                print('current name=$currentname');}),
+                                style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                                cursorColor: Colors.black,
+                                decoration: const InputDecoration(
+                                  labelText: 'Name of Item',
+                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color:Colors.black38),
+                                  ),
+                                ),
+                              ) ,
                             ),
-                          ) ,
-                        ),
-                        Container(
-                          padding:const EdgeInsets.all(13),
-                          child:TextFormField(
-                            initialValue: currentcomponent[i],
-                            validator: (val){
-                              /* if(val!.isEmpty) {
+                            Container(
+                              padding:const EdgeInsets.all(13),
+                              child:TextFormField(
+                                initialValue: currentcomponent[i],
+                                validator: (val){
+                                  /* if(val!.isEmpty) {
                                 return 'Please Enter Component Of Item';
                               }*/
-                              return null;
-                            },
-                            onChanged: (val)=>setState(()=>currentcomponent[i]=val),
-                            style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              labelText: 'Component of Item',
-                              labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color:Colors.black38),
-                              ),
+                                  return null;
+                                },
+                                onChanged: (val)=>setState(()=>currentcomponent[i]=val),
+                                style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                                cursorColor: Colors.black,
+                                decoration: const InputDecoration(
+                                  labelText: 'Component of Item',
+                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color:Colors.black38),
+                                  ),
+                                ),
+                              ) ,
                             ),
-                          ) ,
-                        ),
-                        Container(
-                          padding:EdgeInsets.all(13),
-                          child:TextFormField(
-                            initialValue: '${currentprice[i]}',
-                            validator: (val){
-                              if(val!.isEmpty) {
-                                return 'Please Enter The Price Of Item';
-                              }
-                              return null;
-                            },
-                            onChanged: (val)=>setState((){
-                              currentprice[i]=num.parse(val);
-                              print('price $currentprice');
-                            }),
-                            style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              labelText: 'Price of Item',
-                              labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color:Colors.black38),
-                              ),
+                            Container(
+                              padding:EdgeInsets.all(13),
+                              child:TextFormField(
+                                initialValue: '${currentprice[i]}',
+                                validator: (val){
+                                  if(val!.isEmpty) {
+                                    return 'Please Enter The Price Of Item';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val)=>setState((){
+                                  currentprice[i]=num.parse(val);
+                                  print('price $currentprice');
+                                }),
+                                style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                                cursorColor: Colors.black,
+                                decoration: const InputDecoration(
+                                  labelText: 'Price of Item',
+                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color:Colors.black38),
+                                  ),
+                                ),
+                              ) ,
                             ),
-                          ) ,
+                          ],
                         ),
+                          )
                       ],
-                    ),
                   ),
                 ),
               Card(
@@ -203,81 +210,89 @@ MyAppState({Key? key, required this.title2}) : super();
                     imageUrl.add('');
                   });
                 },
-                  child: Column(
+                  child: Row(
                     children: [
+                      Expanded(child: Column(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+
+                            color: Colors.white,
+                          ),
+                          FloatingActionButton(
+                            child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                            backgroundColor: Colors.teal,
+                            mini: true,
+                            onPressed:(){
+
+                            },
+                          ),
+                        ],
+                      )),
                       Container(
                         width: 50,
                         height: 60,
                         child:Icon(Icons.add, color: Colors.white, size: 50),
                         color: Colors.teal,
                       ),
-                      Container(
-                        width: 100,
-                        height: 100,
-
-                        color: Colors.white,
-                      ),
-                      FloatingActionButton(
-                        child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                        backgroundColor: Colors.teal,
-                        mini: true,
-                        onPressed:(){
-
-                        },
-                      ),
-                      Container(
-                        height: 100,
-                        padding:EdgeInsets.all(13),
-                        child:TextFormField(
-                          initialValue: 'new',
-                          /*validator: (val){
+                      Expanded(child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            padding:EdgeInsets.all(13),
+                            child:TextFormField(
+                              initialValue: 'new',
+                              /*validator: (val){
                             if(val!.isEmpty) {
                               return 'Please Enter Name Of Category';
                             }
                             return null;
                           },*/
-                          //onChanged: (val)=>setState((){=val;}),
-                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                          cursorColor: Colors.black,
-                          decoration: const InputDecoration(
-                            labelText: 'Name of Category',
-                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color:Colors.black38),
-                            ),
+                              //onChanged: (val)=>setState((){=val;}),
+                              style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                              cursorColor: Colors.black,
+                              decoration: const InputDecoration(
+                                labelText: 'Name of Category',
+                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color:Colors.black38),
+                                ),
+                              ),
+                            ) ,
                           ),
-                        ) ,
-                      ),
-                      Container(
-                        padding:const EdgeInsets.all(13),
-                        child:TextFormField(
-                          initialValue: 'new',
-                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                          cursorColor: Colors.black,
-                          decoration: const InputDecoration(
-                            labelText: 'Component of Item',
-                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color:Colors.black38),
-                            ),
+                          Container(
+                            padding:const EdgeInsets.all(13),
+                            child:TextFormField(
+                              initialValue: 'new',
+                              style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                              cursorColor: Colors.black,
+                              decoration: const InputDecoration(
+                                labelText: 'Component of Item',
+                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color:Colors.black38),
+                                ),
+                              ),
+                            ) ,
                           ),
-                        ) ,
-                      ),
-                      Container(
-                        padding:EdgeInsets.all(13),
-                        child:TextFormField(
-                          initialValue: 'new',
-                          style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                          cursorColor: Colors.black,
-                          decoration: const InputDecoration(
-                            labelText: 'Price of Item',
-                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color:Colors.black38),
-                            ),
+                          Container(
+                            padding:EdgeInsets.all(13),
+                            child:TextFormField(
+                              initialValue: 'new',
+                              style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                              cursorColor: Colors.black,
+                              decoration: const InputDecoration(
+                                labelText: 'Price of Item',
+                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color:Colors.black38),
+                                ),
+                              ),
+                            ) ,
                           ),
-                        ) ,
-                      ),
+                        ],
+                      )),
                     ],
                   ),
                 ),
@@ -287,9 +302,6 @@ MyAppState({Key? key, required this.title2}) : super();
         ),
       ),
       floatingActionButton: buildNavigateButton2(),
-
-
-           //buildNavigateButton(),
     );
   }
   Widget buildNavigateButton2()=>ElevatedButton(
@@ -304,8 +316,8 @@ MyAppState({Key? key, required this.title2}) : super();
        if(isValid==true ){
       for(int i=0;i<currentname.length;i++) {
                         if(i>=listid.length){
-                          if(currentprice[i]!=0) {
-                            bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i]
+                          if(currentprice[i]!=0 && imageUrl[i]!='') {
+                            bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i],"type":title2
                             });
                           }
                         }
@@ -320,17 +332,4 @@ MyAppState({Key? key, required this.title2}) : super();
     },
     child: Text('save',style:TextStyle(fontSize: 35)),
   );
- /* Widget buildNavigateButton()=>FloatingActionButton(
-    child: Icon(Icons.add, color: Colors.white, size: 20),
-    onPressed: () async{
-      setState(() {
-        currentname.add('');
-        currentcomponent.add('');
-        currentprice.add(0);
-        imageUrl.add('');
-      });
-    },
-    backgroundColor: Colors.teal,
-    mini: false,
-  );*/
 }
