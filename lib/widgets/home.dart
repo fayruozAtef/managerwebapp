@@ -53,7 +53,8 @@ class _home extends State<Home2> {
   }
   @override
   Widget build(BuildContext context) =>Scaffold(
-    appBar: AppBar(title:const Text('Home',style: TextStyle(color: Colors.white, fontSize: 30,)), 
+    appBar: AppBar(title:const Text('Home',style: TextStyle(color: Colors.white, fontSize: 30,)),
+      automaticallyImplyLeading: false,
     ),
     backgroundColor: Colors.transparent,
     body: Row(
@@ -96,7 +97,7 @@ class _home extends State<Home2> {
               children: [
                 const Icon(Icons.person_add_alt_1_rounded ,color: Colors.white,),
                 FlatButton(onPressed:(){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp(uid: this.uid,)));
                 },
                   child:const Text("New Waiter" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),

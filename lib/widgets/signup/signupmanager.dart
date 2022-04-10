@@ -105,9 +105,9 @@ class _AuthCardState extends State<AuthCard> {
           'email':_autData['email'],
           'jobtype':_autData['type']= 'manager',
         }).then((value) {
-          showAlertDialog(context, " Successfully add a new manager $_autData['fname']  $_autData['lname']");
-          Timer(Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:this.uid ,)));
+          showAlertDialog(context, " Successfully add a new manager ${_autData['fname']}  ${_autData['lname']}"); 
+          Timer(const Duration(seconds: 3), () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:uid ,)));
           });
         });
 

@@ -1,12 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Background/backWithOpacity.dart';
-import '../qr_create_page.dart';
+import '../home.dart';
 import 'auth.dart';
 
 class EmployeSignUp extends StatelessWidget {
-  const EmployeSignUp({Key? key}) : super(key: key);
+  String uid;
+  EmployeSignUp({Key? key,required this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class EmployeSignUp extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30,),
-                SignUpEmp(),
+                SignUpEmp(uid: this.uid,),
               ],
             ),
           ),
@@ -44,13 +47,17 @@ class EmployeSignUp extends StatelessWidget {
 }
 
 class SignUpEmp extends StatefulWidget {
-  const SignUpEmp({Key? key}) : super(key: key);
+  String uid;
+  SignUpEmp({Key? key,required this.uid});
 
   @override
-  _SignUpEmpState createState() => _SignUpEmpState();
+  _SignUpEmpState createState() => _SignUpEmpState(uid: this.uid);
 }
 
 class _SignUpEmpState extends State<SignUpEmp> {
+  String uid;
+  _SignUpEmpState({Key? key,required this.uid});
+
   final GlobalKey<FormState>_formKey=GlobalKey();
   TextEditingController email = TextEditingController();
   Map<String, String> _autData={
@@ -86,7 +93,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
           'email':_autData['email'],
           'jobtype':_autData['type']='Waiter',
         }).then((value) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
+          showAlertDialog(context, " Successfully add a new waiter ${_autData['fname']}  ${_autData['lname']}");
+          Timer(const Duration(seconds: 3), () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:uid ,)));
+          });
         });
 
       }).catchError((e){
