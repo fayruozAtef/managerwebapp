@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:managerweb/widgets/home.dart';
 import '../Background/backWithOpacity.dart';
 import '../qr_create_page.dart';
 import 'auth.dart';
@@ -18,6 +20,8 @@ final List<Map<String, dynamic>> _menuItem = [
 
 ];
 class signupmanager extends StatelessWidget {
+  String uid;
+  signupmanager({Key? key,required this.uid});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,7 +46,7 @@ class signupmanager extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AuthCard(),
+                  AuthCard(uid: this.uid,),
                 ],
               ),
             ),
@@ -56,14 +60,16 @@ class signupmanager extends StatelessWidget {
 }
 
 class AuthCard extends StatefulWidget {
-  const AuthCard({
-    Key ? key,
-  }) : super(key: key);
+  String uid;
+  AuthCard({Key? key,required this.uid});
 
   @override
-  _AuthCardState createState() => _AuthCardState();
+  _AuthCardState createState() => _AuthCardState(uid: this.uid);
 }
 class _AuthCardState extends State<AuthCard> {
+  String uid;
+  _AuthCardState({Key? key,required this.uid});
+
   final GlobalKey<FormState>_formKey=GlobalKey();
   TextEditingController email = TextEditingController();
   Map<String, String> _autData={
@@ -99,7 +105,10 @@ class _AuthCardState extends State<AuthCard> {
           'email':_autData['email'],
           'jobtype':_autData['type']= 'manager',
         }).then((value) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>QRCreatePage()));
+          showAlertDialog(context, " Successfully add a new manager $_autData['fname']  $_autData['lname']");
+          Timer(Duration(seconds: 3), () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:this.uid ,)));
+          });
         });
 
       }).catchError((e){

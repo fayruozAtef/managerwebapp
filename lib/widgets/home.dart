@@ -13,8 +13,8 @@ import 'Login.dart';
 import 'changetable.dart';
 
 class Home extends StatelessWidget {
-  String uid="mCh2OcakXlSMhbpYaZyhISaYgFY2";
-  //Home({Key? key,required this.uid});
+  String uid;
+  Home({Key? key,required this.uid});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -84,7 +84,7 @@ class _home extends State<Home2> {
               children: [
                 const Icon(Icons.person_add_alt ,color: Colors.white,),
                 FlatButton(onPressed:(){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager(uid: this.uid,)));
                 },
                   child:const Text("New Manager" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),
