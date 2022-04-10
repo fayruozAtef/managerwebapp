@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   group_radio_button: ^1.2.0
-
+  syncfusion_flutter_datepicker: ^20.1.47
   path_provider: ^2.0.9
   qr_flutter: ^4.0.0
   # create QR Code

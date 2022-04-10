@@ -97,7 +97,7 @@ class _LogInState extends State<LogIn> {
       alignment: Alignment.center,
       child: Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 150),),
+          const Padding(padding: EdgeInsets.only(top: 110),),
           Container(
             child: SingleChildScrollView(
               child:SizedBox(

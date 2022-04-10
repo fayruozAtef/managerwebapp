@@ -48,14 +48,13 @@ DateTimeRange _dateTimeRange=DateTimeRange(
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Total Payment',
-            style: TextStyle(color: Colors.white, fontSize: 40,)),
-        backgroundColor: Colors.black,
+        title: const Text('Total Payment',
+            style: TextStyle(color: Colors.white, fontSize: 30,)),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+            Padding(padding:const  EdgeInsets.fromLTRB(0, 20, 0, 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:[
@@ -88,7 +87,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                         });
                       });
                 },
-                  child:Text('Select Day',style:TextStyle(fontSize: 30)),
+                  child:Text('Select Day',style:TextStyle(fontSize: 25)),
                   style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
@@ -128,7 +127,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                     });
                   });
                 },
-                  child:Text('Select Days',style:TextStyle(fontSize: 30)),
+                  child:const Text('Select Period',style:TextStyle(fontSize: 25)),
                   style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
