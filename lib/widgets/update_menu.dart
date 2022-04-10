@@ -293,7 +293,6 @@ MyAppState({Key? key, required this.title2}) : super();
                           ),
                         ],
                       )),
-
                     ],
                   ),
                 ),
@@ -303,9 +302,6 @@ MyAppState({Key? key, required this.title2}) : super();
         ),
       ),
       floatingActionButton: buildNavigateButton2(),
-
-
-           //buildNavigateButton(),
     );
   }
   Widget buildNavigateButton2()=>ElevatedButton(
@@ -320,8 +316,8 @@ MyAppState({Key? key, required this.title2}) : super();
        if(isValid==true ){
       for(int i=0;i<currentname.length;i++) {
                         if(i>=listid.length){
-                          if(currentprice[i]!=0) {
-                            bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i]
+                          if(currentprice[i]!=0 && imageUrl[i]!='') {
+                            bff.add({"name": currentname[i], "component": currentcomponent[i], "price": currentprice[i], "imagepath": imageUrl[i],"type":title2
                             });
                           }
                         }
@@ -336,17 +332,4 @@ MyAppState({Key? key, required this.title2}) : super();
     },
     child: Text('save',style:TextStyle(fontSize: 35)),
   );
- /* Widget buildNavigateButton()=>FloatingActionButton(
-    child: Icon(Icons.add, color: Colors.white, size: 20),
-    onPressed: () async{
-      setState(() {
-        currentname.add('');
-        currentcomponent.add('');
-        currentprice.add(0);
-        imageUrl.add('');
-      });
-    },
-    backgroundColor: Colors.teal,
-    mini: false,
-  );*/
 }
