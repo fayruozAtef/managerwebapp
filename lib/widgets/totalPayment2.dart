@@ -17,6 +17,7 @@ class _payment extends State<payment2> {
 
   @override
   DateTime? _dateTime;
+  DateTime intial=DateTime.now();
 DateTimeRange _dateTimeRange=DateTimeRange(
     start: DateTime.now(),
     end:DateTime.now().add(Duration(days: 2))
@@ -65,9 +66,10 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                   CollectionReference bff = FirebaseFirestore.instance.collection("delivery");
                   QuerySnapshot db = await bff.get();
                   showDatePicker(context: context,
-                      initialDate: DateTime.now(),
+                      initialDate: intial,
                       firstDate: DateTime(2022),
                       lastDate: DateTime(2025),
+                      selectableDayPredicate: (DateTime val) => val.isAfter(intial) ?false:true,
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
                           primary: Colors.teal,
@@ -105,7 +107,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                       context: context,
                       initialDateRange: _dateTimeRange,
                       firstDate: DateTime(2022),
-                      lastDate: DateTime(2025),
+                      lastDate: DateTime.now().add(Duration(days: 2)),
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
                           primary: Colors.teal,
