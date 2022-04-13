@@ -20,7 +20,7 @@ class _payment extends State<payment2> {
   DateTime intial=DateTime.now();
 DateTimeRange _dateTimeRange=DateTimeRange(
     start: DateTime.now(),
-    end:DateTime.now().add(Duration(days: 2))
+    end:DateTime.now(),
 );
 
   List orders=[];
@@ -107,7 +107,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                       context: context,
                       initialDateRange: _dateTimeRange,
                       firstDate: DateTime(2022),
-                      lastDate: DateTime.now().add(Duration(days: 2)),
+                      lastDate: DateTime.now(),
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
                           primary: Colors.teal,
@@ -122,7 +122,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                         _dateTimeRange=date!;
                         start=date.start;
                         end=date.end;
-                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && end.isAfter(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))){
+                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
                                 orders.add(element.get('order'));
                                 print('orders $orders');
                           }
