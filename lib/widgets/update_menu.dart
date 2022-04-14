@@ -26,9 +26,17 @@ MyAppState({Key? key, required this.title2}) : super();
   List <String> currentcomponent=[];
   List <num> currentprice=[];
   List<String> imageUrl=[];
-
   List listid=[];
-  CollectionReference bff = FirebaseFirestore.instance.collection("menu");
+  List deleteElement=[];
+  List color=[];
+
+  Future<FirebaseApp> secondaryApp = Firebase.initializeApp();
+  firebase_storage.FirebaseStorage storage =
+  firebase_storage.FirebaseStorage.instanceFor(
+      bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
+
+  CollectionReference bff = FirebaseFirestore.instance.collection("menuupdate");
+
   getData() async {
     QuerySnapshot dbf = await bff.where('type',isEqualTo:title2).get();
     dbf.docs.forEach((element) {
@@ -38,22 +46,19 @@ MyAppState({Key? key, required this.title2}) : super();
         currentcomponent.add(element.get('component'));
         currentprice.add(element.get('price'));
         imageUrl.add(element.get('imagepath'));
+        color.add(0);
       });
     });
   }
 
   updateData(int n,List <String> name,List <String> component,List <num> price,List <String> image) async{
-    CollectionReference db = FirebaseFirestore.instance.collection("menu");
+    CollectionReference db = FirebaseFirestore.instance.collection("menuupdate");
     return await db.doc(listid[n]).set(
       {"name": name[n], "component": component[n], "price": price[n],"imagepath":image[n]},
       SetOptions(merge: true),
     );
   }
 
-  Future<FirebaseApp> secondaryApp = Firebase.initializeApp();
-  firebase_storage.FirebaseStorage storage =
-  firebase_storage.FirebaseStorage.instanceFor(
-      bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
 
   _openPicker(int n) async{
     FilePickerResult? result;
@@ -95,6 +100,7 @@ MyAppState({Key? key, required this.title2}) : super();
               SizedBox(height: 10),
               for(int i = 0; i < currentname.length; i++)
                 Card(
+                  color: color[i]==0?Colors.white:Colors.black26,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(13.0),
                     side: BorderSide(color: Colors.black, width: 2),
@@ -121,6 +127,25 @@ MyAppState({Key? key, required this.title2}) : super();
 ),),
                     Expanded(child:  Column(
                           children: [
+                            Align(
+                              alignment: Alignment.topRight,
+                              child:FloatingActionButton(
+                                child:Icon(Icons.delete ,color:Colors.red,size:40,),
+                                onPressed: (){
+                                  setState(() {
+                                    deleteElement.add(listid[i]);
+                                    currentname[i]='';
+                                    currentcomponent[i]='';
+                                    currentprice[i]=0;
+                                    imageUrl[i]='';
+                                    listid[i]='';
+                                    color[i]=1;
+                                  });
+                                    },
+                                backgroundColor:Colors.white,
+                                mini:false,
+                              ),
+                            ),
                             Container(
                               padding:EdgeInsets.all(13),
                               child:TextFormField(
@@ -191,12 +216,12 @@ MyAppState({Key? key, required this.title2}) : super();
                                 ),
                               ) ,
                             ),
-                          ],
-                        ),
-                          )
-                      ],
-                  ),
+                         ],
+                      ),
+                    ),
+                  ],
                 ),
+               ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13.0),
@@ -208,6 +233,7 @@ MyAppState({Key? key, required this.title2}) : super();
                     currentcomponent.add('');
                     currentprice.add(0);
                     imageUrl.add('');
+                    color.add(0);
                   });
                 },
                   child: Row(
@@ -292,7 +318,8 @@ MyAppState({Key? key, required this.title2}) : super();
                             ) ,
                           ),
                         ],
-                      )),
+                       ),
+                      ),
                     ],
                   ),
                 ),
@@ -311,7 +338,7 @@ MyAppState({Key? key, required this.title2}) : super();
             borderRadius:BorderRadius.circular(20)
         ))
     ),
-    onPressed: () {
+    onPressed: () async{
       final isValid = formkey.currentState!.validate();
        if(isValid==true ){
       for(int i=0;i<currentname.length;i++) {
@@ -325,6 +352,9 @@ MyAppState({Key? key, required this.title2}) : super();
                           updateData(i, currentname, currentcomponent, currentprice, imageUrl);
                         }
                       }
+      for(int k=0;k<deleteElement.length;k++){
+        bff.doc(deleteElement[k]).delete();
+      }
       Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) =>payment()));

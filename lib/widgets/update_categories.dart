@@ -10,6 +10,9 @@ import 'package:uuid/uuid.dart';
 List listid=[];
 List imgList=[];
 List name=[];
+List color=[];
+List deleteElement=[];
+
 class Categories extends StatefulWidget {
   Categories({Key? key}) : super(key: key);
 
@@ -32,6 +35,7 @@ class _CategoriesState extends State<Categories> {
         listid.add(element.id);
         name.add(element.get('type'));
         imgList.add(element.get('imagepath'));
+        color.add(0);
       });
     });
   }
@@ -86,6 +90,7 @@ class _CategoriesState extends State<Categories> {
             children: [
              for(int i=0;i<name.length;i++)
                 Card(
+                  color: color[i]==0?Colors.white:Colors.black26,
                   child:InkWell(onTap: (){
                     Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context)=>details(title: name[i])));
@@ -107,30 +112,51 @@ class _CategoriesState extends State<Categories> {
                             },
                           ),
                         ],)),
-                        Expanded(child: Container(
-                          height: 100,
-                          padding:EdgeInsets.all(13),
-                          child:TextFormField(
-                            initialValue: name[i],
-                            validator: (val){
-                              if(val!.isEmpty) {
-                                return 'Please Enter Name Of Category';
-                              }
-                              return null;
-                            },
-                            onChanged: (val)=>setState((){name[i]=val;}),
-                            style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              labelText: 'Name of Category',
-                              labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color:Colors.black38),
+                        Expanded(child:
+                            Column(children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child:FloatingActionButton(
+                                  child:Icon(Icons.delete ,color:Colors.red,size:40,),
+                                  onPressed: (){
+                                    setState(() {
+                                      deleteElement.add(listid[i]);
+                                      name[i]='';
+                                      imgList[i]='';
+                                      listid[i]='';
+                                      color[i]=1;
+                                    });
+                                  },
+                                  backgroundColor:Colors.white,
+                                  mini:false,
+                                ),
                               ),
+                              Container(
+                                height: 100,
+                                padding:EdgeInsets.all(13),
+                                child:TextFormField(
+                                  initialValue: name[i],
+                                  validator: (val){
+                                    if(val!.isEmpty) {
+                                      return 'Please Enter Name Of Category';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (val)=>setState((){name[i]=val;}),
+                                  style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                                  cursorColor: Colors.black,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Name of Category',
+                                    labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color:Colors.black38),
+                                    ),
+                                  ),
+                                ) ,
+                              ),
+                            ],
                             ),
-                          ) ,
-                        ),),
-
+                        ),
                       ],
                     ),
                     ),
@@ -140,6 +166,7 @@ class _CategoriesState extends State<Categories> {
                   setState(() {
                   name.add('new category');
                   imgList.add('');
+                  color.add(0);
                   });
                 },
                   child: Column(
@@ -193,20 +220,9 @@ class _CategoriesState extends State<Categories> {
       ),
       ),
       floatingActionButton: buildNavigateButton(),
-            //buildNavigateButton2(),
     );
   }
-  /*Widget buildNavigateButton2()=>FloatingActionButton(
-  child: Icon(Icons.add, color: Colors.white, size: 20),
-  onPressed: () async{
-  setState(() {
-  name.add('new category');
-  imgList.add('');
-  });
-},
-backgroundColor: Colors.teal,
-mini: false,
-);*/
+
   Widget buildNavigateButton()=>FloatingActionButton.extended(
     backgroundColor: Colors.teal,
     onPressed: () {
@@ -221,6 +237,9 @@ mini: false,
           else {
             updateData(i, name, imgList);
           }
+        }
+        for(int k=0;k<deleteElement.length;k++){
+          bff.doc(deleteElement[k]).delete();
         }
       }
     },
