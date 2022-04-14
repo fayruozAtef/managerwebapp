@@ -24,6 +24,8 @@ DateTimeRange _dateTimeRange=DateTimeRange(
 );
 
   List orders=[];
+  List consts=[];
+  List location=[];
   int total=0;
 
   String formattedDate(timeStamp){
@@ -36,9 +38,8 @@ DateTimeRange _dateTimeRange=DateTimeRange(
     for (var i in orders[n].values) {
       sum += double.parse(i[2]);
     }
-    return (sum+50).toString();
+    return (sum+int.parse(consts[n])).toString();
   }
-
   @override
   Widget build(BuildContext context) {
     var start=_dateTimeRange.start;
@@ -47,6 +48,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
     for(int i=0;i<orders.length;i++){
       total+=int.parse(getSum(i));
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Total Payment',
@@ -85,6 +87,8 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                             _dateTime=date!;
                             if(formattedDate(element.get('date'))==('${_dateTime?.day}-${_dateTime?.month}-2022')){
                               orders.add(element.get('order'));
+                              location.add(element.get('location'));
+                              consts.add(element.get('const'));
                             }
                           });
                         });
@@ -124,7 +128,8 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                         end=date.end;
                         if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
                                 orders.add(element.get('order'));
-                                print('orders $orders');
+                                location.add(element.get('location'));
+                                consts.add(element.get('const'));
                           }
                       });
                     });
@@ -143,19 +148,19 @@ DateTimeRange _dateTimeRange=DateTimeRange(
             ),
             Card(
               child:Container(
-                width: 500,
-                height: 500,
+                width: 600,
+                height: 600,
                 child:  Column(
                   children: [
                     Row(
                       children: [
                         Container(
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
-                          width: 250,
+                          width: 300,
                           child:Text('Order#',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
                         ),
                         Container(
-                          width: 210,
+                          width: 230,
                           child:
                           Text('Price',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
                         ),
@@ -163,16 +168,55 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                     ),
                     Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
                     for(int i=0;i<orders.length;i++)
-                      Row(
-                        children: [
-                          Container(
+                      ExpansionTile(
+                                  collapsedIconColor: Colors.black,
+                                  iconColor: Colors.black,
+                                  childrenPadding: EdgeInsets.all(16).copyWith(top: 0),
+                                  title:Row(children:[
+                                  Container(
                             padding: EdgeInsets.fromLTRB(20,0,0,5),
-                            width: 250,
-                            child:Text("order${i}",style: TextStyle( color: Colors.black, fontSize: 25,)),
+                            width: 300,
+                            child:Text("order${i+1}",style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)),
+                            ),
+                                    Container(
+                            width: 230,
+                            child:Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)),
                           ),
-                          Container(
-                            width: 210,
-                            child:Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 25,)),
+                      ],
+                                  ),
+                        children: [
+                          for (var j in orders[i].values)
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(8,0,0,5),
+                                width: 200,
+                                child:Text(j[0],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0,0,0,5),
+                                width: 100,
+                                child:Text('x'+j[1],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0,0,0,5),
+                                width: 230,
+                                child:Text(j[2],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children:[
+                              Container(
+                                width: 300,
+                                padding: EdgeInsets.fromLTRB(20,0,0,5),
+                                child: Text(location[i],style:TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                width: 230,
+                                child: Text(consts[i],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -180,13 +224,13 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                     Row(
                       children:[
                         Container(
-                          width: 250,
+                          width: 300,
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
                           child: Text('Total',style:TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
                         ),
                         Container(
-                          width: 210,
-                          child: Text(total.toString(),style: TextStyle( color: Colors.black, fontSize: 28,)),
+                          width: 230,
+                          child: Text(total.toString(),style: TextStyle( color: Colors.black, fontSize: 23,fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
