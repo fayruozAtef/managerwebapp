@@ -53,7 +53,6 @@ DateTimeRange _dateTimeRange=DateTimeRange(
       appBar: AppBar(
         title: Text('Total Payment',
             style: TextStyle(color: Colors.white, fontSize: 40,)),
-        backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -74,7 +73,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                       selectableDayPredicate: (DateTime val) => val.isAfter(intial) ?false:true,
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
-                          primary: Colors.teal,
+                          primary: Colors.blue,
                           onPrimary:Colors.black,
                           onSurface: Colors.black ,
                           surface: Colors.black,
@@ -95,7 +94,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                       });
                 },
                   child:Text('Select Day',style:TextStyle(fontSize: 30)),
-                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius:BorderRadius.circular(25)
@@ -114,7 +113,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                       lastDate: DateTime.now(),
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
-                          primary: Colors.teal,
+                          primary: Colors.blue,
                           onPrimary:Colors.black,
                           onSurface: Colors.black ,
                           surface: Colors.black,
@@ -136,7 +135,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                   });
                 },
                   child:Text('Select Days',style:TextStyle(fontSize: 30)),
-                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius:BorderRadius.circular(25)
@@ -157,16 +156,16 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                         Container(
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
                           width: 300,
-                          child:Text('Order#',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          child:Text('Order#',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                         Container(
                           width: 230,
                           child:
-                          Text('Price',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          Text('Price',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                       ],
                     ),
-                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                     for(int i=0;i<orders.length;i++)
                       ExpansionTile(
                                   collapsedIconColor: Colors.black,
@@ -220,13 +219,13 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                           ),
                         ],
                       ),
-                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                     Row(
                       children:[
                         Container(
                           width: 300,
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
-                          child: Text('Total',style:TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          child: Text('Total',style:TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                         Container(
                           width: 230,

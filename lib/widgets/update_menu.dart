@@ -90,7 +90,6 @@ MyAppState({Key? key, required this.title2}) : super();
     return Scaffold(
       appBar: AppBar(
         title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 40,)),
-        backgroundColor: Colors.black,
       ),
       body:SingleChildScrollView(
         child:Form(
@@ -117,7 +116,7 @@ MyAppState({Key? key, required this.title2}) : super();
     ),
     FloatingActionButton(
       child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.blue,
       mini: true,
       onPressed:(){
         _openPicker(i);
@@ -162,7 +161,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Name of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
@@ -184,7 +183,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Component of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
@@ -209,7 +208,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Price of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
@@ -248,7 +247,7 @@ MyAppState({Key? key, required this.title2}) : super();
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.blue,
                             mini: true,
                             onPressed:(){
 
@@ -260,7 +259,7 @@ MyAppState({Key? key, required this.title2}) : super();
                         width: 50,
                         height: 60,
                         child:Icon(Icons.add, color: Colors.white, size: 50),
-                        color: Colors.teal,
+                        color: Colors.blue,
                       ),
                       Expanded(child: Column(
                         children: [
@@ -280,7 +279,7 @@ MyAppState({Key? key, required this.title2}) : super();
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
                                 labelText: 'Name of Category',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -295,7 +294,7 @@ MyAppState({Key? key, required this.title2}) : super();
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
                                 labelText: 'Component of Item',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -310,7 +309,7 @@ MyAppState({Key? key, required this.title2}) : super();
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
                                 labelText: 'Price of Item',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -332,7 +331,7 @@ MyAppState({Key? key, required this.title2}) : super();
     );
   }
   Widget buildNavigateButton2()=>ElevatedButton(
-    style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+    style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
         fixedSize:MaterialStateProperty.all(Size(120,50)),
         shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
             borderRadius:BorderRadius.circular(20)

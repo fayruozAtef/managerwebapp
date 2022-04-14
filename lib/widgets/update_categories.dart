@@ -80,7 +80,6 @@ class _CategoriesState extends State<Categories> {
               fontWeight: FontWeight.bold,
             )
         ),
-        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
       body:SingleChildScrollView(
@@ -105,7 +104,7 @@ class _CategoriesState extends State<Categories> {
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.blue,
                             mini: true,
                             onPressed:(){
                               _openPicker(i);
@@ -147,7 +146,7 @@ class _CategoriesState extends State<Categories> {
                                   cursorColor: Colors.black,
                                   decoration: const InputDecoration(
                                     labelText: 'Name of Category',
-                                    labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                    labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color:Colors.black38),
                                     ),
@@ -175,7 +174,7 @@ class _CategoriesState extends State<Categories> {
                         width: 50,
                         height: 60,
                         child:Icon(Icons.add, color: Colors.white, size: 50),
-                  color: Colors.teal,
+                  color: Colors.blue,
                       ),
                       Container(
                         width: 100,
@@ -184,7 +183,7 @@ class _CategoriesState extends State<Categories> {
                       ),
                       FloatingActionButton(
                         child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                        backgroundColor: Colors.teal,
+                        backgroundColor: Colors.blue,
                         mini: true,
                         onPressed:(){},
                       ),
@@ -204,7 +203,7 @@ class _CategoriesState extends State<Categories> {
                           cursorColor: Colors.black,
                           decoration: const InputDecoration(
                             labelText: 'Name of Category',
-                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                            labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color:Colors.black38),
                             ),
@@ -224,7 +223,7 @@ class _CategoriesState extends State<Categories> {
   }
 
   Widget buildNavigateButton()=>FloatingActionButton.extended(
-    backgroundColor: Colors.teal,
+    backgroundColor: Colors.blue,
     onPressed: () {
       final isValid = formkey.currentState!.validate();
       if (isValid == true) {
