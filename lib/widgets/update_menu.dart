@@ -35,7 +35,7 @@ MyAppState({Key? key, required this.title2}) : super();
   firebase_storage.FirebaseStorage.instanceFor(
       bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
 
-  CollectionReference bff = FirebaseFirestore.instance.collection("menuupdate");
+  CollectionReference bff = FirebaseFirestore.instance.collection("menu");
 
   getData() async {
     QuerySnapshot dbf = await bff.where('type',isEqualTo:title2).get();
@@ -52,7 +52,7 @@ MyAppState({Key? key, required this.title2}) : super();
   }
 
   updateData(int n,List <String> name,List <String> component,List <num> price,List <String> image) async{
-    CollectionReference db = FirebaseFirestore.instance.collection("menuupdate");
+    CollectionReference db = FirebaseFirestore.instance.collection("menu");
     return await db.doc(listid[n]).set(
       {"name": name[n], "component": component[n], "price": price[n],"imagepath":image[n]},
       SetOptions(merge: true),
