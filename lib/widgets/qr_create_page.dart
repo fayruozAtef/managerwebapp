@@ -4,6 +4,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 class QRCreatePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _QRCreatePageState extends State<QRCreatePage> {
   bool f=false;
   List <String> numbers=[];
   GlobalKey globalKey = GlobalKey();
-  /*Future<void> _captureAndSharePng() async {
+  Future<void> _captureAndSharePng() async {
     try {
       RenderObject? boundary = globalKey.currentContext?.findRenderObject();
       var image = await boundary.toImage();
@@ -30,7 +31,7 @@ class _QRCreatePageState extends State<QRCreatePage> {
     } catch(e) {
       print(e.toString());
     }
-  }*/
+  }
   /*Future<void> renderImage() async {
     //Get the render object from context.
     final RenderObject? boundary = globalKey.currentContext?.findRenderObject();
