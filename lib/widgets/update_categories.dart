@@ -115,7 +115,7 @@ class _CategoriesState extends State<Categories> {
                             Column(children: [
                               Align(
                                 alignment: Alignment.topRight,
-                                child:(imgList[i].isNotEmpty)?FloatingActionButton(
+                                child:(i<listid.length)?FloatingActionButton(
                                   child:Icon(Icons.delete ,color:Colors.red,size:40,),
                                   onPressed: (){
                                     setState(() {
