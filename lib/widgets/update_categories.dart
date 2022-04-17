@@ -115,7 +115,7 @@ class _CategoriesState extends State<Categories> {
                             Column(children: [
                               Align(
                                 alignment: Alignment.topRight,
-                                child:FloatingActionButton(
+                                child:(imgList[i].isNotEmpty)?FloatingActionButton(
                                   child:Icon(Icons.delete ,color:Colors.red,size:40,),
                                   onPressed: (){
                                     setState(() {
@@ -128,7 +128,7 @@ class _CategoriesState extends State<Categories> {
                                   },
                                   backgroundColor:Colors.white,
                                   mini:false,
-                                ),
+                                ):SizedBox(),
                               ),
                               Container(
                                 height: 100,
@@ -163,7 +163,7 @@ class _CategoriesState extends State<Categories> {
               Card(
                 child:InkWell(onTap: ()async{
                   setState(() {
-                  name.add('new category');
+                  name.add('');
                   imgList.add('');
                   color.add(0);
                   });
@@ -229,7 +229,7 @@ class _CategoriesState extends State<Categories> {
       if (isValid == true) {
         for (int i = 0; i < name.length; i++) {
           if (i >= listid.length) {
-            if (imgList[i] != '' || name[i]!='new category') {
+            if (imgList[i] != '' ) {
               bff.add({"type": name[i], "imagepath": imgList[i]});
             }
           }

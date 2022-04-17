@@ -128,7 +128,7 @@ MyAppState({Key? key, required this.title2}) : super();
                           children: [
                             Align(
                               alignment: Alignment.topRight,
-                              child:FloatingActionButton(
+                              child:(imageUrl[i].isNotEmpty)?FloatingActionButton(
                                 child:Icon(Icons.delete ,color:Colors.red,size:40,),
                                 onPressed: (){
                                   setState(() {
@@ -143,7 +143,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                     },
                                 backgroundColor:Colors.white,
                                 mini:false,
-                              ),
+                              ):SizedBox(),
                             ),
                             Container(
                               padding:EdgeInsets.all(13),
