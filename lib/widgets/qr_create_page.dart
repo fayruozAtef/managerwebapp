@@ -1,10 +1,14 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:io';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 
 class QRCreatePage extends StatefulWidget {
@@ -16,22 +20,8 @@ class _QRCreatePageState extends State<QRCreatePage> {
   final controller = TextEditingController();
   bool f=false;
   List <String> numbers=[];
-  GlobalKey globalKey = GlobalKey();
-  Future<void> _captureAndSharePng() async {
-    try {
-      RenderObject? boundary = globalKey.currentContext?.findRenderObject();
-      var image = await boundary.toImage();
-      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
-      Uint8List pngBytes = byteData.buffer.asUint8List();
-      final tempDir = await getTemporaryDirectory();
-      final file = await new File('${tempDir.path}/image.png').create();
-      await file.writeAsBytes(pngBytes);
-      final channel =  MethodChannel('channel:me.alfian.share/share');
-      channel.invokeMethod('shareFile', 'image.png');
-    } catch(e) {
-      print(e.toString());
-    }
-  }
+  final key = GlobalKey();
+  File? file;
   /*Future<void> renderImage() async {
     //Get the render object from context.
     final RenderObject? boundary = globalKey.currentContext?.findRenderObject();
@@ -158,8 +148,34 @@ class _QRCreatePageState extends State<QRCreatePage> {
 
   Widget buildNavigateButton()=>FloatingActionButton.extended(
     backgroundColor: Colors.blue,
-    onPressed: (){
+    onPressed: ()async {
+      try {
+        RenderRepaintBoundary boundary = key.currentContext!
+            .findRenderObject() as RenderRepaintBoundary;
+//captures qr image
+        var image = await boundary.toImage();
 
+        ByteData? byteData =
+        await image.toByteData(format: ImageByteFormat.png);
+
+        Uint8List pngBytes = byteData!.buffer.asUint8List();
+//app directory for storing images.
+        final appDir = await getTemporaryDirectory();
+//current time
+        var datetime = DateTime.now();
+//qr image file creation
+        file = await File('${appDir.path}/$datetime.png').create();
+//appending data
+        await file?.writeAsBytes(pngBytes);
+//Shares QR image
+        await Share.shareFiles(
+          [file!.path],
+          mimeTypes: ["image/png"],
+          text: "Share the QR Code",
+        );
+      } catch (e) {
+        print(e.toString());
+      }
     },
     label: const Text('Save Codes', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white,),),
   );
