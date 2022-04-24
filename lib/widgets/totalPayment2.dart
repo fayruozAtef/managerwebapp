@@ -24,9 +24,8 @@ DateTimeRange _dateTimeRange=DateTimeRange(
 );
 
   List orders=[];
-  List consts=[];
-  List location=[];
-  int total=0;
+  List<String> consts=[];
+  double total=0;
 
   String formattedDate(timeStamp){
     var dateFormTimeStamp=DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds*1000);
@@ -35,10 +34,32 @@ DateTimeRange _dateTimeRange=DateTimeRange(
 
   String getSum(int n) {
     double sum = 0;
-    for (var i in orders[n].values) {
-      sum += double.parse(i[2]);
+    if(n>=consts.length) {
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
+    }
+    return (sum+((sum*14)/100)).toString();
+  }
+
+  String getSumD(int n) {
+    double sum = 0;
+    if(n<consts.length) {
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
     }
     return (sum+int.parse(consts[n])).toString();
+  }
+
+  String getService(int n){
+    double sum = 0;
+    if(n>=consts.length){
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
+    }
+    return((sum*14)/100).toString();
   }
   @override
   Widget build(BuildContext context) {
@@ -46,8 +67,14 @@ DateTimeRange _dateTimeRange=DateTimeRange(
     var end=_dateTimeRange.end;
 
     for(int i=0;i<orders.length;i++){
-      total+=int.parse(getSum(i));
+      if(i>=consts.length) {
+        total += double.parse(getSum(i));
+      }
+      if(i<consts.length){
+        total += double.parse(getSumD(i));
+      }
     }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -64,8 +91,11 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                 ElevatedButton(onPressed: ()async{
                   orders.clear();
                   total=0;
+                  consts.clear();
                   CollectionReference bff = FirebaseFirestore.instance.collection("delivery");
+                  CollectionReference bff2 = FirebaseFirestore.instance.collection("In-Hall");
                   QuerySnapshot db = await bff.get();
+                  QuerySnapshot db2 = await bff2.get();
                   showDatePicker(context: context,
                       initialDate: intial,
                       firstDate: DateTime(2022),
@@ -86,8 +116,15 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                             _dateTime=date!;
                             if(formattedDate(element.get('date'))==('${_dateTime?.day}-${_dateTime?.month}-2022')){
                               orders.add(element.get('order'));
-                              location.add(element.get('location'));
                               consts.add(element.get('const'));
+                            }
+                          });
+                        });
+                        db2.docs.forEach((element) {
+                          setState(() {
+                            _dateTime=date!;
+                            if(formattedDate(element.get('date'))==('${_dateTime?.day}-${_dateTime?.month}-2022')){
+                              orders.add(element.get('order'));
                             }
                           });
                         });
@@ -104,8 +141,11 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                 ElevatedButton(onPressed: ()async{
                   orders.clear();
                   total=0;
-                  CollectionReference bff = FirebaseFirestore.instance.collection("delivery");
-                  QuerySnapshot db = await bff.get();
+                  consts.clear();
+                  CollectionReference de = FirebaseFirestore.instance.collection("delivery");
+                  CollectionReference ha = FirebaseFirestore.instance.collection("In-Hall");
+                  QuerySnapshot dd = await de.get();
+                  QuerySnapshot hh = await ha.get();
                   await showDateRangePicker(
                       context: context,
                       initialDateRange: _dateTimeRange,
@@ -120,16 +160,25 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                           brightness: Brightness.light,
                         ),
                       ), child: child!)).then((date) {
-                    db.docs.forEach((element) {
+                    dd.docs.forEach((element) {
                       setState(() {
                         _dateTimeRange=date!;
                         start=date.start;
                         end=date.end;
                         if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
                                 orders.add(element.get('order'));
-                                location.add(element.get('location'));
                                 consts.add(element.get('const'));
                           }
+                      });
+                    });
+                    hh.docs.forEach((element) {
+                      setState(() {
+                        _dateTimeRange=date!;
+                        start=date.start;
+                        end=date.end;
+                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
+                          orders.add(element.get('order'));
+                        }
                       });
                     });
                   });
@@ -179,7 +228,9 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                             ),
                                     Container(
                             width: 230,
-                            child:Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)),
+                            child:(i<consts.length)?
+                            Text(getSumD(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)):
+                            Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold))  ,
                           ),
                       ],
                                   ),
@@ -209,11 +260,15 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                               Container(
                                 width: 300,
                                 padding: EdgeInsets.fromLTRB(20,0,0,5),
-                                child: Text(location[i],style:TextStyle( color: Colors.black, fontSize: 20,)),
+                                child:(i<consts.length)?
+                                Text('Delivery',style:TextStyle( color: Colors.black, fontSize: 20,)):
+                                Text('Service',style:TextStyle( color: Colors.black, fontSize: 20,)),
                               ),
                               Container(
                                 width: 230,
-                                child: Text(consts[i],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                                child:(i<consts.length)?
+                                Text(consts[i],style: TextStyle( color: Colors.black, fontSize: 20,)):
+                                Text(getService(i),style: TextStyle( color: Colors.black, fontSize: 20,)),
                               ),
                             ],
                           ),
