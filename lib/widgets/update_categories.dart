@@ -115,20 +115,29 @@ class _CategoriesState extends State<Categories> {
                             Column(children: [
                               Align(
                                 alignment: Alignment.topRight,
-                                child:(i<listid.length)?FloatingActionButton(
+                                child:FloatingActionButton(
                                   child:Icon(Icons.delete ,color:Colors.red,size:40,),
                                   onPressed: (){
-                                    setState(() {
-                                      deleteElement.add(listid[i]);
-                                      name[i]='';
-                                      imgList[i]='';
-                                      listid[i]='';
-                                      color[i]=1;
-                                    });
-                                  },
+                                    if(i<listid.length){
+                                      setState(() {
+                                        deleteElement.add(listid[i]);
+                                        name[i]='';
+                                        imgList[i]='';
+                                        listid[i]='';
+                                        color[i]=1;
+                                      });
+                                    }
+                                    else{
+                                      setState(() {
+                                        name[i]='';
+                                        imgList[i]='';
+                                        color[i]=1;
+                                      });
+                                    }
+                                    },
                                   backgroundColor:Colors.white,
                                   mini:false,
-                                ):SizedBox(),
+                                ),
                               ),
                               Container(
                                 height: 100,
@@ -163,7 +172,7 @@ class _CategoriesState extends State<Categories> {
               Card(
                 child:InkWell(onTap: ()async{
                   setState(() {
-                  name.add('');
+                  name.add('New');
                   imgList.add('');
                   color.add(0);
                   });

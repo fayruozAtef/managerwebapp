@@ -128,22 +128,33 @@ MyAppState({Key? key, required this.title2}) : super();
                           children: [
                             Align(
                               alignment: Alignment.topRight,
-                              child:(i<listid.length)?FloatingActionButton(
+                              child: FloatingActionButton(
                                 child:Icon(Icons.delete ,color:Colors.red,size:40,),
                                 onPressed: (){
-                                  setState(() {
-                                    deleteElement.add(listid[i]);
-                                    currentname[i]='';
-                                    currentcomponent[i]='';
-                                    currentprice[i]=0;
-                                    imageUrl[i]='';
-                                    listid[i]='';
-                                    color[i]=1;
-                                  });
-                                    },
+                                  if(i<listid.length){
+                                    setState(() {
+                                      deleteElement.add(listid[i]);
+                                      currentname[i]='';
+                                      currentcomponent[i]='';
+                                      currentprice[i]=0;
+                                      imageUrl[i]='';
+                                      listid[i]='';
+                                      color[i]=1;
+                                    });
+                                  }
+                                  else{
+                                    setState(() {
+                                      currentname[i]='';
+                                      currentcomponent[i]='';
+                                      currentprice[i]=0;
+                                      imageUrl[i]='';
+                                      color[i]=1;
+                                    });
+                                  }
+                                  },
                                 backgroundColor:Colors.white,
                                 mini:false,
-                              ):SizedBox(),
+                              ),
                             ),
                             Container(
                               padding:EdgeInsets.all(13),
@@ -228,7 +239,7 @@ MyAppState({Key? key, required this.title2}) : super();
                 ),
                 child:InkWell(onTap: ()async{
                   setState(() {
-                    currentname.add('');
+                    currentname.add('New');
                     currentcomponent.add('');
                     currentprice.add(0);
                     imageUrl.add('');
@@ -242,16 +253,13 @@ MyAppState({Key? key, required this.title2}) : super();
                           Container(
                             width: 100,
                             height: 100,
-
                             color: Colors.white,
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
                             backgroundColor: Colors.blue,
                             mini: true,
-                            onPressed:(){
-
-                            },
+                            onPressed:(){},
                           ),
                         ],
                       )),
@@ -268,17 +276,10 @@ MyAppState({Key? key, required this.title2}) : super();
                             padding:EdgeInsets.all(13),
                             child:TextFormField(
                               initialValue: 'new',
-                              /*validator: (val){
-                            if(val!.isEmpty) {
-                              return 'Please Enter Name Of Category';
-                            }
-                            return null;
-                          },*/
-                              //onChanged: (val)=>setState((){=val;}),
                               style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
-                                labelText: 'Name of Category',
+                                labelText: 'Name of Item',
                                 labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
