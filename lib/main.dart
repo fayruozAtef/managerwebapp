@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/signup/signupmanager.dart';
+import 'package:managerweb/widgets/totalPayment2.dart';
+import 'package:managerweb/widgets/update_categories.dart';
+import 'package:managerweb/widgets/update_menu.dart';
 
 void main()  async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false ,
-      home:signupmanager (),
+      home:payment2(),
+      //Categories(),
+      //payment2(),
+      //
+      //signupmanager (),
 
     );
   }

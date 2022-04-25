@@ -197,7 +197,6 @@ DateTimeRange _dateTimeRange=DateTimeRange(
             Card(
               child:Container(
                 width: 600,
-                height: 600,
                 child:  Column(
                   children: [
                     Row(

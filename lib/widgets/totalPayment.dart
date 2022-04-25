@@ -122,11 +122,12 @@ class _payment extends State<payment> {
                       });
                       print(formattedDate(element.get('date')));
                     });
+                    print('orders $orders');
 
 
                  /* Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (context) =>));*/
+                          builder: (context) =>payment()));*/
                   //  }
                 },
                 child: Text('Show Result',style:TextStyle(fontSize: 32)),
