@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:math';
@@ -6,16 +7,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
+
+import 'home.dart';
 class QRCreatePage extends StatefulWidget {
-  const QRCreatePage({Key? key}) : super(key: key);
-
-
-
+   QRCreatePage({Key? key, required this.uid}) : super(key: key);
+   String uid;
   @override
-  State<QRCreatePage> createState() => _QRCreatePage();
+  State<QRCreatePage> createState() => _QRCreatePage(id: this.uid);
 }
 
 class _QRCreatePage extends State<QRCreatePage> {
+  String id;
+  _QRCreatePage({Key? key, required this.id});
   final controller = TextEditingController();
   Uint8List? _imageFile;
   ScreenshotController screenshotController = ScreenshotController();
@@ -140,26 +143,27 @@ class _QRCreatePage extends State<QRCreatePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          print("ready to take the image");
           screenshotController.capture().then((Uint8List? image) {
-            print("Photo has taken");
             //Capture Done
             setState(() {
               _imageFile = image;
-              print("Photo saved in imagefile");
             });
-            print("Start download");
             download(_imageFile!.toList());
-            debugPrint('downloaded successfully');
+            f=false;
+            numbers=[];
+            controller.clear();
+            Timer(const Duration(seconds: 3), () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:id ,)));
+            });
+            showAlertDialog(context, "QR-codes Created and downloaded sucessfully");
           }).catchError((onError) {
-            print("an error catched");
             debugPrint(onError);
           });
         },
         tooltip: 'Increment',
-        child: const Text("Save ", style: TextStyle(fontSize: 18),),
+        label: const Text(" SAVE ", style: TextStyle(fontSize: 23),),
       ),
     );
   }

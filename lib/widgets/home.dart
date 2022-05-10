@@ -108,7 +108,7 @@ class _home extends State<Home2> {
                 const Icon(Icons.qr_code_outlined ,color: Colors.white,),
                 FlatButton(
                   onPressed:(){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage(uid: this.uid,)));
                   },
                   child: const Text("Generate QR Codes" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),
