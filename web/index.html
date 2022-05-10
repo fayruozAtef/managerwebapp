@@ -23,13 +23,13 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="managerweb">
+  <meta name="apple-mobile-web-app-title" content="managerwebapp">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>managerweb</title>
+  <title>managerwebapp</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -85,7 +85,7 @@
           });
 
         // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plain <script> tag.
+        // fallback to plaint <script> tag.
         setTimeout(() => {
           if (!scriptLoaded) {
             console.warn(
@@ -100,28 +100,5 @@
       loadMainDartJs();
     }
   </script>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBgi5-xQd9BtXG0Za3LjyVlyFf1Pgu15Us",
-    authDomain: "testfirebaseflutter-aa934.firebaseapp.com",
-    projectId: "testfirebaseflutter-aa934",
-    storageBucket: "testfirebaseflutter-aa934.appspot.com",
-    messagingSenderId: "736288426370",
-    appId: "1:736288426370:web:d4f5bc6377d460cb7b679b",
-    measurementId: "G-C52EKRE7BW"
-  };
-
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
 </body>
 </html>

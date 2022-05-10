@@ -142,19 +142,24 @@ class _QRCreatePage extends State<QRCreatePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          print("ready to take the image");
           screenshotController.capture().then((Uint8List? image) {
+            print("Photo has taken");
             //Capture Done
             setState(() {
               _imageFile = image;
+              print("Photo saved in imagefile");
             });
+            print("Start download");
             download(_imageFile!.toList());
             debugPrint('downloaded successfully');
           }).catchError((onError) {
+            print("an error catched");
             debugPrint(onError);
           });
         },
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Text("Save ", style: TextStyle(fontSize: 18),),
       ),
     );
   }

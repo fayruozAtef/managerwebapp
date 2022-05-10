@@ -1,6 +1,6 @@
 {
-    "name": "managerweb",
-    "short_name": "managerweb",
+    "name": "managerwebapp",
+    "short_name": "managerwebapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
