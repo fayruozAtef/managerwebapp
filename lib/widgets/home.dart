@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/qr_create_page.dart';
 import 'package:managerweb/widgets/signup/employeesignup.dart';
 import 'package:managerweb/widgets/signup/signupmanager.dart';
-import 'package:managerweb/widgets/totalPayment.dart';
 import 'package:managerweb/widgets/totalPayment2.dart';
 import 'package:managerweb/widgets/update_categories.dart';
 import 'Background/homeback.dart';
