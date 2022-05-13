@@ -119,7 +119,7 @@ class _QRCreatePage extends State<QRCreatePage> {
                                         child: Column(
                                           children: [
                                             QrImage(
-                                              data: numbers[i],
+                                              data: numbers[i+k],
                                               version: QrVersions.auto,
                                               size: 250.0,
                                             ),
@@ -188,7 +188,7 @@ class _QRCreatePage extends State<QRCreatePage> {
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
       backgroundColor: Colors.white54,
-      title:const Text("Warning:", style: TextStyle(
+      title:const Text("Message:", style: TextStyle(
         fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
       ),),
       content: Text('$message', style: const TextStyle(
