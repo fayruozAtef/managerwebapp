@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:math';
 import 'dart:typed_data';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-
 import 'home.dart';
 class QRCreatePage extends StatefulWidget {
    QRCreatePage({Key? key, required this.uid}) : super(key: key);
@@ -19,11 +18,40 @@ class QRCreatePage extends StatefulWidget {
 class _QRCreatePage extends State<QRCreatePage> {
   String id;
   _QRCreatePage({Key? key, required this.id});
-  final controller = TextEditingController();
   Uint8List? _imageFile;
   ScreenshotController screenshotController = ScreenshotController();
   List <String> numbers=[];
   bool f=false;
+  int tablesNumber=0;
+  CollectionReference tables = FirebaseFirestore.instance.collection("tables");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    gettableNumber();
+  }
+  Future<void> gettableNumber() async {
+    tables.get().then((querySnapshot) {
+      tablesNumber=querySnapshot.size;
+    });
+  }
+  void generateQRcodes(){
+    numbers=[];
+    f=false;
+    if(tablesNumber>0){
+      f = true;
+      while (numbers.length<tablesNumber) {
+        var r = Random();
+        String s = String.fromCharCodes(List.generate(5, (index) => r.nextInt(33) + 89));
+        numbers.add(s);
+      }
+    }
+    else {
+      showAlertDialog(context,
+          "There is no tables stored in the database. \n Please add tables first.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,65 +65,12 @@ class _QRCreatePage extends State<QRCreatePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Number of tables:',
-                    style:  TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black,),
-                  ),
-                  const SizedBox(width: 12),
-                  SizedBox(
-                      width: 300,
-                      child: TextField(
-                        controller: controller,
-                        keyboardType: TextInputType.number,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Enter table numbers ',
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide:const BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      )
-                  ),
-                  const SizedBox(width: 12),
-                  FloatingActionButton(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child:const  Icon(Icons.done, size: 30),
-                    onPressed: () => setState(() {
-                      numbers=[];
-                      f=false;
-                      if(controller.text.isEmpty) {
-                        showAlertDialog(context,"Enter number of tables");
-                      }
-                      else{
-                        int num = int.parse(controller.text);
-                        if(num>0){
-                          f = true;
-                          while (numbers.length<num) {
-                            var r = Random();
-                            String s = String.fromCharCodes(List.generate(5, (index) => r.nextInt(33) + 89));
-                            numbers.add(s);
-                          }
-                        }
-                      }
-                    }),
-                  )
-                ],
+              FloatingActionButton.extended(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  label:const Text("Generate Codes", style: TextStyle(fontSize: 30),),
+                  onPressed: () => setState(() {
+                    generateQRcodes();
+                  }),
               ),
               const SizedBox(height: 50,),
               if(f==true)
@@ -143,7 +118,7 @@ class _QRCreatePage extends State<QRCreatePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton:f==true? FloatingActionButton.extended(
         onPressed: () {
           screenshotController.capture().then((Uint8List? image) {
             //Capture Done
@@ -153,7 +128,6 @@ class _QRCreatePage extends State<QRCreatePage> {
             download(_imageFile!.toList());
             f=false;
             numbers=[];
-            controller.clear();
             Timer(const Duration(seconds: 3), () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:id ,)));
             });
@@ -164,12 +138,22 @@ class _QRCreatePage extends State<QRCreatePage> {
         },
         tooltip: 'Increment',
         label: const Text(" SAVE ", style: TextStyle(fontSize: 23),),
-      ),
+      ):const SizedBox(),
     );
+  }
+
+  updatecodes(int docID,String code) async {
+    await tables.doc('$docID').update({'qrcode': code})
+        .then((value) => print("table Code Updated"))
+        .catchError((error) => print("Failed to update table: $error"));
+    print("all are updated");
   }
 
   void download(List<int> bytes) {
     // Encode our file in base64
+    for(int i=0;i<numbers.length;i++) {
+      updatecodes((i + 1), numbers[i]);
+    }
     final _base64 = base64Encode(bytes);
     // Create the link with the file
     final anchor =
@@ -183,8 +167,8 @@ class _QRCreatePage extends State<QRCreatePage> {
     anchor.remove();
     return;
   }
-  showAlertDialog(BuildContext context,String message) {
 
+  showAlertDialog(BuildContext context,String message) {
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
       backgroundColor: Colors.white54,

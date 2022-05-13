@@ -86,7 +86,7 @@ class _LogInState extends State<LogIn> {
           }
         });
       }else{
-        showAlertDialog(context, "Please Enter the Right Email and Password");
+        showAlertDialog(context, "Wrong Email address");
       }
     }
   }
