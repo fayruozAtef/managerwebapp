@@ -17,13 +17,15 @@ class _payment extends State<payment2> {
 
   @override
   DateTime? _dateTime;
+  DateTime intial=DateTime.now();
 DateTimeRange _dateTimeRange=DateTimeRange(
     start: DateTime.now(),
-    end:DateTime.now().add(Duration(days: 2))
+    end:DateTime.now(),
 );
 
   List orders=[];
-  int total=0;
+  List<String> consts=[];
+  double total=0;
 
   String formattedDate(timeStamp){
     var dateFormTimeStamp=DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds*1000);
@@ -32,24 +34,52 @@ DateTimeRange _dateTimeRange=DateTimeRange(
 
   String getSum(int n) {
     double sum = 0;
-    for (var i in orders[n].values) {
-      sum += double.parse(i[2]);
+    if(n>=consts.length) {
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
     }
-    return (sum+50).toString();
+    return (sum+((sum*14)/100)).toString();
   }
 
+  String getSumD(int n) {
+    double sum = 0;
+    if(n<consts.length) {
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
+    }
+    return (sum+int.parse(consts[n])).toString();
+  }
+
+  String getService(int n){
+    double sum = 0;
+    if(n>=consts.length){
+      for (var i in orders[n].values) {
+        sum += double.parse(i[2]);
+      }
+    }
+    return((sum*14)/100).toString();
+  }
   @override
   Widget build(BuildContext context) {
     var start=_dateTimeRange.start;
     var end=_dateTimeRange.end;
 
     for(int i=0;i<orders.length;i++){
-      total+=int.parse(getSum(i));
+      if(i>=consts.length) {
+        total += double.parse(getSum(i));
+      }
+      if(i<consts.length){
+        total += double.parse(getSumD(i));
+      }
     }
+
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Total Payment',
-            style: TextStyle(color: Colors.white, fontSize: 30,)),
+        title: Text('Total Payment',
+            style: TextStyle(color: Colors.white, fontSize: 40,)),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -61,15 +91,19 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                 ElevatedButton(onPressed: ()async{
                   orders.clear();
                   total=0;
+                  consts.clear();
                   CollectionReference bff = FirebaseFirestore.instance.collection("delivery");
+                  CollectionReference bff2 = FirebaseFirestore.instance.collection("In-Hall");
                   QuerySnapshot db = await bff.get();
+                  QuerySnapshot db2 = await bff2.get();
                   showDatePicker(context: context,
-                      initialDate: DateTime.now(),
+                      initialDate: intial,
                       firstDate: DateTime(2022),
                       lastDate: DateTime(2025),
+                      selectableDayPredicate: (DateTime val) => val.isAfter(intial) ?false:true,
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
-                          primary: Colors.teal,
+                          primary: Colors.blue,
                           onPrimary:Colors.black,
                           onSurface: Colors.black ,
                           surface: Colors.black,
@@ -82,13 +116,23 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                             _dateTime=date!;
                             if(formattedDate(element.get('date'))==('${_dateTime?.day}-${_dateTime?.month}-2022')){
                               orders.add(element.get('order'));
+                              consts.add(element.get('const'));
+                            }
+                          });
+                        });
+                        db2.docs.forEach((element) {
+                          setState(() {
+                            _dateTime=date!;
+                            if(formattedDate(element.get('date'))==('${_dateTime?.day}-${_dateTime?.month}-2022')){
+                              orders.add(element.get('order'));
                             }
                           });
                         });
                       });
                 },
-                  child:Text('Select Day',style:TextStyle(fontSize: 25)),
-                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+
+                  child:Text('Select Day',style:TextStyle(fontSize: 30)),
+                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius:BorderRadius.circular(25)
@@ -98,37 +142,50 @@ DateTimeRange _dateTimeRange=DateTimeRange(
                 ElevatedButton(onPressed: ()async{
                   orders.clear();
                   total=0;
-                  CollectionReference bff = FirebaseFirestore.instance.collection("delivery");
-                  QuerySnapshot db = await bff.get();
+                  consts.clear();
+                  CollectionReference de = FirebaseFirestore.instance.collection("delivery");
+                  CollectionReference ha = FirebaseFirestore.instance.collection("In-Hall");
+                  QuerySnapshot dd = await de.get();
+                  QuerySnapshot hh = await ha.get();
                   await showDateRangePicker(
                       context: context,
                       initialDateRange: _dateTimeRange,
                       firstDate: DateTime(2022),
-                      lastDate: DateTime(2025),
+                      lastDate: DateTime.now(),
                       builder: (context,child)=>Theme(data: ThemeData().copyWith(
                         colorScheme: ColorScheme.dark(
-                          primary: Colors.teal,
+                          primary: Colors.blue,
                           onPrimary:Colors.black,
                           onSurface: Colors.black ,
                           surface: Colors.black,
                           brightness: Brightness.light,
                         ),
                       ), child: child!)).then((date) {
-                    db.docs.forEach((element) {
+                    dd.docs.forEach((element) {
                       setState(() {
                         _dateTimeRange=date!;
                         start=date.start;
                         end=date.end;
-                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && end.isAfter(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))){
+                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
                                 orders.add(element.get('order'));
-                                print('orders $orders');
+                                consts.add(element.get('const'));
                           }
+                      });
+                    });
+                    hh.docs.forEach((element) {
+                      setState(() {
+                        _dateTimeRange=date!;
+                        start=date.start;
+                        end=date.end;
+                        if(start.isBefore(DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000))==true && (DateTime.fromMillisecondsSinceEpoch(element.get('date').seconds*1000)).isBefore(end.add(Duration(days: 1)))==true){
+                          orders.add(element.get('order'));
+                        }
                       });
                     });
                   });
                 },
-                  child:const Text('Select Period',style:TextStyle(fontSize: 25)),
-                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+                  child:Text('Select Days',style:TextStyle(fontSize: 30)),
+                  style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
                       fixedSize:MaterialStateProperty.all(Size(200,60)),
                       shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                           borderRadius:BorderRadius.circular(25)
@@ -140,50 +197,94 @@ DateTimeRange _dateTimeRange=DateTimeRange(
             ),
             Card(
               child:Container(
-                width: 500,
-                height: 500,
+                width: 600,
                 child:  Column(
                   children: [
                     Row(
                       children: [
                         Container(
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
-                          width: 250,
-                          child:Text('Order#',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          width: 300,
+                          child:Text('Order#',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                         Container(
-                          width: 210,
+                          width: 230,
                           child:
-                          Text('Price',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          Text('Price',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                       ],
                     ),
-                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                     for(int i=0;i<orders.length;i++)
-                      Row(
-                        children: [
-                          Container(
+                      ExpansionTile(
+                                  collapsedIconColor: Colors.black,
+                                  iconColor: Colors.black,
+                                  childrenPadding: EdgeInsets.all(16).copyWith(top: 0),
+                                  title:Row(children:[
+                                  Container(
                             padding: EdgeInsets.fromLTRB(20,0,0,5),
-                            width: 250,
-                            child:Text("order${i}",style: TextStyle( color: Colors.black, fontSize: 25,)),
+                            width: 300,
+                            child:Text("order${i+1}",style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)),
+                            ),
+                                    Container(
+                            width: 230,
+                            child:(i<consts.length)?
+                            Text(getSumD(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold)):
+                            Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold))  ,
                           ),
-                          Container(
-                            width: 210,
-                            child:Text(getSum(i),style: TextStyle( color: Colors.black, fontSize: 25,)),
+                      ],
+                                  ),
+                        children: [
+                          for (var j in orders[i].values)
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(8,0,0,5),
+                                width: 200,
+                                child:Text(j[0],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0,0,0,5),
+                                width: 100,
+                                child:Text('x'+j[1],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0,0,0,5),
+                                width: 230,
+                                child:Text(j[2],style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children:[
+                              Container(
+                                width: 300,
+                                padding: EdgeInsets.fromLTRB(20,0,0,5),
+                                child:(i<consts.length)?
+                                Text('Delivery',style:TextStyle( color: Colors.black, fontSize: 20,)):
+                                Text('Service',style:TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                              Container(
+                                width: 230,
+                                child:(i<consts.length)?
+                                Text(consts[i],style: TextStyle( color: Colors.black, fontSize: 20,)):
+                                Text(getService(i),style: TextStyle( color: Colors.black, fontSize: 20,)),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                    Text('-------------------------------',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                     Row(
                       children:[
                         Container(
-                          width: 250,
+                          width: 300,
                           padding: EdgeInsets.fromLTRB(20,0,0,5),
-                          child: Text('Total',style:TextStyle(fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 30,)),
+                          child: Text('Total',style:TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 30,)),
                         ),
                         Container(
-                          width: 210,
-                          child: Text(total.toString(),style: TextStyle( color: Colors.black, fontSize: 28,)),
+                          width: 230,
+                          child: Text(total.toString(),style: TextStyle( color: Colors.black, fontSize: 23,fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),

@@ -10,6 +10,9 @@ import 'package:uuid/uuid.dart';
 List listid=[];
 List imgList=[];
 List name=[];
+List color=[];
+List deleteElement=[];
+
 class Categories extends StatefulWidget {
   Categories({Key? key}) : super(key: key);
 
@@ -32,6 +35,7 @@ class _CategoriesState extends State<Categories> {
         listid.add(element.id);
         name.add(element.get('type'));
         imgList.add(element.get('imagepath'));
+        color.add(0);
       });
     });
   }
@@ -76,8 +80,7 @@ class _CategoriesState extends State<Categories> {
               fontWeight: FontWeight.bold,
             )
         ),
-        //backgroundColor: Colors.black,
-        //automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
       ),
       body:SingleChildScrollView(
        child:Form(
@@ -86,6 +89,7 @@ class _CategoriesState extends State<Categories> {
             children: [
              for(int i=0;i<name.length;i++)
                 Card(
+                  color: color[i]==0?Colors.white:Colors.black26,
                   child:InkWell(onTap: (){
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context)=>details(title: name[i])));
@@ -100,37 +104,67 @@ class _CategoriesState extends State<Categories> {
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.blue,
                             mini: true,
                             onPressed:(){
                               _openPicker(i);
                             },
                           ),
                         ],)),
-                        Expanded(child: Container(
-                          height: 100,
-                          padding:EdgeInsets.all(13),
-                          child:TextFormField(
-                            initialValue: name[i],
-                            validator: (val){
-                              if(val!.isEmpty) {
-                                return 'Please Enter Name Of Category';
-                              }
-                              return null;
-                            },
-                            onChanged: (val)=>setState((){name[i]=val;}),
-                            style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              labelText: 'Name of Category',
-                              labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color:Colors.black38),
+                        Expanded(child:
+                            Column(children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child:FloatingActionButton(
+                                  child:Icon(Icons.delete ,color:Colors.red,size:40,),
+                                  onPressed: (){
+                                    if(i<listid.length){
+                                      setState(() {
+                                        deleteElement.add(listid[i]);
+                                        name[i]='';
+                                        imgList[i]='';
+                                        listid[i]='';
+                                        color[i]=1;
+                                      });
+                                    }
+                                    else{
+                                      setState(() {
+                                        name[i]='';
+                                        imgList[i]='';
+                                        color[i]=1;
+                                      });
+                                    }
+                                    },
+                                  backgroundColor:Colors.white,
+                                  mini:false,
+                                ),
                               ),
+                              Container(
+                                height: 100,
+                                padding:EdgeInsets.all(13),
+                                child:TextFormField(
+                                  initialValue: name[i],
+                                  validator: (val){
+                                    if(val!.isEmpty) {
+                                      return 'Please Enter Name Of Category';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (val)=>setState((){name[i]=val;}),
+                                  style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                                  cursorColor: Colors.black,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Name of Category',
+                                    labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color:Colors.black38),
+                                    ),
+                                  ),
+                                ) ,
+                              ),
+                            ],
                             ),
-                          ) ,
-                        ),),
-
+                        ),
                       ],
                     ),
                     ),
@@ -138,8 +172,9 @@ class _CategoriesState extends State<Categories> {
               Card(
                 child:InkWell(onTap: ()async{
                   setState(() {
-                  name.add('new category');
+                  name.add('New');
                   imgList.add('');
+                  color.add(0);
                   });
                 },
                   child: Column(
@@ -148,7 +183,7 @@ class _CategoriesState extends State<Categories> {
                         width: 50,
                         height: 60,
                         child:Icon(Icons.add, color: Colors.white, size: 50),
-                  color: Colors.teal,
+                  color: Colors.blue,
                       ),
                       Container(
                         width: 100,
@@ -157,7 +192,7 @@ class _CategoriesState extends State<Categories> {
                       ),
                       FloatingActionButton(
                         child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                        backgroundColor: Colors.teal,
+                        backgroundColor: Colors.blue,
                         mini: true,
                         onPressed:(){},
                       ),
@@ -177,7 +212,7 @@ class _CategoriesState extends State<Categories> {
                           cursorColor: Colors.black,
                           decoration: const InputDecoration(
                             labelText: 'Name of Category',
-                            labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                            labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color:Colors.black38),
                             ),
@@ -193,34 +228,26 @@ class _CategoriesState extends State<Categories> {
       ),
       ),
       floatingActionButton: buildNavigateButton(),
-            //buildNavigateButton2(),
     );
   }
-  /*Widget buildNavigateButton2()=>FloatingActionButton(
-  child: Icon(Icons.add, color: Colors.white, size: 20),
-  onPressed: () async{
-  setState(() {
-  name.add('new category');
-  imgList.add('');
-  });
-},
-backgroundColor: Colors.teal,
-mini: false,
-);*/
+
   Widget buildNavigateButton()=>FloatingActionButton.extended(
-    backgroundColor: Colors.teal,
+    backgroundColor: Colors.blue,
     onPressed: () {
       final isValid = formkey.currentState!.validate();
       if (isValid == true) {
         for (int i = 0; i < name.length; i++) {
           if (i >= listid.length) {
-            if (imgList[i] != '' || name[i]!='new category') {
+            if (imgList[i] != '' ) {
               bff.add({"type": name[i], "imagepath": imgList[i]});
             }
           }
           else {
             updateData(i, name, imgList);
           }
+        }
+        for(int k=0;k<deleteElement.length;k++){
+          bff.doc(deleteElement[k]).delete();
         }
       }
     },

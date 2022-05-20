@@ -26,9 +26,17 @@ MyAppState({Key? key, required this.title2}) : super();
   List <String> currentcomponent=[];
   List <num> currentprice=[];
   List<String> imageUrl=[];
-
   List listid=[];
+  List deleteElement=[];
+  List color=[];
+
+  Future<FirebaseApp> secondaryApp = Firebase.initializeApp();
+  firebase_storage.FirebaseStorage storage =
+  firebase_storage.FirebaseStorage.instanceFor(
+      bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
+
   CollectionReference bff = FirebaseFirestore.instance.collection("menu");
+
   getData() async {
     QuerySnapshot dbf = await bff.where('type',isEqualTo:title2).get();
     dbf.docs.forEach((element) {
@@ -38,6 +46,7 @@ MyAppState({Key? key, required this.title2}) : super();
         currentcomponent.add(element.get('component'));
         currentprice.add(element.get('price'));
         imageUrl.add(element.get('imagepath'));
+        color.add(0);
       });
     });
   }
@@ -50,10 +59,6 @@ MyAppState({Key? key, required this.title2}) : super();
     );
   }
 
-  Future<FirebaseApp> secondaryApp = Firebase.initializeApp();
-  firebase_storage.FirebaseStorage storage =
-  firebase_storage.FirebaseStorage.instanceFor(
-      bucket: 'storageBucket: "testfirebaseflutter-aa934.appspot.com",');
 
   _openPicker(int n) async{
     FilePickerResult? result;
@@ -84,8 +89,7 @@ MyAppState({Key? key, required this.title2}) : super();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 30,)),
-        //backgroundColor: Colors.black,
+        title: Text(title2, style: TextStyle(color: Colors.white, fontSize: 40,)),
       ),
       body:SingleChildScrollView(
         child:Form(
@@ -95,6 +99,7 @@ MyAppState({Key? key, required this.title2}) : super();
               SizedBox(height: 10),
               for(int i = 0; i < currentname.length; i++)
                 Card(
+                  color: color[i]==0?Colors.white:Colors.black26,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(13.0),
                     side: BorderSide(color: Colors.black, width: 2),
@@ -111,7 +116,7 @@ MyAppState({Key? key, required this.title2}) : super();
     ),
     FloatingActionButton(
       child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.blue,
       mini: true,
       onPressed:(){
         _openPicker(i);
@@ -121,6 +126,36 @@ MyAppState({Key? key, required this.title2}) : super();
 ),),
                     Expanded(child:  Column(
                           children: [
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: FloatingActionButton(
+                                child:Icon(Icons.delete ,color:Colors.red,size:40,),
+                                onPressed: (){
+                                  if(i<listid.length){
+                                    setState(() {
+                                      deleteElement.add(listid[i]);
+                                      currentname[i]='';
+                                      currentcomponent[i]='';
+                                      currentprice[i]=0;
+                                      imageUrl[i]='';
+                                      listid[i]='';
+                                      color[i]=1;
+                                    });
+                                  }
+                                  else{
+                                    setState(() {
+                                      currentname[i]='';
+                                      currentcomponent[i]='';
+                                      currentprice[i]=0;
+                                      imageUrl[i]='';
+                                      color[i]=1;
+                                    });
+                                  }
+                                  },
+                                backgroundColor:Colors.white,
+                                mini:false,
+                              ),
+                            ),
                             Container(
                               padding:EdgeInsets.all(13),
                               child:TextFormField(
@@ -137,7 +172,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Name of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
@@ -159,7 +194,7 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Component of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
@@ -184,19 +219,19 @@ MyAppState({Key? key, required this.title2}) : super();
                                 cursorColor: Colors.black,
                                 decoration: const InputDecoration(
                                   labelText: 'Price of Item',
-                                  labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                  labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color:Colors.black38),
                                   ),
                                 ),
                               ) ,
                             ),
-                          ],
-                        ),
-                          )
-                      ],
-                  ),
+                         ],
+                      ),
+                    ),
+                  ],
                 ),
+               ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13.0),
@@ -204,10 +239,11 @@ MyAppState({Key? key, required this.title2}) : super();
                 ),
                 child:InkWell(onTap: ()async{
                   setState(() {
-                    currentname.add('');
+                    currentname.add('New');
                     currentcomponent.add('');
                     currentprice.add(0);
                     imageUrl.add('');
+                    color.add(0);
                   });
                 },
                   child: Row(
@@ -217,16 +253,13 @@ MyAppState({Key? key, required this.title2}) : super();
                           Container(
                             width: 100,
                             height: 100,
-
                             color: Colors.white,
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.blue,
                             mini: true,
-                            onPressed:(){
-
-                            },
+                            onPressed:(){},
                           ),
                         ],
                       )),
@@ -234,7 +267,7 @@ MyAppState({Key? key, required this.title2}) : super();
                         width: 50,
                         height: 60,
                         child:Icon(Icons.add, color: Colors.white, size: 50),
-                        color: Colors.teal,
+                        color: Colors.blue,
                       ),
                       Expanded(child: Column(
                         children: [
@@ -243,18 +276,11 @@ MyAppState({Key? key, required this.title2}) : super();
                             padding:EdgeInsets.all(13),
                             child:TextFormField(
                               initialValue: 'new',
-                              /*validator: (val){
-                            if(val!.isEmpty) {
-                              return 'Please Enter Name Of Category';
-                            }
-                            return null;
-                          },*/
-                              //onChanged: (val)=>setState((){=val;}),
                               style:const TextStyle(color:Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
-                                labelText: 'Name of Category',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20,fontWeight: FontWeight.bold),
+                                labelText: 'Name of Item',
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -269,7 +295,7 @@ MyAppState({Key? key, required this.title2}) : super();
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
                                 labelText: 'Component of Item',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -284,7 +310,7 @@ MyAppState({Key? key, required this.title2}) : super();
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
                                 labelText: 'Price of Item',
-                                labelStyle: TextStyle(color:Colors.teal,fontSize: 20),
+                                labelStyle: TextStyle(color:Colors.blue,fontSize: 20),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color:Colors.black38),
                                 ),
@@ -292,7 +318,8 @@ MyAppState({Key? key, required this.title2}) : super();
                             ) ,
                           ),
                         ],
-                      )),
+                       ),
+                      ),
                     ],
                   ),
                 ),
@@ -305,13 +332,13 @@ MyAppState({Key? key, required this.title2}) : super();
     );
   }
   Widget buildNavigateButton2()=>ElevatedButton(
-    style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.teal),
+    style:ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(Colors.blue),
         fixedSize:MaterialStateProperty.all(Size(120,50)),
         shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
             borderRadius:BorderRadius.circular(20)
         ))
     ),
-    onPressed: () {
+    onPressed: () async{
       final isValid = formkey.currentState!.validate();
        if(isValid==true ){
       for(int i=0;i<currentname.length;i++) {
@@ -325,6 +352,9 @@ MyAppState({Key? key, required this.title2}) : super();
                           updateData(i, currentname, currentcomponent, currentprice, imageUrl);
                         }
                       }
+      for(int k=0;k<deleteElement.length;k++){
+        bff.doc(deleteElement[k]).delete();
+      }
       Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) =>payment()));
