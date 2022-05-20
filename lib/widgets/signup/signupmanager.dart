@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:managerweb/widgets/home.dart';
 import '../Background/backWithOpacity.dart';
-import '../qr_create_page.dart';
 import 'auth.dart';
 class signupmanager extends StatelessWidget {
   String uid;
