@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:managerweb/widgets/home.dart';
 import 'Background/backWithOpacity.dart';
-import 'forgetpassword.dart';
-import 'signup/auth.dart';
+import 'login.dart';
+enum AuthMode{ Signup , Login }
 
-class Loginmanager extends StatelessWidget {
+class Password extends StatelessWidget {
+  static const routeName='/auth';
+  //const AuthScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -30,7 +34,7 @@ class Loginmanager extends StatelessWidget {
             body: Stack(
               children:const[
                 SingleChildScrollView(
-                  child: LogIn(),
+                  child: ForgetPAssword(),
                 ),
               ],
             ),
@@ -40,57 +44,25 @@ class Loginmanager extends StatelessWidget {
     );
   }
 }
-class LogIn extends StatefulWidget {
-  const LogIn({
+
+
+class ForgetPAssword extends StatefulWidget {
+  const ForgetPAssword({
     Key ? key,
   }) : super(key: key);
 
   @override
-  _LogInState createState() => _LogInState();
+  _ForgetPAsswordState createState() => _ForgetPAsswordState();
 }
-class _LogInState extends State<LogIn> {
+
+class _ForgetPAsswordState extends State<ForgetPAssword> {
   final GlobalKey<FormState>_formKey=GlobalKey();
+  final emailcontroller=TextEditingController();
   CollectionReference gettype = FirebaseFirestore.instance.collection("employee");
   String type="";
   Map<String, String> _autData={
     'email':'' ,
-    'password':'' ,
   };
-
-  /////////log in function//////////////////
-  Future<void>_logIn()async{
-
-    if(_formKey.currentState!.validate()){
-
-      _formKey.currentState!.save() ;
-      QuerySnapshot dbt = await gettype.where("email",isEqualTo: _autData['email']).get();
-      dbt.docs.forEach((element) {
-        setState(() {
-          type = element.get('jobtype');
-        });
-      });
-      //true login
-      if(type=="manager") {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _autData['email']!,
-            password: _autData['password']!
-        ).then((value) {
-          print("Successfull");
-          String id = Auth().getId();
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => Home()));
-        }).catchError((e) {
-          if (e.code == 'user-not-found') {
-            showAlertDialog(context, 'No user found for that email.');
-          } else if (e.code == 'wrong-password') {
-            showAlertDialog(context, 'Wrong password');
-          }
-        });
-      }else{
-        showAlertDialog(context, "Wrong Email address");
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,20 +102,6 @@ class _LogInState extends State<LogIn> {
                           _autData['email']=value!;
                         },
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 40),),
-                      TextFormField(
-                        decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
-                        obscureText: true,
-                        style:const TextStyle(color: Colors.white,fontSize: 23,),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'enter password';
-                          }
-                        },
-                        onSaved: (value) {
-                          _autData['password']=value!;
-                        },
-                      ),
                     ],
                   ),
 
@@ -166,12 +124,12 @@ class _LogInState extends State<LogIn> {
                 height: 80.0,
                 child: RaisedButton(
                   child:
-                 const Text('LOGIN',
+                  const Text('Reset Password',
                     style: TextStyle(fontWeight: FontWeight.bold,
                         fontSize: 30),
                   ),
                   onPressed:() {
-                    _logIn();
+                    resetpassword();
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -184,33 +142,30 @@ class _LogInState extends State<LogIn> {
               ),
             ),
           ),
-          //SizedBox(height: 15,),
-          FlatButton(
-            child: Text(
-              'Forget Password ',
-              style: TextStyle(fontSize: 30),
-            ),
-            onPressed: (){
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Password()));
-            } ,
-            //padding: const EdgeInsets.symmetric(horizontal: 30.0,vertical: 4),
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            textColor: Colors.white,
-          ),
-
         ],
       ),
     );
   }
-
+  Future resetpassword() async{
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: emailcontroller.text.trim()).then((value) =>{
+          showAlertDialog(context, "Password Reset Email Sent"),
+          Timer(const Duration(seconds: 3), () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Loginmanager()));
+          }),
+      });
+    }on FirebaseException catch(e){
+      print(e);
+    }
+  }
   showAlertDialog(BuildContext context,String message) {
 
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
       backgroundColor: Colors.white54,
-      title:const Text("Warning:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+      title:const Text("Message:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
       ),),
       content: Text('$message', style: const TextStyle(
         fontSize: 18, color: Colors.black,
@@ -227,3 +182,5 @@ class _LogInState extends State<LogIn> {
     );
   }
 }
+
+
