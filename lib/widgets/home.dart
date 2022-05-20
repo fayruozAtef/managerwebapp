@@ -99,7 +99,7 @@ class _home extends State<Home2> {
 
             FlatButton(
               onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage(uid: uid,)));
               },
               child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
             ),

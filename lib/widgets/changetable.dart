@@ -7,17 +7,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/EditTable/addtable.dart';
 import 'package:uuid/uuid.dart';
+
+import 'home.dart';
 class Uploadimage extends StatefulWidget {
-  //final String userId;
-  const Uploadimage({Key? key, }) : super(key: key);
+  final String uid;
+  const Uploadimage({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _imagepic createState() => _imagepic();
+  _imagepic createState() => _imagepic(uid: this.uid);
 }
 
 class _imagepic extends State<Uploadimage> {
-  String? _error;
-  String? _error2;
+  String uid;
+  _imagepic({Key? key,required this.uid});
   String _group="";
   List imagelist=[];
   final number =TextEditingController();
@@ -26,7 +28,8 @@ class _imagepic extends State<Uploadimage> {
   num seatsno=0;
   num nochange=0;
   List input=[];
-  CollectionReference gettable = FirebaseFirestore.instance.collection("tryimage");
+  num tablenumber=-1;
+  CollectionReference gettable = FirebaseFirestore.instance.collection("tables");
   FirebaseStorage _storage= FirebaseStorage.instanceFor(
       bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
   //String filename = result.files.single.name;
@@ -86,11 +89,16 @@ class _imagepic extends State<Uploadimage> {
             //ADD Table
             SizedBox(height: 30,),
             Container(
+              padding: EdgeInsets.fromLTRB(350, 0, 400, 0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
               child: ButtonTheme(
                 minWidth: 100.0,
                 height: 50.0,
                 child: RaisedButton(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.add,
                           size: 50,color: Colors.white),
@@ -101,8 +109,10 @@ class _imagepic extends State<Uploadimage> {
                       ),
                     ],
                   ),
-                  onPressed:() {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable()));
+                  onPressed:() async {
+                    QuerySnapshot dbt = await gettable.get();
+                     tablenumber=dbt.size+1;
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable(tn: tablenumber, uid: uid,)));
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -242,35 +252,42 @@ class _imagepic extends State<Uploadimage> {
                           fontSize: 30, color: Colors.white),
                     ),
                     onPressed:() async {
-                      QuerySnapshot dbt = await gettable.get();
-                      setState(() {
-                        input=[];
-                        dbt.docs.forEach((element) {
-                          setState(() {
-                            input.add(element.get('num'));
+                      if(number.text.isEmpty){
+                        showAlertDialog2(context,"Enter number of Table first");
+                      }else{
+                        if(seats.text.isEmpty){
+                          showAlertDialog2(context,"Enter number of seats first");
+                        }
+                        else{
+                          QuerySnapshot dbt = await gettable.get();
+                          input=[];
+                          dbt.docs.forEach((element) {
+                            setState(() {
+                              input.add(element.get('num'));
+                            });
                           });
-                        });
-                        print("ta : $input");
-                        tableno=int.parse(number.text) ;
-                        seatsno=int.parse(seats.text) ;
-                        if(number.text.isNotEmpty){
-                        if(input.contains(tableno)) {
-                          changenoseats();
-                          if (imagelist.toString() != "[]") {
-                            photo();
+                          print("ta : $input");
+                          tableno=int.parse(number.text) ;
+                          seatsno=int.parse(seats.text) ;
+                          if(input.contains(tableno)) {
+                            changenoseats();
+                            if (imagelist.toString() != "[]") {
+                              photo();
+                            }
+
+                            if (_group.isNotEmpty) {
+                              changloca();
+                            }
+                            showAlertDialog3(context, tableno);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+
+                          }else {
+                            showAlertDialog(context, tableno);
                           }
+                        }
 
-                          if (_group.isNotEmpty) {
-                            changloca();
-                          }
-                          showAlertDialog3(context, tableno);
-
-
-                        }else {
-                          showAlertDialog(context, tableno);
-                        }}else{showAlertDialog(context, tableno);}
-                      });
-
+                      }
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -348,7 +365,6 @@ class _imagepic extends State<Uploadimage> {
           children:[
             Radio<String>(
               value: 'In Door',
-              hoverColor: Colors.white,
               groupValue: _group,
               onChanged: (value) {
                 setState((){
@@ -415,4 +431,26 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
+showAlertDialog2(BuildContext context,String message) {
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    backgroundColor: Colors.white,
+    title: const Text("Warning:", style: TextStyle(
+      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
+    ),),
+    content: Text(message, style:const TextStyle(
+      fontSize: 18, color: Colors.black,
+    ),),
+    actions: [],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 }

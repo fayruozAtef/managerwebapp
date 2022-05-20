@@ -8,27 +8,31 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-class Addtable extends StatefulWidget {
-  //final String userId;
-  const Addtable({Key? key, }) : super(key: key);
 
+import '../home.dart';
+class Addtable extends StatefulWidget {
+  final num tn;
+  final String uid;
+  const Addtable({Key? key,required this.tn, required this.uid }) : super(key: key);
   @override
-  _add createState() => _add();
+  _add createState() => _add(tablenumber: this.tn,uid: this.uid);
 }
 
 class _add extends State<Addtable> {
-
+  num tablenumber;
+  String uid;
+_add({Key? key,required this.tablenumber,required this.uid});
   String _group="";
   List imagelist=[];
   final seats =TextEditingController();
-  num tablenumber=-1;
   num seatsno=0;
   num nochange=0;
   List input=[];
-  CollectionReference gettable = FirebaseFirestore.instance.collection("tryimage");
+  CollectionReference gettable = FirebaseFirestore.instance.collection("tables");
   FirebaseStorage _storage= FirebaseStorage.instanceFor(
       bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
   //String filename = result.files.single.name;
+
 
   _openPicker() async{
     FilePickerResult? result;
@@ -53,18 +57,25 @@ class _add extends State<Addtable> {
     }
   }
 
+@override
+   initState() {
+    super.initState();
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('Arrange Table'),),
+      appBar: AppBar(title:const Text('Add Table'),),
       backgroundColor: Colors.black,
       body:SingleChildScrollView(
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+
+            const SizedBox(height: 30,),
+            buildText(" Table Number: $tablenumber"),
             const SizedBox(height: 30,),
 
             buildText("Enter Number of Seats"),
@@ -207,8 +218,6 @@ class _add extends State<Addtable> {
                       }
                       else{
                         seatsno=int.parse(seats.text);
-                        QuerySnapshot dbt = await gettable.get();
-                        tablenumber=dbt.size+1;
                         if(imagelist.length==0){
                           showAlertDialog2(context, "Insert images first");
                         }
@@ -224,6 +233,7 @@ class _add extends State<Addtable> {
                                 showAlertDialog3(context),
                             );
                             Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
                           }
                           else{
                             showAlertDialog2(context, "Choose the table place");
@@ -232,37 +242,6 @@ class _add extends State<Addtable> {
 
                       }
 
-                      /*QuerySnapshot dbt = await gettable.get();
-                      setState(() async {
-                        input=[];
-                        dbt.docs.forEach((element) {
-                          setState(() {
-                            input.add(element.get('num'));
-                          });
-                        });
-                        print("ta : $input");
-                        tableno=int.parse(number.text) ;
-                        seatsno=int.parse(seats.text) ;
-
-
-                            if (imagelist.toString() != "[]") {
-                              if (_group.isNotEmpty) {
-                                await gettable.doc("$tableno").set(
-                                    {
-                                      "num": tableno,
-                                      "no-of-sets": seatsno,
-                                      "location": _group,
-                                      "image": imagelist
-                                    },
-                                    showAlertDialog3(context)
-                                );
-                              }
-                          }else{
-                            showAlertDialog2(context);
-                          }
-
-
-                      });*/
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -341,7 +320,6 @@ class _add extends State<Addtable> {
           children:[
             Radio<String>(
               value: 'In Door',
-              hoverColor: Colors.white,
               groupValue: _group,
               onChanged: (value) {
                 setState((){
