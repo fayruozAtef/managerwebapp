@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,24 +7,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:managerweb/widgets/EditTable/addtable.dart';
 import 'package:uuid/uuid.dart';
-class Uploadimage extends StatefulWidget {
+class Addtable extends StatefulWidget {
   //final String userId;
-  const Uploadimage({Key? key, }) : super(key: key);
+  const Addtable({Key? key, }) : super(key: key);
 
   @override
-  _imagepic createState() => _imagepic();
+  _add createState() => _add();
 }
 
-class _imagepic extends State<Uploadimage> {
-  String? _error;
-  String? _error2;
+class _add extends State<Addtable> {
+
   String _group="";
   List imagelist=[];
-  final number =TextEditingController();
   final seats =TextEditingController();
-  num tableno=0;
+  num tablenumber=-1;
   num seatsno=0;
   num nochange=0;
   List input=[];
@@ -31,10 +30,10 @@ class _imagepic extends State<Uploadimage> {
       bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
   //String filename = result.files.single.name;
 
-   _openPicker() async{
+  _openPicker() async{
     FilePickerResult? result;
     result=await FilePicker.platform.pickFiles(
-      type: FileType.image
+        type: FileType.image
     );
 
     if(result != null) {
@@ -54,24 +53,7 @@ class _imagepic extends State<Uploadimage> {
     }
   }
 
-  photo()async{
 
-      await gettable.doc('$tableno').update({
-        "image": imagelist
-      });
-      print("Url 222 :: $imagelist");
-  }
-
-  changenoseats() async {
-        await gettable.doc('$tableno').update({
-          "no-of-sets":seatsno
-        });
-    }
-  changloca() async {
-    await gettable.doc('$tableno').update({
-       "location":_group
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,58 +65,34 @@ class _imagepic extends State<Uploadimage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            //ADD Table
-            SizedBox(height: 30,),
-            Container(
-              child: ButtonTheme(
-                minWidth: 100.0,
-                height: 50.0,
-                child: RaisedButton(
-                  child: Row(
-                    children: [
-                      Icon(Icons.add,
-                          size: 50,color: Colors.white),
-                      const SizedBox(width: 10,),
-                      Text('Add Table',
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 30,color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  onPressed:() {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable()));
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                  color: Color.fromRGBO(65, 189, 180, 54),
-                ),
-              ),
-            ),
-            SizedBox(height: 30,),
-            ////Table no
-            Container(
-                child: Row(
-                  children: [
-                    buildText("Enter Table Number You Want to Change"),
-                    Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
-                  ],
-                )
-            ),
-            Container(
-              color: Colors.black,
-              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-              child: buildtableno(),
-            ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
+
             buildText("Enter Number of Seats"),
             Container(
               color: Colors.black,
-              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-              child: buildnoseat(),
+              padding:const EdgeInsets.fromLTRB(50, 10, 400, 0),
+              child:  TextField(
+                controller: seats,
+                keyboardType: TextInputType.number,
+                style:const TextStyle(color: Colors.white),
+                decoration:  InputDecoration(
+                  hintText: 'Number of seats',
+                  hintStyle: const TextStyle(color: Colors.grey,),
+                  errorText: "Please Enter Number of Seats",
+                  errorStyle:const TextStyle(color: Colors.white,),
+                  errorBorder: OutlineInputBorder(
+                    borderSide:const BorderSide(color: Colors.white),
+                    borderRadius:  BorderRadius.circular(15.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius:  BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+
+                ),
+              ),
             ),
-            SizedBox(height: 30,),
+           const SizedBox(height: 30,),
 
             ////Location
             Container(
@@ -147,7 +105,7 @@ class _imagepic extends State<Uploadimage> {
                 ],
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
 
             ////UploadPhoto
             Container(
@@ -160,10 +118,10 @@ class _imagepic extends State<Uploadimage> {
                       height: 50.0,
                       child: RaisedButton(
                         child: Row(
-                          children: [
+                          children:const [
                             Icon(Icons.cloud_upload_outlined,
-                            size: 50,color: Colors.white),
-                            const SizedBox(width: 10,),
+                                size: 50,color: Colors.white),
+                             SizedBox(width: 10,),
                             Text('Upload Image',
                               style: TextStyle(fontWeight: FontWeight.bold,
                                   fontSize: 30,color: Colors.white),
@@ -188,10 +146,10 @@ class _imagepic extends State<Uploadimage> {
                       height: 50.0,
                       child: RaisedButton(
                         child: Row(
-                          children: [
+                          children: const [
                             Icon(Icons.delete_forever,
-                              size: 50,color: Colors.white),
-                            const SizedBox(width: 10,),
+                                size: 50,color: Colors.white),
+                            SizedBox(width: 10,),
                             Text('Delete Images',
                               style: TextStyle(fontWeight: FontWeight.bold,
                                   fontSize: 30,color: Colors.white),
@@ -212,8 +170,9 @@ class _imagepic extends State<Uploadimage> {
                 ],
               ),
             ),
-            SizedBox(height: 30,),
-            imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
+            const SizedBox(height: 30,),
+            imagelist.toString() == "[]" ?
+            const Center(child: Text(" No images Uploaded",
               style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
               height: 200,
               child: GridView.builder(
@@ -223,11 +182,11 @@ class _imagepic extends State<Uploadimage> {
                     return Image.network(File(imagelist[index]).path,);
                   }),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             /////Change Button
             Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
 
@@ -237,13 +196,44 @@ class _imagepic extends State<Uploadimage> {
                   height: 80.0,
                   child: RaisedButton(
                     child:
-                    Text('Change',
+                    const Text('Add Table',
                       style: TextStyle(fontWeight: FontWeight.bold,
                           fontSize: 30, color: Colors.white),
                     ),
-                    onPressed:() async {
-                      QuerySnapshot dbt = await gettable.get();
-                      setState(() {
+                    onPressed:()  async {
+                      if(seats.text.isEmpty){
+                        print("You click on the button");
+                        showAlertDialog2(context,"Enter number of seats first");
+                      }
+                      else{
+                        seatsno=int.parse(seats.text);
+                        QuerySnapshot dbt = await gettable.get();
+                        tablenumber=dbt.size+1;
+                        if(imagelist.length==0){
+                          showAlertDialog2(context, "Insert images first");
+                        }
+                        else{
+                          if (_group.isNotEmpty) {
+                            await gettable.doc("$tablenumber").set(
+                                {
+                                  "num": tablenumber,
+                                  "no-of-sets": seatsno,
+                                  "location": _group,
+                                  "image": imagelist
+                                },
+                                showAlertDialog3(context),
+                            );
+                            Navigator.of(context).pop();
+                          }
+                          else{
+                            showAlertDialog2(context, "Choose the table place");
+                          }
+                        }
+
+                      }
+
+                      /*QuerySnapshot dbt = await gettable.get();
+                      setState(() async {
                         input=[];
                         dbt.docs.forEach((element) {
                           setState(() {
@@ -253,24 +243,26 @@ class _imagepic extends State<Uploadimage> {
                         print("ta : $input");
                         tableno=int.parse(number.text) ;
                         seatsno=int.parse(seats.text) ;
-                        if(number.text.isNotEmpty){
-                        if(input.contains(tableno)) {
-                          changenoseats();
-                          if (imagelist.toString() != "[]") {
-                            photo();
+
+
+                            if (imagelist.toString() != "[]") {
+                              if (_group.isNotEmpty) {
+                                await gettable.doc("$tableno").set(
+                                    {
+                                      "num": tableno,
+                                      "no-of-sets": seatsno,
+                                      "location": _group,
+                                      "image": imagelist
+                                    },
+                                    showAlertDialog3(context)
+                                );
+                              }
+                          }else{
+                            showAlertDialog2(context);
                           }
 
-                          if (_group.isNotEmpty) {
-                            changloca();
-                          }
-                          showAlertDialog3(context, tableno);
 
-
-                        }else {
-                          showAlertDialog(context, tableno);
-                        }}else{showAlertDialog(context, tableno);}
-                      });
-
+                      });*/
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -293,19 +285,19 @@ class _imagepic extends State<Uploadimage> {
       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
     ),
   );
-  Widget buildnoseat() =>Material(
+  /*Widget buildnoseat() =>Material(
     color: Colors.black,
     child:   TextField(
       controller: seats,
       keyboardType: TextInputType.number,
-      style: TextStyle(color: Colors.white),
+      style:const TextStyle(color: Colors.white),
       decoration:  InputDecoration(
         hintText: 'Number of seats',
-        hintStyle: TextStyle(color: Colors.grey,),
+        hintStyle: const TextStyle(color: Colors.grey,),
         errorText: "Please Enter Number of Seats",
-        errorStyle: TextStyle(color: Colors.white,),
+        errorStyle:const TextStyle(color: Colors.white,),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide:const BorderSide(color: Colors.white),
           borderRadius:  BorderRadius.circular(15.0),
         ),
         border: OutlineInputBorder(
@@ -315,19 +307,19 @@ class _imagepic extends State<Uploadimage> {
 
       ),
     ),
-  );
+  );*/
 
-  Widget buildtableno() =>Material(
+  /*Widget buildtableno() =>Material(
     color:  Colors.black,
     child:   TextField(
       controller: number,
       keyboardType: TextInputType.number,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
       decoration:  InputDecoration(
         hintText: 'Enter Table no',
-        hintStyle: TextStyle(color: Colors.grey,),
+        hintStyle: const TextStyle(color: Colors.grey,),
         errorText: "Please Enter Table Number",
-        errorStyle: TextStyle(color: Colors.white),
+        errorStyle: const TextStyle(color: Colors.white),
         errorBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.white),
           borderRadius:  BorderRadius.circular(15.0),
@@ -339,7 +331,8 @@ class _imagepic extends State<Uploadimage> {
 
       ),
     ),
-  );
+  );*/
+
   Widget buildlocation() =>Material(
     color: Colors.black,
     child:   Theme(
@@ -356,7 +349,7 @@ class _imagepic extends State<Uploadimage> {
                 });
               },
             ),
-            Text('In Door',style:TextStyle(fontSize: 22, color: Colors.white)),
+            const Text('In Door',style:TextStyle(fontSize: 22, color: Colors.white)),
             const SizedBox(width: 50,),
             Radio<String>(value: 'Out Door',
               groupValue: _group ,
@@ -366,7 +359,7 @@ class _imagepic extends State<Uploadimage> {
                 });
               },
             ),
-            Text('Out Door',style:TextStyle(fontSize: 22, color: Colors.white))
+            const Text('Out Door',style:TextStyle(fontSize: 22, color: Colors.white))
           ]
       ),
     ),
@@ -379,7 +372,7 @@ class _imagepic extends State<Uploadimage> {
       title:const Text("Warning:", style: TextStyle(
         fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
       ),),
-      content: Text("There is no table with number $noseats in the resturant to change.", style:const  TextStyle(
+      content: Text("There is table with number $noseats in the Resturant.", style:const  TextStyle(
         fontSize: 18, color: Colors.black,
       ),),
       actions: const [],
@@ -393,7 +386,29 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
-  showAlertDialog3(BuildContext context,num noseats) {
+  showAlertDialog2(BuildContext context,String message) {
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white,
+      title: const Text("Warning:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
+      ),),
+      content: Text(message, style:const TextStyle(
+        fontSize: 18, color: Colors.black,
+      ),),
+      actions: [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+  showAlertDialog3(BuildContext context) {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -401,7 +416,7 @@ class _imagepic extends State<Uploadimage> {
       title:const Text("Message:", style: TextStyle(
         fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
       ),),
-      content: Text("You Changed The Table $noseats Successfully.", style:const  TextStyle(
+      content: Text("You Added Table Successfully.", style:const  TextStyle(
         fontSize: 18, color: Colors.black,
       ),),
       actions: const [],
