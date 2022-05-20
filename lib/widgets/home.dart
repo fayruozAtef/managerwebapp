@@ -102,7 +102,7 @@ class _home extends State<Home2> {
                 ),
               ],
             ),
-
+            
             Row(
               children: [
                 const Icon(Icons.qr_code_outlined ,color: Colors.white,),
@@ -120,7 +120,7 @@ class _home extends State<Home2> {
                 const Icon(Icons.table_restaurant ,color: Colors.white,),
                 FlatButton(
                   onPressed:(){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage(uid: uid,)));
                   },
                   child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),

@@ -5,18 +5,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:managerweb/widgets/EditTable/addtable.dart';
 import 'package:uuid/uuid.dart';
+
+import 'home.dart';
 class Uploadimage extends StatefulWidget {
-  //final String userId;
-  const Uploadimage({Key? key, }) : super(key: key);
+  final String uid;
+  const Uploadimage({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _imagepic createState() => _imagepic();
+  _imagepic createState() => _imagepic(uid: this.uid);
 }
 
 class _imagepic extends State<Uploadimage> {
-  String? _error;
-  String? _error2;
+  String uid;
+  _imagepic({Key? key,required this.uid});
   String _group="";
   List imagelist=[];
   final number =TextEditingController();
@@ -25,7 +28,8 @@ class _imagepic extends State<Uploadimage> {
   num seatsno=0;
   num nochange=0;
   List input=[];
-  CollectionReference gettable = FirebaseFirestore.instance.collection("tryimage");
+  num tablenumber=-1;
+  CollectionReference gettable = FirebaseFirestore.instance.collection("tables");
   FirebaseStorage _storage= FirebaseStorage.instanceFor(
       bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
   //String filename = result.files.single.name;
@@ -82,35 +86,47 @@ class _imagepic extends State<Uploadimage> {
           alignment: Alignment.center,
           child: Column(
 
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 30,),
-              ////Table no
-              Container(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //ADD Table
+            SizedBox(height: 30,),
+            Container(
+              padding: EdgeInsets.fromLTRB(350, 0, 400, 0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: ButtonTheme(
+                minWidth: 100.0,
+                height: 50.0,
+                child: RaisedButton(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildText("Enter Table Number You Want to Change"),
-                      Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
+                      Icon(Icons.add,
+                          size: 50,color: Colors.white),
+                      const SizedBox(width: 10,),
+                      Text('Add Table',
+                        style: TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 30,color: Colors.white),
+                      ),
                     ],
-                  )
+                  ),
+                  onPressed:() async {
+                    QuerySnapshot dbt = await gettable.get();
+                     tablenumber=dbt.size+1;
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable(tn: tablenumber, uid: uid,)));
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                  color: Color.fromRGBO(65, 189, 180, 54),
+                ),
               ),
-              Container(
-                color: Colors.black,
-                padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-                child: buildtableno(),
-              ),
-              SizedBox(height: 30,),
-              buildText("Enter Number of Seats"),
-              Container(
-                color: Colors.black,
-                padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
-                child: buildnoseat(),
-              ),
-              SizedBox(height: 30,),
-
-              ////Location
-              Container(
-                color: Colors.black,
+            ),
+            SizedBox(height: 30,),
+            ////Table no
+            Container(
                 child: Row(
                   children: [
                     buildText(" Location Of table"),
@@ -181,41 +197,15 @@ class _imagepic extends State<Uploadimage> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30,),
-              imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
-                style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
-                height: 200,
-                child: GridView.builder(
-                    itemCount: imagelist.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
-                    itemBuilder: (BuildContext context,int index){
-                      return Image.network(File(imagelist[index]).path,);
-                    }),
-              ),
-              SizedBox(height: 30,),
-              /////Change Button
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-
-                child: Center(
-                  child: ButtonTheme(
-                    minWidth: 200.0,
-                    height: 80.0,
-                    child: RaisedButton(
-                      child:
-                      Text('Change',
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 30, color: Colors.white),
-                      ),
-                      onPressed:() async {
-                        QuerySnapshot dbt = await gettable.get();
-                        setState(() {
+                    onPressed:() async {
+                      if(number.text.isEmpty){
+                        showAlertDialog2(context,"Enter number of Table first");
+                      }else{
+                        if(seats.text.isEmpty){
+                          showAlertDialog2(context,"Enter number of seats first");
+                        }
+                        else{
+                          QuerySnapshot dbt = await gettable.get();
                           input=[];
                           dbt.docs.forEach((element) {
                             setState(() {
@@ -234,17 +224,19 @@ class _imagepic extends State<Uploadimage> {
                             if (_group.isNotEmpty) {
                               changloca();
                             }
+                            showAlertDialog3(context, tableno);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+
                           }else {
                             showAlertDialog(context, tableno);
                           }
-                        });
+                        }
 
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                      color: Color.fromRGBO(65, 189, 180, 54),
+                      }
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
@@ -268,6 +260,7 @@ class _imagepic extends State<Uploadimage> {
       controller: seats,
       style: TextStyle(color: Colors.white),
       keyboardType: TextInputType.number,
+      style: TextStyle(color: Colors.white),
       decoration:  InputDecoration(
         hintText: 'Number of seats',
         hintStyle: TextStyle(color: Colors.grey,),
@@ -292,6 +285,7 @@ class _imagepic extends State<Uploadimage> {
       style: TextStyle(color: Colors.white),
       controller: number,
       keyboardType: TextInputType.number,
+      style: TextStyle(color: Colors.white),
       decoration:  InputDecoration(
         hintText: 'Enter Table no',
         hintStyle: TextStyle(color: Colors.white,),
@@ -317,7 +311,6 @@ class _imagepic extends State<Uploadimage> {
           children:[
             Radio<String>(
               value: 'In Door',
-              hoverColor: Colors.white,
               groupValue: _group,
               onChanged: (value) {
                 setState((){
@@ -362,5 +355,48 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
+  showAlertDialog3(BuildContext context,num noseats) {
 
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white54,
+      title:const Text("Message:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+      ),),
+      content: Text("You Changed The Table $noseats Successfully.", style:const  TextStyle(
+        fontSize: 18, color: Colors.black,
+      ),),
+      actions: const [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+showAlertDialog2(BuildContext context,String message) {
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    backgroundColor: Colors.white,
+    title: const Text("Warning:", style: TextStyle(
+      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
+    ),),
+    content: Text(message, style:const TextStyle(
+      fontSize: 18, color: Colors.black,
+    ),),
+    actions: [],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 }
