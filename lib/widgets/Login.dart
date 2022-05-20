@@ -77,7 +77,7 @@ class _LogInState extends State<LogIn> {
           print("Successfull");
           String id = Auth().getId();
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => Home(uid: id,)));
+              MaterialPageRoute(builder: (context) => Home()));
         }).catchError((e) {
           if (e.code == 'user-not-found') {
             showAlertDialog(context, 'No user found for that email.');

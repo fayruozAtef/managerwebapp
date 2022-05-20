@@ -254,7 +254,7 @@ class _CategoriesState extends State<Categories> {
         }
       }
       String managerID=FirebaseAuth.instance.currentUser!.uid;
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home(uid: managerID,)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home()));
     },
     label: Text('Save',style:TextStyle(fontSize: 32)),
   );

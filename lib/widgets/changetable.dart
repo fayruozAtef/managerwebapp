@@ -34,10 +34,10 @@ class _imagepic extends State<Uploadimage> {
       bucket:'storageBucket: "testfirebaseflutter-aa934.appspot.com"' );
   //String filename = result.files.single.name;
 
-   _openPicker() async{
+  _openPicker() async{
     FilePickerResult? result;
     result=await FilePicker.platform.pickFiles(
-      type: FileType.image
+        type: FileType.image
     );
 
     if(result != null) {
@@ -59,33 +59,31 @@ class _imagepic extends State<Uploadimage> {
 
   photo()async{
 
-      await gettable.doc('$tableno').update({
-        "image": imagelist
-      });
-      print("Url 222 :: $imagelist");
+    await gettable.doc('$tableno').update({
+      "image": imagelist
+    });
+    print("Url 222 :: $imagelist");
   }
 
   changenoseats() async {
-        await gettable.doc('$tableno').update({
-          "no-of-sets":seatsno
-        });
-    }
+    await gettable.doc('$tableno').update({
+      "no-of-sets":seatsno
+    });
+  }
   changloca() async {
     await gettable.doc('$tableno').update({
-       "location":_group
+      "location":_group
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('Arrange Table',style: TextStyle(color: Colors.white, fontSize: 30,)),),
+      appBar: AppBar(title:const Text('Arrange Table'),),
       backgroundColor: Colors.black,
       body:SingleChildScrollView(
-        child: Align(
-          alignment: Alignment.center,
-          child: Column(
 
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //ADD Table
@@ -113,7 +111,7 @@ class _imagepic extends State<Uploadimage> {
                   ),
                   onPressed:() async {
                     QuerySnapshot dbt = await gettable.get();
-                     tablenumber=dbt.size+1;
+                    tablenumber=dbt.size+1;
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable(tn: tablenumber, uid: uid,)));
                   },
                   shape: RoundedRectangleBorder(
@@ -129,73 +127,129 @@ class _imagepic extends State<Uploadimage> {
             Container(
                 child: Row(
                   children: [
-                    buildText(" Location Of table"),
-                    const SizedBox(width: 50,),
-                    buildlocation(),
+                    buildText("Enter Table Number You Want to Change"),
+                    Text("**",style: TextStyle(color:Colors.red,fontSize:22 ),)
                   ],
-                ),
-              ),
-              SizedBox(height: 30,),
+                )
+            ),
+            Container(
+              color: Colors.black,
+              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
+              child: buildtableno(),
+            ),
+            SizedBox(height: 30,),
+            buildText("Enter Number of Seats"),
+            Container(
+              color: Colors.black,
+              padding: EdgeInsets.fromLTRB(50, 10, 400, 0),
+              child: buildnoseat(),
+            ),
+            SizedBox(height: 30,),
 
-              ////UploadPhoto
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: ButtonTheme(
-                        minWidth: 100.0,
-                        height: 50.0,
-                        child: RaisedButton(
-                          child: Row(
-                            children: [
-                              Icon(Icons.cloud_upload_outlined,
-                              size: 50,color: Colors.white),
-                              const SizedBox(width: 10,),
-                              Text('Upload Image',
-                                style: TextStyle(fontWeight: FontWeight.bold,
-                                    fontSize: 30,color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          onPressed:() {
-                            _openPicker();
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                          color: Color.fromRGBO(65, 189, 180, 54),
+            ////Location
+            Container(
+              color: Colors.black,
+              child: Row(
+                children: [
+                  buildText(" Location Of table"),
+                  const SizedBox(width: 50,),
+                  buildlocation(),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+
+            ////UploadPhoto
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: ButtonTheme(
+                      minWidth: 100.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.cloud_upload_outlined,
+                                size: 50,color: Colors.white),
+                            const SizedBox(width: 10,),
+                            Text('Upload Image',
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 30,color: Colors.white),
+                            ),
+                          ],
                         ),
+                        onPressed:() {
+                          _openPicker();
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                        color: Color.fromRGBO(65, 189, 180, 54),
                       ),
                     ),
-                    const SizedBox(width: 80,),
-                    Container(
-                      child: ButtonTheme(
-                        minWidth: 100.0,
-                        height: 50.0,
-                        child: RaisedButton(
-                          child: Row(
-                            children: [
-                              Icon(Icons.delete_forever,
+                  ),
+                  const SizedBox(width: 80,),
+                  Container(
+                    child: ButtonTheme(
+                      minWidth: 100.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.delete_forever,
                                 size: 50,color: Colors.white),
-                              const SizedBox(width: 10,),
-                              Text('Delete Images',
-                                style: TextStyle(fontWeight: FontWeight.bold,
-                                    fontSize: 30,color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          onPressed:() {
-                            imagelist=[];
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                          color: Color.fromRGBO(65, 189, 180, 54),
+                            const SizedBox(width: 10,),
+                            Text('Delete Images',
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 30,color: Colors.white),
+                            ),
+                          ],
                         ),
+                        onPressed:() {
+                          imagelist=[];
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                        color: Color.fromRGBO(65, 189, 180, 54),
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
+              style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
+              height: 200,
+              child: GridView.builder(
+                  itemCount: imagelist.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
+                  itemBuilder: (BuildContext context,int index){
+                    return Image.network(File(imagelist[index]).path,);
+                  }),
+            ),
+            SizedBox(height: 30,),
+            /////Change Button
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+
+              child: Center(
+                child: ButtonTheme(
+                  minWidth: 200.0,
+                  height: 80.0,
+                  child: RaisedButton(
+                    child:
+                    Text('Change',
+                      style: TextStyle(fontWeight: FontWeight.bold,
+                          fontSize: 30, color: Colors.white),
                     ),
                     onPressed:() async {
                       if(number.text.isEmpty){
@@ -238,11 +292,13 @@ class _imagepic extends State<Uploadimage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
+                    padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                    color: Color.fromRGBO(65, 189, 180, 54),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ) ,
     );
@@ -255,10 +311,9 @@ class _imagepic extends State<Uploadimage> {
     ),
   );
   Widget buildnoseat() =>Material(
-    color: Colors.transparent,
+    color: Colors.black,
     child:   TextField(
       controller: seats,
-      style: TextStyle(color: Colors.white),
       keyboardType: TextInputType.number,
       style: TextStyle(color: Colors.white),
       decoration:  InputDecoration(
@@ -280,15 +335,14 @@ class _imagepic extends State<Uploadimage> {
   );
 
   Widget buildtableno() =>Material(
-    color:  Colors.transparent,
+    color:  Colors.black,
     child:   TextField(
-      style: TextStyle(color: Colors.white),
       controller: number,
       keyboardType: TextInputType.number,
       style: TextStyle(color: Colors.white),
       decoration:  InputDecoration(
         hintText: 'Enter Table no',
-        hintStyle: TextStyle(color: Colors.white,),
+        hintStyle: TextStyle(color: Colors.grey,),
         errorText: "Please Enter Table Number",
         errorStyle: TextStyle(color: Colors.white),
         errorBorder: OutlineInputBorder(
@@ -377,26 +431,26 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
-showAlertDialog2(BuildContext context,String message) {
+  showAlertDialog2(BuildContext context,String message) {
 
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    backgroundColor: Colors.white,
-    title: const Text("Warning:", style: TextStyle(
-      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
-    ),),
-    content: Text(message, style:const TextStyle(
-      fontSize: 18, color: Colors.black,
-    ),),
-    actions: [],
-  );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white,
+      title: const Text("Warning:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
+      ),),
+      content: Text(message, style:const TextStyle(
+        fontSize: 18, color: Colors.black,
+      ),),
+      actions: [],
+    );
 
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

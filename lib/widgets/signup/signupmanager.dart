@@ -95,7 +95,7 @@ class _AuthCardState extends State<AuthCard> {
         }).then((value) {
           showAlertDialog(context, " Successfully add a new manager ${_autData['fname']}  ${_autData['lname']}"); 
           Timer(const Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(uid:uid ,)));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home()));
           });
         });
 

@@ -12,8 +12,8 @@ import 'Login.dart';
 import 'changetable.dart';
 
 class Home extends StatelessWidget {
-  String uid;
-  Home({Key? key,required this.uid});
+  String uid=FirebaseAuth.instance.currentUser!.uid;
+  Home({Key? key});
   @override
   Widget build(BuildContext context) {
     return Stack(
