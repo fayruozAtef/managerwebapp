@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:file_picker/file_picker.dart';
-import 'package:managerweb/widgets/totalPayment.dart';
+import 'package:managerweb/widgets/update_categories.dart';
 import 'dart:typed_data';
 import 'package:uuid/uuid.dart';
 
@@ -108,22 +108,22 @@ MyAppState({Key? key, required this.title2}) : super();
                       children: [
                    Expanded(child:
                    Column(
-  children: [
-    Container(
-      width: 400,
-      height: 400,
-      child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
-    ),
-    FloatingActionButton(
-      child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-      backgroundColor: Colors.blue,
-      mini: true,
-      onPressed:(){
-        _openPicker(i);
-      },
-    ),
-  ],
-),),
+                      children: [
+                        Container(
+                          width: 400,
+                          height: 400,
+                          child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
+                        ),
+                        FloatingActionButton(
+                          child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                          backgroundColor: Colors.blue,
+                          mini: true,
+                          onPressed:(){
+                            _openPicker(i);
+                          },
+                        ),
+                      ],
+                    ),),
                     Expanded(child:  Column(
                           children: [
                             Align(
@@ -355,9 +355,9 @@ MyAppState({Key? key, required this.title2}) : super();
       for(int k=0;k<deleteElement.length;k++){
         bff.doc(deleteElement[k]).delete();
       }
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (context) =>payment()));
+              builder: (context) =>Categories()));
        }
     },
     child: Text('save',style:TextStyle(fontSize: 35)),

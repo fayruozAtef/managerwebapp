@@ -8,17 +8,6 @@ import 'package:managerweb/widgets/home.dart';
 import '../Background/backWithOpacity.dart';
 import '../qr_create_page.dart';
 import 'auth.dart';
-final List<Map<String, dynamic>> _menuItem = [
-  {
-    "title": "Manager",
-    "selected": false,
-  },
-  {
-    "title": "Waiter",
-    "selected": true,
-  },
-
-];
 class signupmanager extends StatelessWidget {
   String uid;
   signupmanager({Key? key,required this.uid});
@@ -79,7 +68,6 @@ class _AuthCardState extends State<AuthCard> {
     'lname':'',
     'phone':'',
     'type':'',
-
   };
   final _passwordController =TextEditingController();
 

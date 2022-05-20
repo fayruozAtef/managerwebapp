@@ -1,11 +1,14 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:managerweb/widgets/update_menu.dart';
 import 'package:uuid/uuid.dart';
+
+import 'home.dart';
 
 List listid=[];
 List imgList=[];
@@ -80,7 +83,7 @@ class _CategoriesState extends State<Categories> {
               fontWeight: FontWeight.bold,
             )
         ),
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
       ),
       body:SingleChildScrollView(
        child:Form(
@@ -88,7 +91,7 @@ class _CategoriesState extends State<Categories> {
         child: Column(
             children: [
              for(int i=0;i<name.length;i++)
-                Card(
+               Card(
                   color: color[i]==0?Colors.white:Colors.black26,
                   child:InkWell(onTap: (){
                     Navigator.of(context).push(
@@ -172,7 +175,7 @@ class _CategoriesState extends State<Categories> {
               Card(
                 child:InkWell(onTap: ()async{
                   setState(() {
-                  name.add('New');
+                  name.add('');
                   imgList.add('');
                   color.add(0);
                   });
@@ -250,6 +253,8 @@ class _CategoriesState extends State<Categories> {
           bff.doc(deleteElement[k]).delete();
         }
       }
+      String managerID=FirebaseAuth.instance.currentUser!.uid;
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home(uid: managerID,)));
     },
     label: Text('Save',style:TextStyle(fontSize: 32)),
   );
