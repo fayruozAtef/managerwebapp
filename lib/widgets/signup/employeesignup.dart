@@ -201,7 +201,7 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     keyboardType: TextInputType.emailAddress,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
-                                      if(value!.isEmpty || !value.contains('@') || !value.contains('.com')){
+                                      if(value!.isEmpty || !value.contains('@') || !value.endsWith('.com')){
                                         return 'Invalid Email! ';
                                       }
                                     },
