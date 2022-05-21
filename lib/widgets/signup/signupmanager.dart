@@ -143,7 +143,6 @@ class _AuthCardState extends State<AuthCard> {
                                         if(value!.isEmpty){
                                           return '**Enter first name**';
                                         }
-                                        _autData['firstname']=value!;
                                       },
                                       onSaved: (value) {
                                         _autData['fname']=value!;
@@ -170,7 +169,7 @@ class _AuthCardState extends State<AuthCard> {
                                         if(value!.isEmpty){
                                           return '**Enter phone number**';
                                         }
-                                        else if(value!.length!=11){
+                                        else if(value.length!=11){
                                           return '**Enter correct phone number**';
                                         }
                                       },
@@ -186,7 +185,7 @@ class _AuthCardState extends State<AuthCard> {
                                       keyboardType: TextInputType.emailAddress,
                                       style: const TextStyle(color: Colors.white,fontSize: 23),
                                       validator: (value){
-                                        if(value!.isEmpty || !value.contains('@')){
+                                        if(value!.isEmpty || !value.contains('@') || !value.endsWith(".com")){
                                           return '**Invalid Email! ';
                                         }
                                       },
