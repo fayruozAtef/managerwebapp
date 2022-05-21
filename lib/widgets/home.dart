@@ -9,7 +9,7 @@ import 'package:managerweb/widgets/totalPayment2.dart';
 import 'package:managerweb/widgets/update_categories.dart';
 import 'Background/homeback.dart';
 import 'Login.dart';
-import 'changetable.dart';
+import 'EditTable/changetable.dart';
 
 class Home extends StatelessWidget {
   String uid=FirebaseAuth.instance.currentUser!.uid;

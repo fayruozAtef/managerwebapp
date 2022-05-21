@@ -227,7 +227,7 @@ _add({Key? key,required this.tablenumber});
                                   "num": tablenumber,
                                   "no-of-sets": seatsno,
                                   "location": _group,
-                                  "image": imagelist
+                                  "images": imagelist
                                 },
                                 showAlertDialog3(context),
                             );

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:managerweb/widgets/EditTable/addtable.dart';
 import 'package:uuid/uuid.dart';
 
-import 'home.dart';
+import '../home.dart';
 class Uploadimage extends StatefulWidget {
 
   const Uploadimage({Key? key,}) : super(key: key);
@@ -58,7 +58,7 @@ class _imagepic extends State<Uploadimage> {
   photo()async{
 
     await gettable.doc('$tableno').update({
-      "image": imagelist
+      "images": imagelist
     });
     print("Url 222 :: $imagelist");
   }
@@ -112,7 +112,7 @@ class _imagepic extends State<Uploadimage> {
                 child: RaisedButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children:const [
                       Icon(Icons.add,
                           size: 50,color: Colors.white),
                       const SizedBox(width: 10,),
@@ -131,7 +131,7 @@ class _imagepic extends State<Uploadimage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -297,10 +297,10 @@ class _imagepic extends State<Uploadimage> {
                           }
                           }
                         else{
-                          showAlertDialog2(context, "You Changed Table $tableno Successefully");
                           tableno=int.parse(number.text) ;
                           seatsno=int.parse(seats.text) ;
                           if(input.contains(tableno)) {
+                            showAlertDialog2(context, "You Changed Table $tableno Successefully");
                             changenoseats();
 
                             print("success");
@@ -476,10 +476,10 @@ class _imagepic extends State<Uploadimage> {
         fontSize: 18, color: Colors.black,
       ),),
       actions: [
-        FlatButton(child: Text("ok",style: TextStyle(fontSize: 15),),
+        FlatButton(child: const Text("Ok",style: TextStyle(fontSize: 18),),
           onPressed: (){
             Navigator.of(context).pop();
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+            Navigator.of(context).pop();
           },
         )
       ],
