@@ -96,7 +96,7 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
                         decoration:const InputDecoration (
                             labelText: 'E-Mail' ,
                             labelStyle: TextStyle(color: Colors.white),
-                            errorStyle: TextStyle(color: Colors.red,fontSize: 15)),
+                            errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(color: Colors.white,fontSize: 23),
                         validator: (value){
