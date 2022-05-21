@@ -17,7 +17,7 @@ class signupmanager extends StatelessWidget {
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
-            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(fontSize: 25),),),
+            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(color: Colors.white, fontSize: 30,)),),
             backgroundColor: Colors.transparent,
             body: Stack(
                 children:[
@@ -169,7 +169,7 @@ class _AuthCardState extends State<AuthCard> {
                                         if(value!.isEmpty){
                                           return '**Enter phone number**';
                                         }
-                                        else if(value!.length!=11){
+                                        else if(value.length!=11){
                                           return '**Enter correct phone number**';
                                         }
                                       },
@@ -185,7 +185,7 @@ class _AuthCardState extends State<AuthCard> {
                                       keyboardType: TextInputType.emailAddress,
                                       style: const TextStyle(color: Colors.white,fontSize: 23),
                                       validator: (value){
-                                        if(value!.isEmpty || !value.contains('@')){
+                                        if(value!.isEmpty || !value.contains('@') || !value.endsWith(".com")){
                                           return '**Invalid Email! ';
                                         }
                                       },
