@@ -360,9 +360,8 @@ MyAppState({Key? key, required this.title2}) : super();
 
       showAlertDialog(context,"Your update in menu is Done");
       Timer(const Duration(seconds: 3), () {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) =>Categories()));
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       });
      }
     },

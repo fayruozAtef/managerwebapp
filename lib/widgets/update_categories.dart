@@ -258,7 +258,8 @@ class _CategoriesState extends State<Categories> {
       String managerID=FirebaseAuth.instance.currentUser!.uid;
       showAlertDialog(context,"Your Update is Done");
       Timer(const Duration(seconds: 3), () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home()));
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       });
     },
     label: Text('Save',style:TextStyle(fontSize: 32)),
