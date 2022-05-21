@@ -118,7 +118,7 @@ class _imagepic extends State<Uploadimage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                  color: Color.fromRGBO(65, 189, 180, 54),
+                  color: Colors.blue,
                 ),
               ),
             ),
@@ -187,7 +187,7 @@ class _imagepic extends State<Uploadimage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                        color: Color.fromRGBO(65, 189, 180, 54),
+                        color: Colors.blue,
                       ),
                     ),
                   ),
@@ -215,7 +215,7 @@ class _imagepic extends State<Uploadimage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                        color: Color.fromRGBO(65, 189, 180, 54),
+                        color: Colors.blue,
                       ),
                     ),
                   ),
@@ -259,6 +259,7 @@ class _imagepic extends State<Uploadimage> {
                           showAlertDialog2(context,"Enter number of seats first");
                         }
                         else{
+                          showAlertDialog2(context, "You Changed Successefully");
                           QuerySnapshot dbt = await gettable.get();
                           input=[];
                           dbt.docs.forEach((element) {
@@ -271,15 +272,14 @@ class _imagepic extends State<Uploadimage> {
                           seatsno=int.parse(seats.text) ;
                           if(input.contains(tableno)) {
                             changenoseats();
+
+                            print("success");
                             if (imagelist.toString() != "[]") {
                               photo();
+                              if (_group.isNotEmpty) {
+                                changloca();
+                              }
                             }
-
-                            if (_group.isNotEmpty) {
-                              changloca();
-                            }
-                            showAlertDialog3(context, tableno);
-                            Navigator.of(context).pop();
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
 
                           }else {
@@ -293,7 +293,7 @@ class _imagepic extends State<Uploadimage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                    color: Color.fromRGBO(65, 189, 180, 54),
+                    color: Colors.blue,
                   ),
                 ),
               ),
@@ -409,28 +409,7 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
-  showAlertDialog3(BuildContext context,num noseats) {
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      backgroundColor: Colors.white54,
-      title:const Text("Message:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
-      ),),
-      content: Text("You Changed The Table $noseats Successfully.", style:const  TextStyle(
-        fontSize: 18, color: Colors.black,
-      ),),
-      actions: const [],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
   showAlertDialog2(BuildContext context,String message) {
 
     // set up the AlertDialog
