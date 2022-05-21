@@ -10,16 +10,14 @@ import 'package:uuid/uuid.dart';
 
 import 'home.dart';
 class Uploadimage extends StatefulWidget {
-  final String uid;
-  const Uploadimage({Key? key, required this.uid}) : super(key: key);
+
+  const Uploadimage({Key? key,}) : super(key: key);
 
   @override
-  _imagepic createState() => _imagepic(uid: this.uid);
+  _imagepic createState() => _imagepic();
 }
 
 class _imagepic extends State<Uploadimage> {
-  String uid;
-  _imagepic({Key? key,required this.uid});
   String _group="";
   List imagelist=[];
   final number =TextEditingController();
@@ -127,7 +125,7 @@ class _imagepic extends State<Uploadimage> {
                   onPressed:() async {
                     QuerySnapshot dbt = await gettable.get();
                     tablenumber=dbt.size+1;
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable(tn: tablenumber, uid: uid,)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Addtable(tn: tablenumber,)));
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -240,7 +238,7 @@ class _imagepic extends State<Uploadimage> {
             SizedBox(height: 30,),
             imagelist.toString() == "[]" ? Center(child: Text(" No images Uploaded",
               style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
-              height: 200,
+              height: 300,
               child: GridView.builder(
                   itemCount: imagelist.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
@@ -466,7 +464,6 @@ class _imagepic extends State<Uploadimage> {
       },
     );
   }
-
   showAlertDialog2(BuildContext context,String message) {
 
     // set up the AlertDialog
