@@ -79,7 +79,7 @@ class _imagepic extends State<Uploadimage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('Arrange Table'),),
+      appBar: AppBar(title:const Text('Arrange Table',style: TextStyle(color: Colors.white, fontSize: 30,)),),
       backgroundColor: Colors.black,
       body:SingleChildScrollView(
 

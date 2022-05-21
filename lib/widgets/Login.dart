@@ -116,9 +116,10 @@ class _LogInState extends State<LogIn> {
                         decoration:const InputDecoration (
                           labelText: 'E-Mail' ,
                           labelStyle: TextStyle(color: Colors.white),
+                          errorStyle:TextStyle(color: Colors.white,fontSize: 15)
                         ),
                         keyboardType: TextInputType.emailAddress,
-                        style:const TextStyle(color: Colors.white,fontSize: 23,),
+                        style:const TextStyle(color: Colors.white,fontSize: 25,),
                         validator: (value){
                           if(value!.isEmpty || !value.contains('@')){
                             return 'Invalid Email! ';
@@ -131,12 +132,16 @@ class _LogInState extends State<LogIn> {
                       ),
                       const Padding(padding: EdgeInsets.only(top: 40),),
                       TextFormField(
-                        decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
+                        decoration:const InputDecoration(
+                            labelText: 'password' ,
+                            labelStyle: TextStyle(color: Colors.white),
+                            errorStyle:TextStyle(color: Colors.white,fontSize: 15)
+                        ),
                         obscureText: true,
-                        style:const TextStyle(color: Colors.white,fontSize: 23,),
+                        style:const TextStyle(color: Colors.white,fontSize: 25,),
                         validator: (value){
                           if(value!.isEmpty){
-                            return 'enter password';
+                            return 'Enter password';
                           }
                         },
                         onSaved: (value) {
