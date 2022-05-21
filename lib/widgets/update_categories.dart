@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -252,8 +253,36 @@ class _CategoriesState extends State<Categories> {
         }
       }
       String managerID=FirebaseAuth.instance.currentUser!.uid;
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home(uid: managerID,)));
+      showAlertDialog(context,"Your Update is Done");
+      Timer(const Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>Home(uid: managerID,)));
+      });
     },
     label: Text('Save',style:TextStyle(fontSize: 32)),
   );
+
+  showAlertDialog(BuildContext context,String message) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      backgroundColor: Colors.white,
+      title:const Text("Message:", style: TextStyle(
+        fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black,
+      ),),
+      content: Text(message, style: const TextStyle(
+        fontSize: 20, color: Colors.black,
+      ),),
+      actions: [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

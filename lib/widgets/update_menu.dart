@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -355,11 +357,40 @@ MyAppState({Key? key, required this.title2}) : super();
       for(int k=0;k<deleteElement.length;k++){
         bff.doc(deleteElement[k]).delete();
       }
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-              builder: (context) =>Categories()));
-       }
+
+      showAlertDialog(context,"Your update in menu is Done");
+      Timer(const Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (context) =>Categories()));
+      });
+     }
     },
     child: Text('save',style:TextStyle(fontSize: 35)),
   );
+
+  showAlertDialog(BuildContext context,String message) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      backgroundColor: Colors.white,
+      title:const Text("Message:", style: TextStyle(
+        fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black,
+      ),),
+      content: Text(message, style: const TextStyle(
+        fontSize: 20, color: Colors.black,
+      ),),
+      actions: [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
