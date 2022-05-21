@@ -34,6 +34,9 @@ class _CategoriesState extends State<Categories> {
   CollectionReference bff = FirebaseFirestore.instance.collection("categories");
   getData() async {
     QuerySnapshot dbf = await bff.get();
+    listid=[];
+    name=[];
+    imgList=[];
     dbf.docs.forEach((element) {
       setState(() {
         listid.add(element.id);
