@@ -143,7 +143,6 @@ class _AuthCardState extends State<AuthCard> {
                                         if(value!.isEmpty){
                                           return '**Enter first name**';
                                         }
-                                        _autData['firstname']=value!;
                                       },
                                       onSaved: (value) {
                                         _autData['fname']=value!;
