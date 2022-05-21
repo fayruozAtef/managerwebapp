@@ -56,7 +56,7 @@ class _QRCreatePage extends State<QRCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Generate QR-code"),
+        title: const Text("Generate QR-code", style: TextStyle(color: Colors.white, fontSize: 30,)),
       ),
       body: Align(
         alignment: Alignment.topCenter,

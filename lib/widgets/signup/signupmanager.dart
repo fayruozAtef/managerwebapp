@@ -17,7 +17,7 @@ class signupmanager extends StatelessWidget {
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
-            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(fontSize: 25),),),
+            appBar: AppBar(title: const Text("Add New Manager", style: TextStyle(color: Colors.white, fontSize: 30,)),),
             backgroundColor: Colors.transparent,
             body: Stack(
                 children:[
