@@ -75,7 +75,22 @@ class _imagepic extends State<Uploadimage> {
       "location":_group
     });
   }
-
+  getdata() async {
+    QuerySnapshot dbt = await gettable.get();
+    input=[];
+    dbt.docs.forEach((element) {
+      setState(() {
+        input.add(element.get('num'));
+      });
+    });
+    print("ta 1: $input");
+  }
+  @override
+  void initState() {
+    getdata();
+    print("ta 2: $input");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -253,21 +268,38 @@ class _imagepic extends State<Uploadimage> {
                     ),
                     onPressed:() async {
                       if(number.text.isEmpty){
-                        showAlertDialog2(context,"Enter number of Table first");
+                        showAlertDialog3(context,"Enter number of Table first");
                       }else{
                         if(seats.text.isEmpty){
-                          showAlertDialog2(context,"Enter number of seats first");
-                        }
+                          tableno=int.parse(number.text) ;
+                          if(input.contains(tableno)) {
+                            if (imagelist.toString() != "[]") {
+                              photo();
+                              if (_group.isNotEmpty) {
+                                changloca();
+                                print("group 1");
+                              }
+                              showAlertDialog2(context, "You Changed Table $tableno Successefully");
+
+                            }
+                            else{
+                              if (_group.isNotEmpty) {
+                                showAlertDialog2(context, "You Changed Table $tableno Successefully");
+                                changloca();
+                                print("group 2");
+                               
+                              }
+                              else{
+                                showAlertDialog3(context, "There is no Change Happened to Table $tableno .");
+                                print("no changes");
+                              }}
+                            }else{
+                            print("wrong table");
+                            showAlertDialog(context, tableno);
+                          }
+                          }
                         else{
-                          showAlertDialog2(context, "You Changed Successefully");
-                          QuerySnapshot dbt = await gettable.get();
-                          input=[];
-                          dbt.docs.forEach((element) {
-                            setState(() {
-                              input.add(element.get('num'));
-                            });
-                          });
-                          print("ta : $input");
+                          showAlertDialog2(context, "You Changed Table $tableno Successefully");
                           tableno=int.parse(number.text) ;
                           seatsno=int.parse(seats.text) ;
                           if(input.contains(tableno)) {
@@ -279,8 +311,11 @@ class _imagepic extends State<Uploadimage> {
                               if (_group.isNotEmpty) {
                                 changloca();
                               }
-                            }
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+                            }else{
+                              if (_group.isNotEmpty) {
+                              changloca();
+                            }}
+                            //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
 
                           }else {
                             showAlertDialog(context, tableno);
@@ -391,11 +426,33 @@ class _imagepic extends State<Uploadimage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       title:const Text("Warning:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
       ),),
       content: Text("There is no table with number $noseats in the resturant to change.", style:const  TextStyle(
+        fontSize: 18, color: Colors.black,
+      ),),
+      actions: const [],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+  showAlertDialog3(BuildContext context,String message ) {
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.white,
+      title:const Text("Warning:", style: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
+      ),),
+      content: Text(message, style:const  TextStyle(
         fontSize: 18, color: Colors.black,
       ),),
       actions: const [],
@@ -421,7 +478,14 @@ class _imagepic extends State<Uploadimage> {
       content: Text(message, style:const TextStyle(
         fontSize: 18, color: Colors.black,
       ),),
-      actions: [],
+      actions: [
+        FlatButton(child: Text("ok",style: TextStyle(fontSize: 15),),
+          onPressed: (){
+            Navigator.of(context).pop();
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+          },
+        )
+      ],
     );
 
     // show the dialog
