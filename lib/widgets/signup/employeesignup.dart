@@ -15,7 +15,7 @@ class EmployeSignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        BackWithOpacity(),
+        const BackWithOpacity(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
@@ -35,7 +35,6 @@ class EmployeSignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
                 SignUpEmp(uid: this.uid,),
               ],
             ),
@@ -43,6 +42,8 @@ class EmployeSignUp extends StatelessWidget {
         ),
       ],
     );
+
+
   }
 }
 
@@ -140,7 +141,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
 
                                   const SizedBox(height: 10,),
                                   TextFormField(
-                                    decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration: const InputDecoration(
+                                        labelText: 'F-name' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     style:const TextStyle(color: Colors.white,fontSize: 23,),
                                     keyboardType: TextInputType.name,
                                     validator: (value){
@@ -154,13 +158,16 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'L-name' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     style: TextStyle(color: Colors.white,fontSize: 23),
                                     keyboardType: TextInputType.name,
                                     validator: (value){
                                       _autData['lastname']=value!;
                                       if(value.isEmpty){
-                                        return'please enter your first name';
+                                        return'please enter your last name';
                                       }
                                     },
                                     onSaved: (value) {
@@ -168,7 +175,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'phone' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     keyboardType: TextInputType.phone,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
@@ -186,11 +196,12 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     decoration:const InputDecoration (
                                       labelText: 'E-Mail' ,
                                       labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)
                                     ),
                                     keyboardType: TextInputType.emailAddress,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
-                                      if(value!.isEmpty || !value.contains('@')){
+                                      if(value!.isEmpty || !value.contains('@') || !value.contains('.com')){
                                         return 'Invalid Email! ';
                                       }
                                     },
@@ -200,7 +211,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'password' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     obscureText: true,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     controller: _passwordController,
@@ -218,8 +232,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                      decoration:const InputDecoration(labelText: 'confirm password' ,
-                                          labelStyle: TextStyle(color: Colors.white,fontSize: 23)),
+                                      decoration:const InputDecoration(
+                                          labelText: 'confirm password' ,
+                                          labelStyle: TextStyle(color: Colors.white,fontSize: 23),
+                                          errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       style:const TextStyle(color: Colors.white,fontSize: 23),
                                       obscureText: true,
                                       validator: (value) {
@@ -231,24 +247,35 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                   ),
                                   const SizedBox(height: 20,),
                                   Container(
-                                    width: 250,
-                                    height: 50,
+                                    height: 120,
+                                    padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-
+                                      borderRadius: BorderRadius.all(Radius.circular(5)),
                                     ),
-                                    child: RaisedButton(
-                                      child:
-                                      const Text('SIGN UP',
-                                        style: TextStyle(fontSize: 25),
+
+                                    child: Center(
+                                      child: ButtonTheme(
+                                        minWidth: 200.0,
+                                        height: 80.0,
+                                        child: RaisedButton(
+                                          child:
+                                          const Text('SignUp',
+                                            style: TextStyle(fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+
+                                          onPressed:() {
+                                            _signup();
+                                          },
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(30),
+                                          ),
+                                          padding:const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                                          color: Colors.blue,
+                                          //color: Color.fromRGBO(65, 189, 180, 54),
+                                          textColor: Colors.white,
+                                        ),
                                       ),
-                                      onPressed:() {
-                                        _signup();
-                                      },
-                                      padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                      //color:const  Color.fromRGBO(65, 189, 180, 54),
-                                      color: Colors.blue,
-                                      textColor: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -257,7 +284,6 @@ class _SignUpEmpState extends State<SignUpEmp> {
                           ),
                         ]
                     ),
-
                   ]
               ),
             ),
@@ -271,9 +297,9 @@ class _SignUpEmpState extends State<SignUpEmp> {
 
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       title:const Text("Warning:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
       ),),
       content: Text('$message', style: const TextStyle(
         fontSize: 18, color: Colors.black,
