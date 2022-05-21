@@ -16,6 +16,7 @@ class Password extends StatelessWidget {
     return Stack(
       children:<Widget> [
         const BackWithOpacity(),
+       // SizedBox(height: 200),
         Container(
           padding: const EdgeInsets.all(20.0),
           height: 150,
@@ -30,6 +31,7 @@ class Password extends StatelessWidget {
         ),
         Container(
           child: Scaffold(
+            appBar: AppBar(title: const Text("Add New Waiter", style: TextStyle(fontSize: 25),),),
             backgroundColor: Colors.transparent,
             body: Stack(
               children:const[
@@ -86,15 +88,16 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
                         ),
                       ),
                       TextFormField(
+                        controller: emailcontroller,
                         decoration:const InputDecoration (
-                          labelText: 'E-Mail' ,
-                          labelStyle: TextStyle(color: Colors.white),
-                        ),
+                            labelText: 'E-Mail' ,
+                            labelStyle: TextStyle(color: Colors.white),
+                            errorStyle: TextStyle(color: Colors.red,fontSize: 15)),
                         keyboardType: TextInputType.emailAddress,
-                        style:const TextStyle(color: Colors.white,fontSize: 23,),
+                        style: const TextStyle(color: Colors.white,fontSize: 23),
                         validator: (value){
                           if(value!.isEmpty || !value.contains('@')){
-                            return 'Invalid Email! ';
+                            return 'invalid email! ';
                           }
                         },
                         // controller: email,
@@ -147,16 +150,24 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
     );
   }
   Future resetpassword() async{
-    try{
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: emailcontroller.text.trim()).then((value) =>{
+    if(_formKey.currentState!.validate()){
+      _formKey.currentState!.save() ;
+      try{
+        await FirebaseAuth.instance.sendPasswordResetEmail(
+            email: emailcontroller.text.trim()).then((value) =>{
           showAlertDialog(context, "Password Reset Email Sent"),
           Timer(const Duration(seconds: 3), () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Loginmanager()));
           }),
-      });
-    }on FirebaseException catch(e){
-      print(e);
+        });
+      }on FirebaseException catch(e){
+        if(e.code=="The email address is badly formatted")
+        {
+          showAlertDialog(context, "your mail is not valid please enter the right one");
+        }
+
+      }
+
     }
   }
   showAlertDialog(BuildContext context,String message) {

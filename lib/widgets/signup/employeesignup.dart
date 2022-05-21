@@ -140,7 +140,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
 
                                   const SizedBox(height: 10,),
                                   TextFormField(
-                                    decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration: const InputDecoration(
+                                        labelText: 'F-name' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     style:const TextStyle(color: Colors.white,fontSize: 23,),
                                     keyboardType: TextInputType.name,
                                     validator: (value){
@@ -154,13 +157,16 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'L-name' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     style: TextStyle(color: Colors.white,fontSize: 23),
                                     keyboardType: TextInputType.name,
                                     validator: (value){
                                       _autData['lastname']=value!;
                                       if(value.isEmpty){
-                                        return'please enter your first name';
+                                        return'please enter your last name';
                                       }
                                     },
                                     onSaved: (value) {
@@ -168,7 +174,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'phone' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     keyboardType: TextInputType.phone,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
@@ -186,11 +195,12 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     decoration:const InputDecoration (
                                       labelText: 'E-Mail' ,
                                       labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)
                                     ),
                                     keyboardType: TextInputType.emailAddress,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
-                                      if(value!.isEmpty || !value.contains('@')){
+                                      if(value!.isEmpty || !value.contains('@') || !value.contains('.com')){
                                         return 'Invalid Email! ';
                                       }
                                     },
@@ -200,7 +210,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                    decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
+                                    decoration:const InputDecoration(
+                                        labelText: 'password' ,
+                                        labelStyle: TextStyle(color: Colors.white),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                     obscureText: true,
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     controller: _passwordController,
@@ -218,8 +231,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     },
                                   ),
                                   TextFormField(
-                                      decoration:const InputDecoration(labelText: 'confirm password' ,
-                                          labelStyle: TextStyle(color: Colors.white,fontSize: 23)),
+                                      decoration:const InputDecoration(
+                                          labelText: 'confirm password' ,
+                                          labelStyle: TextStyle(color: Colors.white,fontSize: 23),
+                                          errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       style:const TextStyle(color: Colors.white,fontSize: 23),
                                       obscureText: true,
                                       validator: (value) {
