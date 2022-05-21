@@ -233,7 +233,8 @@ class _AuthCardState extends State<AuthCard> {
                                           _signup();
                                         },
                                         padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                        color:const  Color.fromRGBO(65, 189, 180, 54),
+                                        //color:const  Color.fromRGBO(65, 189, 180, 54),
+                                        color: Colors.blue,
                                         textColor: Colors.white,
                                       ),
                                     ),

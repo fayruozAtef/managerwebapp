@@ -170,6 +170,7 @@ class _LogInState extends State<LogIn> {
                     style: TextStyle(fontWeight: FontWeight.bold,
                         fontSize: 30),
                   ),
+
                   onPressed:() {
                     _logIn();
                   },
@@ -177,7 +178,7 @@ class _LogInState extends State<LogIn> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   padding:const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                  color: Colors.transparent,
+                  color: Colors.blue,
                   //color: Color.fromRGBO(65, 189, 180, 54),
                   textColor: Colors.white,
                 ),
