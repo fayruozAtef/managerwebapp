@@ -31,7 +31,7 @@ class Password extends StatelessWidget {
         ),
         Container(
           child: Scaffold(
-            appBar: AppBar(title: const Text("Add New Waiter", style: TextStyle(fontSize: 25),),),
+            appBar: AppBar(title: const Text("Forget Password", style: TextStyle(fontSize: 25),),),
             backgroundColor: Colors.transparent,
             body: Stack(
               children:const[
@@ -65,7 +65,11 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
   Map<String, String> _autData={
     'email':'' ,
   };
-
+  @override
+  void dispose(){
+    emailcontroller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -161,11 +165,10 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
           }),
         });
       }on FirebaseException catch(e){
-        if(e.code=="The email address is badly formatted")
-        {
-          showAlertDialog(context, "your mail is not valid please enter the right one");
-        }
-
+        print(e);
+        showAlertDialog(context, 'your email is not exist');
+        //print(e);
+        //showAlertDialog(context, e.code);
       }
 
     }

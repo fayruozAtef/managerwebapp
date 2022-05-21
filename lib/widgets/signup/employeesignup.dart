@@ -286,9 +286,9 @@ class _SignUpEmpState extends State<SignUpEmp> {
 
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       title:const Text("Warning:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
       ),),
       content: Text('$message', style: const TextStyle(
         fontSize: 18, color: Colors.black,
