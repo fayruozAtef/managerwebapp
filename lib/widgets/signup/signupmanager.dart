@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:managerweb/widgets/home.dart';
+import '../Background/RegesterBack.dart';
 import '../Background/backWithOpacity.dart';
 import 'auth.dart';
 class signupmanager extends StatelessWidget {
@@ -12,7 +13,7 @@ class signupmanager extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        BackWithOpacity(),
+        RegesterBack(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
