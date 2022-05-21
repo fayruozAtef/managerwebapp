@@ -133,7 +133,8 @@ class _QRCreatePage extends State<QRCreatePage> {
             });
             showAlertDialog(context, "QR-codes Created and downloaded sucessfully");
           }).catchError((onError) {
-            debugPrint(onError);
+            print("We find an error");
+            //debugPrint(onError);
           });
         },
         tooltip: 'Increment',
