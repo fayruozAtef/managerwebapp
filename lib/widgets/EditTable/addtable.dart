@@ -66,7 +66,7 @@ _add({Key? key,required this.tablenumber,required this.uid});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text('Add Table'),),
+      appBar: AppBar(title:const Text('Add Table',style: TextStyle(color: Colors.white, fontSize: 30,)),),
       backgroundColor: Colors.black,
       body:SingleChildScrollView(
 
