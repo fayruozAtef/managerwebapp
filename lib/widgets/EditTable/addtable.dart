@@ -12,16 +12,15 @@ import 'package:uuid/uuid.dart';
 import '../home.dart';
 class Addtable extends StatefulWidget {
   final num tn;
-  final String uid;
-  const Addtable({Key? key,required this.tn, required this.uid }) : super(key: key);
+  const Addtable({Key? key,required this.tn,}) : super(key: key);
   @override
-  _add createState() => _add(tablenumber: this.tn,uid: this.uid);
+  _add createState() => _add(tablenumber: this.tn);
 }
 
 class _add extends State<Addtable> {
   num tablenumber;
-  String uid;
-_add({Key? key,required this.tablenumber,required this.uid});
+
+_add({Key? key,required this.tablenumber});
   String _group="";
   List imagelist=[];
   final seats =TextEditingController();
@@ -185,7 +184,7 @@ _add({Key? key,required this.tablenumber,required this.uid});
             imagelist.toString() == "[]" ?
             const Center(child: Text(" No images Uploaded",
               style: TextStyle(fontSize: 26, fontWeight:FontWeight.bold,color: Colors.white),)): Container(
-              height: 200,
+              height: 300,
               child: GridView.builder(
                   itemCount: imagelist.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),

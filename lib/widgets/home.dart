@@ -120,7 +120,7 @@ class _home extends State<Home2> {
                 const Icon(Icons.table_restaurant ,color: Colors.white,),
                 FlatButton(
                   onPressed:(){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage(uid: uid,)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Uploadimage()));
                   },
                   child: const Text("Arrange tables" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),
