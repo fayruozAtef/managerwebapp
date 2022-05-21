@@ -15,7 +15,7 @@ class EmployeSignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        BackWithOpacity(),
+        const BackWithOpacity(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
@@ -35,7 +35,6 @@ class EmployeSignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
                 SignUpEmp(uid: this.uid,),
               ],
             ),
@@ -43,6 +42,8 @@ class EmployeSignUp extends StatelessWidget {
         ),
       ],
     );
+
+
   }
 }
 
@@ -246,24 +247,35 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                   ),
                                   const SizedBox(height: 20,),
                                   Container(
-                                    width: 250,
-                                    height: 50,
+                                    height: 120,
+                                    padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-
+                                      borderRadius: BorderRadius.all(Radius.circular(5)),
                                     ),
-                                    child: RaisedButton(
-                                      child:
-                                      const Text('SIGN UP',
-                                        style: TextStyle(fontSize: 25),
+
+                                    child: Center(
+                                      child: ButtonTheme(
+                                        minWidth: 200.0,
+                                        height: 80.0,
+                                        child: RaisedButton(
+                                          child:
+                                          const Text('SignUp',
+                                            style: TextStyle(fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+
+                                          onPressed:() {
+                                            _signup();
+                                          },
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(30),
+                                          ),
+                                          padding:const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
+                                          color: Colors.blue,
+                                          //color: Color.fromRGBO(65, 189, 180, 54),
+                                          textColor: Colors.white,
+                                        ),
                                       ),
-                                      onPressed:() {
-                                        _signup();
-                                      },
-                                      padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                      //color:const  Color.fromRGBO(65, 189, 180, 54),
-                                      color: Colors.blue,
-                                      textColor: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -272,7 +284,6 @@ class _SignUpEmpState extends State<SignUpEmp> {
                           ),
                         ]
                     ),
-
                   ]
               ),
             ),
