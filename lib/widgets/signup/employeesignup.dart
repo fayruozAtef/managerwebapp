@@ -3,19 +3,19 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Background/backWithOpacity.dart';
+import 'package:managerweb/widgets/Background/RegesterBack.dart';
 import '../home.dart';
 import 'auth.dart';
 
 class EmployeSignUp extends StatelessWidget {
-  String uid;
-  EmployeSignUp({Key? key,required this.uid});
+  String ManagerId;
+  EmployeSignUp({Key? key,required this.ManagerId});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        const BackWithOpacity(),
+        const RegesterBack(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
@@ -35,7 +35,7 @@ class EmployeSignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                SignUpEmp(uid: this.uid,),
+                SignUpEmp(uid: this.ManagerId,),
               ],
             ),
           ),
@@ -96,7 +96,7 @@ class _SignUpEmpState extends State<SignUpEmp> {
         }).then((value) {
           showAlertDialog(context, " Successfully add a new waiter ${_autData['fname']}  ${_autData['lname']}");
           Timer(const Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: uid,)));
           });
         });
 

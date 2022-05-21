@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,9 @@ _add({Key? key,required this.tablenumber});
                           ],
                         ),
                         onPressed:() {
-                          imagelist=[];
+                          setState(() {
+                            imagelist=[];
+                          });
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -232,7 +235,8 @@ _add({Key? key,required this.tablenumber});
                                 showAlertDialog3(context),
                             );
                             Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+                            String ManagerId=FirebaseAuth.instance.currentUser!.uid;
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home(ManagerId: ManagerId,)));
                           }
                           else{
                             showAlertDialog2(context, "Choose the table place");

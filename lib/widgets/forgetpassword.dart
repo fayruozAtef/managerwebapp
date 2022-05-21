@@ -16,26 +16,26 @@ class Password extends StatelessWidget {
     return Stack(
       children:<Widget> [
         const BackWithOpacity(),
-       // SizedBox(height: 200),
-        Container(
-          padding: const EdgeInsets.all(20.0),
-          height: 150,
-          width: 150,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              opacity: 0.6,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         Container(
           child: Scaffold(
             appBar: AppBar(title: const Text("Forget Password", style: TextStyle(fontSize: 25),),),
             backgroundColor: Colors.transparent,
             body: Stack(
-              children:const[
-                SingleChildScrollView(
+              children:[
+                const SizedBox(height: 20,),
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  height: 150,
+                  width: 150,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/logo.png'),
+                      opacity: 0.6,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SingleChildScrollView(
                   child: ForgetPAssword(),
                 ),
               ],

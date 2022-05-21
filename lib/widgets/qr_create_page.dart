@@ -4,20 +4,20 @@ import 'dart:html';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 import 'home.dart';
 class QRCreatePage extends StatefulWidget {
-   QRCreatePage({Key? key, required this.uid}) : super(key: key);
-   String uid;
+   QRCreatePage({Key? key,}) : super(key: key);
   @override
-  State<QRCreatePage> createState() => _QRCreatePage(id: this.uid);
+  State<QRCreatePage> createState() => _QRCreatePage();
 }
 
 class _QRCreatePage extends State<QRCreatePage> {
-  String id;
-  _QRCreatePage({Key? key, required this.id});
+  String Managerid= FirebaseAuth.instance.currentUser!.uid;
+  _QRCreatePage({Key? key,});
   Uint8List? _imageFile;
   ScreenshotController screenshotController = ScreenshotController();
   List <String> numbers=[];
@@ -129,7 +129,7 @@ class _QRCreatePage extends State<QRCreatePage> {
             f=false;
             numbers=[];
             Timer(const Duration(seconds: 3), () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: Managerid,)));
             });
             showAlertDialog(context, "QR-codes Created and downloaded sucessfully");
           }).catchError((onError) {

@@ -7,8 +7,9 @@ import '../Background/RegesterBack.dart';
 import '../Background/backWithOpacity.dart';
 import 'auth.dart';
 class signupmanager extends StatelessWidget {
+  String ManagerId;
   String uid;
-  signupmanager({Key? key,required this.uid});
+  signupmanager({Key? key,required this.uid,required this.ManagerId});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,7 +34,7 @@ class signupmanager extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AuthCard(uid: this.uid,),
+                  AuthCard(uid: this.uid,ManagerId: this.ManagerId,),
                 ],
               ),
             ),
@@ -47,15 +48,17 @@ class signupmanager extends StatelessWidget {
 }
 
 class AuthCard extends StatefulWidget {
+  String ManagerId;
   String uid;
-  AuthCard({Key? key,required this.uid});
+  AuthCard({Key? key,required this.uid, required this.ManagerId});
 
   @override
-  _AuthCardState createState() => _AuthCardState(uid: this.uid);
+  _AuthCardState createState() => _AuthCardState(uid: this.uid,Managerid: ManagerId);
 }
 class _AuthCardState extends State<AuthCard> {
+  String Managerid;
   String uid;
-  _AuthCardState({Key? key,required this.uid});
+  _AuthCardState({Key? key,required this.uid, required this.Managerid});
 
   final GlobalKey<FormState>_formKey=GlobalKey();
   TextEditingController email = TextEditingController();
@@ -92,7 +95,7 @@ class _AuthCardState extends State<AuthCard> {
         }).then((value) {
           showAlertDialog(context, " Successfully add a new manager ${_autData['fname']}  ${_autData['lname']}"); 
           Timer(const Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId:Managerid ,)));
           });
         });
 
@@ -260,9 +263,9 @@ class _AuthCardState extends State<AuthCard> {
 
     // set up the AlertDialog
     AlertDialog alert =  AlertDialog(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       title:const Text("Warning:", style: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+        fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,
       ),),
       content: Text('$message', style: const TextStyle(
         fontSize: 18, color: Colors.black,

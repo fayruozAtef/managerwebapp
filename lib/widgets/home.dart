@@ -12,34 +12,34 @@ import 'Login.dart';
 import 'EditTable/changetable.dart';
 
 class Home extends StatelessWidget {
-  String uid=FirebaseAuth.instance.currentUser!.uid;
-  Home({Key? key});
+  String ManagerId;
+  Home({Key? key,required this.ManagerId});
   @override
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
         const HomeBack(),
-        Home2(uid: this.uid,),
+        Home2(ManagerId: this.ManagerId,),
       ],
     );
   }
 }
 
 class Home2 extends StatefulWidget {
-  String uid;
-  Home2({Key? key,required this.uid});
+  String ManagerId;
+  Home2({Key? key,required this.ManagerId});
   @override
-  _home createState() => _home(uid: this.uid);
+  _home createState() => _home(ManagerId: this.ManagerId);
 }
 
 class _home extends State<Home2> {
-  String uid;
-  _home({Key? key,required this.uid});
+  String ManagerId;
+  _home({Key? key,required this.ManagerId});
   String uname='';
   String uemail='';
 
   getData() async {
-    DocumentReference data = FirebaseFirestore.instance.collection("employee").doc(uid);
+    DocumentReference data = FirebaseFirestore.instance.collection("employee").doc(ManagerId);
     var dbu = await data.get();
     setState(() {
       uname = dbu.get("first name") + ' ' + dbu.get("last name");
@@ -84,7 +84,7 @@ class _home extends State<Home2> {
               children: [
                 const Icon(Icons.person_add_alt ,color: Colors.white,),
                 FlatButton(onPressed:(){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager(uid: this.uid,)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => signupmanager(uid: this.ManagerId,ManagerId: ManagerId,)));
                 },
                   child:const Text("New Manager" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),
@@ -96,7 +96,7 @@ class _home extends State<Home2> {
               children: [
                 const Icon(Icons.person_add_alt_1_rounded ,color: Colors.white,),
                 FlatButton(onPressed:(){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp(uid: this.uid,)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmployeSignUp(ManagerId: this.ManagerId,)));
                 },
                   child:const Text("New Waiter" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),
@@ -108,7 +108,7 @@ class _home extends State<Home2> {
                 const Icon(Icons.qr_code_outlined ,color: Colors.white,),
                 FlatButton(
                   onPressed:(){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage(uid: this.uid,)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRCreatePage()));
                   },
                   child: const Text("Generate QR Codes" ,style: TextStyle(color: Colors.white,fontSize: 22),),
                 ),

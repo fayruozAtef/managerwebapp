@@ -222,7 +222,10 @@ class _imagepic extends State<Uploadimage> {
                           ],
                         ),
                         onPressed:() {
-                          imagelist=[];
+                          setState(() {
+                            imagelist=[];
+                          });
+
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
