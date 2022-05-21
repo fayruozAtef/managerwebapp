@@ -79,9 +79,7 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menu Categories' ,
-            style: TextStyle(color: Colors.white, fontSize: 25,
-              fontWeight: FontWeight.bold,
-            )
+            style: TextStyle(color: Colors.white, fontSize: 30,)
         ),
         //automaticallyImplyLeading: false,
       ),
@@ -175,7 +173,7 @@ class _CategoriesState extends State<Categories> {
               Card(
                 child:InkWell(onTap: ()async{
                   setState(() {
-                  name.add('');
+                  name.add('New');
                   imgList.add('');
                   color.add(0);
                   });
@@ -241,7 +239,7 @@ class _CategoriesState extends State<Categories> {
       if (isValid == true) {
         for (int i = 0; i < name.length; i++) {
           if (i >= listid.length) {
-            if (imgList[i] != '' ) {
+            if (imgList[i] != '' && name[i]!="New") {
               bff.add({"type": name[i], "imagepath": imgList[i]});
             }
           }

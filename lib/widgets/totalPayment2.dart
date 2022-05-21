@@ -78,7 +78,7 @@ DateTimeRange _dateTimeRange=DateTimeRange(
     return Scaffold(
       appBar: AppBar(
         title: Text('Total Payment',
-            style: TextStyle(color: Colors.white, fontSize: 40,)),
+            style:TextStyle(color: Colors.white, fontSize: 30,)),
       ),
       body: SingleChildScrollView(
         child: Column(
