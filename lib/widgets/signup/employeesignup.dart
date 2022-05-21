@@ -145,6 +145,9 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     keyboardType: TextInputType.name,
                                     validator: (value){
                                       _autData['firstname']=value!;
+                                      if(value.isEmpty){
+                                        return'please enter your first name';
+                                      }
                                     },
                                     onSaved: (value) {
                                       _autData['fname']=value!;
@@ -156,6 +159,9 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     keyboardType: TextInputType.name,
                                     validator: (value){
                                       _autData['lastname']=value!;
+                                      if(value.isEmpty){
+                                        return'please enter your first name';
+                                      }
                                     },
                                     onSaved: (value) {
                                       _autData['lname']=value!;
@@ -167,6 +173,10 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                     style: const TextStyle(color: Colors.white,fontSize: 23),
                                     validator: (value){
                                       _autData['phone']=value!;
+                                      if(value.length>11 || value.length<11)
+                                      {
+                                        return 'Please enter a valid phone number ';
+                                      }
                                     },
                                     onSaved: (value) {
                                       _autData['phone']=value!;
@@ -236,7 +246,8 @@ class _SignUpEmpState extends State<SignUpEmp> {
                                         _signup();
                                       },
                                       padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                      color:const  Color.fromRGBO(65, 189, 180, 54),
+                                      //color:const  Color.fromRGBO(65, 189, 180, 54),
+                                      color: Colors.blue,
                                       textColor: Colors.white,
                                     ),
                                   ),
