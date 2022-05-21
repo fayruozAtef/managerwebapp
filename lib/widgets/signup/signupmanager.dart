@@ -12,7 +12,7 @@ class signupmanager extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children:<Widget> [
-        const BackWithOpacity(),
+        BackWithOpacity(),
         const SizedBox(height: 200,),
         Container(
           child: Scaffold(
@@ -77,7 +77,6 @@ class _AuthCardState extends State<AuthCard> {
       _formKey.currentState!.save() ;
       //true signup
       //to make user authentication
-      UserCredential userCredential ;
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _autData['email']!,
           password: _autData['password']!
@@ -115,13 +114,12 @@ class _AuthCardState extends State<AuthCard> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize= MediaQuery.of(context).size;
     return Align(
         alignment: Alignment.center,
         child:  SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 100,),
+              const SizedBox(height: 70,),
               SizedBox(
                 width:( MediaQuery. of(context). size. width )-300,
                 child: Column(
@@ -137,10 +135,13 @@ class _AuthCardState extends State<AuthCard> {
 
                                     const SizedBox(height: 10,),
                                     TextFormField(
-                                      decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white)),
-                                      style:const TextStyle(color: Colors.white,fontSize: 23,),
+                                      decoration: const InputDecoration(labelText: 'F-name' ,labelStyle: TextStyle(color: Colors.white),errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
+                                      style:const TextStyle(color: Colors.white,fontSize: 25,),
                                       keyboardType: TextInputType.name,
                                       validator: (value){
+                                        if(value!.isEmpty){
+                                          return '**Enter first name**';
+                                        }
                                         _autData['firstname']=value!;
                                       },
                                       onSaved: (value) {
@@ -148,22 +149,29 @@ class _AuthCardState extends State<AuthCard> {
                                       },
                                     ),
                                     TextFormField(
-                                      decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white)),
+                                      decoration:const InputDecoration(labelText: 'L-name' ,labelStyle: TextStyle(color: Colors.white),errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       style: TextStyle(color: Colors.white,fontSize: 23),
                                       keyboardType: TextInputType.name,
                                       validator: (value){
-                                        _autData['lastname']=value!;
+                                        if(value!.isEmpty){
+                                          return '**Enter last name**';
+                                        }
                                       },
                                       onSaved: (value) {
                                         _autData['lname']=value!;
                                       },
                                     ),
                                     TextFormField(
-                                      decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white)),
+                                      decoration:const InputDecoration(labelText: 'phone' ,labelStyle: TextStyle(color: Colors.white),errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       keyboardType: TextInputType.phone,
                                       style: const TextStyle(color: Colors.white,fontSize: 23),
                                       validator: (value){
-                                        _autData['phone']=value!;
+                                        if(value!.isEmpty){
+                                          return '**Enter phone number**';
+                                        }
+                                        else if(value!.length!=11){
+                                          return '**Enter correct phone number**';
+                                        }
                                       },
                                       onSaved: (value) {
                                         _autData['phone']=value!;
@@ -173,12 +181,12 @@ class _AuthCardState extends State<AuthCard> {
                                       decoration:const InputDecoration (
                                         labelText: 'E-Mail' ,
                                         labelStyle: TextStyle(color: Colors.white),
-                                      ),
+                                        errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       keyboardType: TextInputType.emailAddress,
                                       style: const TextStyle(color: Colors.white,fontSize: 23),
                                       validator: (value){
                                         if(value!.isEmpty || !value.contains('@')){
-                                          return 'Invalid Email! ';
+                                          return '**Invalid Email! ';
                                         }
                                       },
                                       // controller: email,
@@ -187,16 +195,16 @@ class _AuthCardState extends State<AuthCard> {
                                       },
                                     ),
                                     TextFormField(
-                                      decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white)),
+                                      decoration:const InputDecoration(labelText: 'password' ,labelStyle: TextStyle(color: Colors.white),errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                       obscureText: true,
                                       style: const TextStyle(color: Colors.white,fontSize: 23),
                                       controller: _passwordController,
                                       validator: (value){
                                         if(value!.isEmpty){
-                                          return 'enter password';
+                                          return '**enter password**';
                                         }
                                         else if(value.length <5){
-                                          return 'password is too short!';
+                                          return '**password is too short!**';
                                         }
                                         return null;
                                       },
@@ -206,12 +214,12 @@ class _AuthCardState extends State<AuthCard> {
                                     ),
                                     TextFormField(
                                         decoration:const InputDecoration(labelText: 'confirm password' ,
-                                            labelStyle: TextStyle(color: Colors.white,fontSize: 23)),
+                                            labelStyle: TextStyle(color: Colors.white,fontSize: 23),errorStyle: TextStyle(color: Colors.white,fontSize: 15)),
                                         style:const TextStyle(color: Colors.white,fontSize: 23),
                                         obscureText: true,
                                         validator: (value) {
                                           if(value !=_passwordController.text){
-                                            return 'passwords do not match!' ;
+                                            return '**passwords do not match!**' ;
                                           }
                                           return null;
                                         }
@@ -224,17 +232,12 @@ class _AuthCardState extends State<AuthCard> {
                                         borderRadius: BorderRadius.circular(10),
 
                                       ),
-                                      child: RaisedButton(
-                                        child:
-                                        const Text('SIGN UP',
-                                          style: TextStyle(fontSize: 25),
-                                        ),
-                                        onPressed:() {
+                                      child:FloatingActionButton.extended(
+                                        backgroundColor: Theme.of(context).primaryColor,
+                                        label:const Text("SIGN UP", style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
+                                        onPressed: () => setState(() {
                                           _signup();
-                                        },
-                                        padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8.0),
-                                        color:const  Color.fromRGBO(65, 189, 180, 54),
-                                        textColor: Colors.white,
+                                        }),
                                       ),
                                     ),
                                   ],
