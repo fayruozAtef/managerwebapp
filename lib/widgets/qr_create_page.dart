@@ -122,6 +122,7 @@ class _QRCreatePage extends State<QRCreatePage> {
         onPressed: () {
           screenshotController.capture().then((Uint8List? image) {
             //Capture Done
+            print("photo is taken");
             setState(() {
               _imageFile = image;
             });
@@ -129,11 +130,11 @@ class _QRCreatePage extends State<QRCreatePage> {
             f=false;
             numbers=[];
             Timer(const Duration(seconds: 3), () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: Managerid,)));
+              //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: Managerid,)));
             });
             showAlertDialog(context, "QR-codes Created and downloaded sucessfully");
           }).catchError((onError) {
-            debugPrint(onError);
+            debugPrint(onError.toString());
           });
         },
         tooltip: 'Increment',
