@@ -130,7 +130,7 @@ class _QRCreatePage extends State<QRCreatePage> {
             f=false;
             numbers=[];
             Timer(const Duration(seconds: 3), () {
-              //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: Managerid,)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home(ManagerId: Managerid,)));
             });
             showAlertDialog(context, "QR-codes Created and downloaded sucessfully");
           }).catchError((onError) {
