@@ -246,7 +246,7 @@ class _imagepic extends State<Uploadimage> {
                   itemCount: imagelist.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:4),
                   itemBuilder: (BuildContext context,int index){
-                    return Image.network(File(imagelist[index]).path,);
+                    return Image.network("https://cors-anywhere.herokuapp.com/${File(imagelist[index]).path}",);
                   }),
             ),
             SizedBox(height: 30,),

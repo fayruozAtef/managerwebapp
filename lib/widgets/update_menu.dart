@@ -114,7 +114,7 @@ MyAppState({Key? key, required this.title2}) : super();
                         Container(
                           width: 400,
                           height: 400,
-                          child: (imageUrl[i]!='')? Image.network(imageUrl[i]) : SizedBox(),
+                          child: (imageUrl[i]!='')? Image.network("https://cors-anywhere.herokuapp.com/${imageUrl[i]}") : SizedBox(),
                         ),
                         FloatingActionButton(
                           child: Icon(Icons.camera_alt, color: Colors.white, size: 20),

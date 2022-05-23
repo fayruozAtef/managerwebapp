@@ -105,7 +105,7 @@ class _CategoriesState extends State<Categories> {
                           Container(
                             width: 400,
                             height: 400,
-                            child: (imgList[i]!='')?Image.network(imgList[i]) : SizedBox(height: 100,width: 100,),
+                            child: (imgList[i]!='')?Image.network("https://cors-anywhere.herokuapp.com/${imgList[i]}") : SizedBox(height: 100,width: 100,),
                           ),
                           FloatingActionButton(
                             child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
