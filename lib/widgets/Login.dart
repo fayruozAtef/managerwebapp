@@ -122,8 +122,8 @@ class _LogInState extends State<LogIn> {
                         keyboardType: TextInputType.emailAddress,
                         style:const TextStyle(color: Colors.white,fontSize: 25,),
                         validator: (value){
-                          if(value!.isEmpty || !value.contains('@')){
-                            return 'Invalid Email! ';
+                          if(value!.isEmpty ){
+                            return 'please enter your email ';
                           }
                         },
                         // controller: email,
@@ -142,7 +142,7 @@ class _LogInState extends State<LogIn> {
                         style:const TextStyle(color: Colors.white,fontSize: 25,),
                         validator: (value){
                           if(value!.isEmpty){
-                            return 'Enter password';
+                            return 'please enter your password';
                           }
                         },
                         onSaved: (value) {
